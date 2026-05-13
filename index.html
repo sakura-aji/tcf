@@ -144,6 +144,20 @@
   .toast{padding:10px 14px;border-radius:var(--radius-sm);background:#1a2e22;color:#c8f0da;font-size:12.5px;font-weight:500;box-shadow:var(--shadow-lg);border:1px solid rgba(29,158,92,.2);animation:slideIn .2s ease}
   @keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
 
+
+  .sticky-alert{position:sticky;top:0;z-index:5;margin:-14px -16px 14px;padding:10px 14px;border-bottom:1px solid rgba(220,38,38,.18);background:rgba(254,242,242,.96);backdrop-filter:blur(10px)}
+  .sticky-alert.green{background:rgba(240,253,244,.96);border-bottom-color:rgba(22,163,74,.18)}
+  .id-header{display:grid;grid-template-columns:1.4fr 1fr 1.2fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;margin-bottom:12px}
+  .id-header b{font-size:13px}.id-header span{font-size:11.5px;color:var(--muted);display:block}
+  .mini-metric{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px}.mini-metric b{font-size:18px;display:block}.mini-metric span{font-size:11.5px;color:var(--muted)}
+  .exercise-grid{overflow-x:auto}.exercise-grid table{min-width:980px}.exercise-grid input{min-width:160px}
+  .field-tip{border-bottom:1px dotted var(--muted);cursor:help}
+
+  .med-action{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(29,158,92,.22);background:var(--accent-light);color:#0a3520;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer}
+  .med-action .ic svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .confirm-card{border:1px solid rgba(220,38,38,.2);background:rgba(254,242,242,.7);border-radius:14px;padding:12px;margin-top:12px}
+  .dose-pop{display:inline-block;border-bottom:1px dotted var(--muted);cursor:help;color:#0a3520;font-weight:600}
+
   @media(max-width:1000px){
     .col-8,.col-7,.col-6,.col-5,.col-4{grid-column:span 12}
     .kpi{grid-column:span 6}
@@ -168,7 +182,7 @@
         <div><label>Role</label><select id="loginRole" class="select">
           <option>Super Admin</option><option>Administrator</option><option>Operations</option>
           <option>Facility</option><option>Finance</option><option>Doctor</option>
-          <option>Nurse</option><option>Therapist</option>
+          <option>Nurse</option><option>Therapist</option><option>Therapy Assistant</option><option>Visiting Specialist</option><option>Dietician</option><option>Psychologist</option>
         </select></div>
       </div>
       <p class="note">Preview-only demo. Navigation, profile structure and permissions follow the updated TCF Management System planning document (v6).</p>
@@ -194,17 +208,17 @@
 
     <div class="nav-section">
       <div class="nav-label">Main</div>
-      <button class="nav-btn" data-view="dashboard" onclick="showView('dashboard',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist"><span class="ic" data-icon="dashboard"></span><span class="nav-label-text">Dashboard</span></button>
-      <button class="nav-btn" data-view="patients" onclick="showView('patients',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist"><span class="ic" data-icon="patients"></span><span class="nav-label-text">Patients</span></button>
+      <button class="nav-btn" data-view="dashboard" onclick="showView('dashboard',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist,Therapy Assistant,Visiting Specialist,Dietician,Psychologist"><span class="ic" data-icon="dashboard"></span><span class="nav-label-text">Dashboard</span></button>
+      <button class="nav-btn" data-view="patients" onclick="showView('patients',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist,Therapy Assistant,Visiting Specialist,Dietician,Psychologist"><span class="ic" data-icon="patients"></span><span class="nav-label-text">Patients</span></button>
 
       <div class="nav-label">Facility &amp; Operations</div>
       <button class="nav-btn" data-view="visitors" onclick="showView('visitors',this)" data-roles="Super Admin,Administrator,Operations,Facility,Nurse"><span class="ic" data-icon="visitors"></span><span class="nav-label-text">Visitor Management</span></button>
-      <button class="nav-btn" data-view="food" onclick="showView('food',this)" data-roles="Super Admin,Administrator,Facility,Doctor,Nurse,Operations,Finance"><span class="ic" data-icon="food"></span><span class="nav-label-text">Food &amp; Diet</span></button>
-      <button class="nav-btn" data-view="facility" onclick="showView('facility',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist"><span class="ic" data-icon="facility"></span><span class="nav-label-text">Facility</span></button>
+      <button class="nav-btn" data-view="food" onclick="showView('food',this)" data-roles="Super Admin,Administrator,Facility,Doctor,Nurse,Operations,Finance,Dietician"><span class="ic" data-icon="food"></span><span class="nav-label-text">Food &amp; Diet</span></button>
+      <button class="nav-btn" data-view="facility" onclick="showView('facility',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist,Therapy Assistant,Visiting Specialist,Dietician,Psychologist"><span class="ic" data-icon="facility"></span><span class="nav-label-text">Facility</span></button>
 
       <div class="nav-label">Commercial &amp; Admin</div>
       <button class="nav-btn" data-view="finance" onclick="showView('finance',this)" data-roles="Super Admin,Administrator,Operations,Finance"><span class="ic" data-icon="finance"></span><span class="nav-label-text">Finance</span></button>
-      <button class="nav-btn" data-view="reports" onclick="showView('reports',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist"><span class="ic" data-icon="reports"></span><span class="nav-label-text">Reports</span></button>
+      <button class="nav-btn" data-view="reports" onclick="showView('reports',this)" data-roles="Super Admin,Administrator,Operations,Facility,Finance,Doctor,Nurse,Therapist,Therapy Assistant,Visiting Specialist,Dietician,Psychologist"><span class="ic" data-icon="reports"></span><span class="nav-label-text">Reports</span></button>
       <button class="nav-btn" data-view="admin" onclick="showView('admin',this)" data-roles="Super Admin,Administrator"><span class="ic" data-icon="admin"></span><span class="nav-label-text">Admin</span></button>
     </div>
 
@@ -284,18 +298,23 @@
                 <button class="tab-btn" onclick="filterPatients('discharged',this)"><span class="ic" data-icon="logout"></span>Discharged</button>
               </div>
               <div class="cols4" style="margin-bottom:12px">
-                <div><label>Status</label><select class="select" id="pat_status" onchange="filterPatients(this.value.toLowerCase(),null)"><option value="all">All</option><option value="pre-admission">Pre-admission</option><option value="admission">Admission</option><option value="active">Active</option><option value="discharged">Discharged</option></select></div>
-                <div><label>Block / Ward</label><select class="select" id="pat_ward"><option>All</option><option>Block A / Ward 1</option><option>Block B / Ward 2</option><option>Block C / Ward 3</option></select></div>
-                <div><label>Assigned RN</label><select class="select" id="pat_rn"><option>All</option><option>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div>
-                <div><label>Search</label><input class="input" id="pat_search" placeholder="Name / NRIC / bed / diet"></div>
+                <div><label>Status</label><select class="select" id="pat_status" onchange="applyPatientFilters()"><option value="all">All</option><option value="pre-admission">Pre-admission</option><option value="admission">Admission</option><option value="active">Active</option><option value="discharged">Discharged</option></select></div>
+                <div><label>Ward</label><select class="select" id="pat_ward" onchange="applyPatientFilters()"><option>All</option><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div>
+                <div><label>Cubicle</label><select class="select" id="pat_cubicle" onchange="applyPatientFilters()"><option>All</option><option>Cubicle 1</option><option>Cubicle 2</option><option>Pending</option></select></div>
+                <div><label>Last Review Role</label><select class="select" id="pat_review_role"><option>All roles</option><option>PT</option><option>OT</option><option>TA</option></select><div class="note">Shows same-role note patients only.</div></div>
+                <div><label>Sort</label><select class="select" id="pat_review_sort"><option>Ward → Cubicle → Bed</option><option>Last review date ascending</option><option>Last review date descending</option></select></div>
+              </div>
+              <div class="cols" style="margin-bottom:12px">
+                <div><label>Assigned RN</label><select class="select" id="pat_rn" onchange="applyPatientFilters()"><option>All</option><option>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div>
+                <div><label>Search</label><input class="input" id="pat_search" oninput="applyPatientFilters()" placeholder="Name / NRIC / Ward / Cubicle / Bed / diet"></div>
               </div>
               <table class="tbl patient-table">
-                <thead><tr><th>Full Name</th><th>NRIC / FIN</th><th>Status</th><th>Block / Ward</th><th>Bed</th><th>RN</th><th>Diet</th><th>Flags</th><th>Action</th></tr></thead>
+                <thead><tr><th>Full Name</th><th>NRIC / FIN</th><th>Status</th><th>Ward</th><th>Cubicle</th><th>Bed</th><th>RN</th><th>Diet</th><th>Flags</th><th>Action</th></tr></thead>
                 <tbody>
-                  <tr data-status="active" onclick="openPatientProfile('Mr Tan Wei Ming · W2 B14')"><td><b>Mr Tan Wei Ming</b><br><span class="note">DOB: dd/mm/yyyy · +65 9XXX XXXX</span></td><td>S1234567A</td><td><span class="tag good">Active</span></td><td>Block A / Ward 1</td><td>W2 · B14</td><td>RN Sarah</td><td>Normal diet</td><td><span class="tag bad">Penicillin</span> <span class="tag warn">Shellfish</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Tan Wei Ming · W2 B14')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
-                  <tr data-status="pre-admission" onclick="openPatientProfile('Mdm Lim Siew Eng · Pending bed')"><td><b>Mdm Lim Siew Eng</b><br><span class="note">DOB: dd/mm/yyyy · +65 8XXX XXXX</span></td><td>S7654321B</td><td><span class="tag info">Pre-admission</span></td><td>Pending</td><td>Pending</td><td>RN Mei Lin</td><td>Diabetic diet</td><td><span class="tag warn">Incomplete form</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mdm Lim Siew Eng · Pending bed')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
-                  <tr data-status="admission" onclick="openPatientProfile('Mr Ahmad Rahman · W1 B08')"><td><b>Mr Ahmad Rahman</b><br><span class="note">DOB: dd/mm/yyyy · +65 8123 0000</span></td><td>S2222333C</td><td><span class="tag warn">Admission</span></td><td>Block A / Ward 1</td><td>W1 · B08</td><td>RN Daniel</td><td>Soft diet</td><td><span class="tag warn">Fall risk</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Ahmad Rahman · W1 B08')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
-                  <tr data-status="discharged" onclick="openPatientProfile('Mr Ravi Kumar · W3 B07')"><td><b>Mr Ravi Kumar</b><br><span class="note">DOB: dd/mm/yyyy · +65 9111 2222</span></td><td>G4321987C</td><td><span class="tag teal">Discharged</span></td><td>Block C / Ward 3</td><td>W3 · B07</td><td>RN Sarah</td><td>Low-salt diet</td><td><span class="tag info">Billing</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Ravi Kumar · W3 B07')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
+                  <tr data-status="active" data-ward="Ward 1" data-cubicle="Cubicle 2" data-rn="RN Sarah" onclick="openPatientProfile('Mr Tan Wei Ming · W2 B14')"><td><b>Mr Tan Wei Ming</b><br><span class="note">DOB: dd/mm/yyyy · +65 9XXX XXXX</span></td><td>S1234567A</td><td><span class="tag good">Active</span></td><td>Ward 1</td><td>Cubicle 2</td><td>Bed 14</td><td>RN Sarah</td><td>Normal diet</td><td><span class="tag bad">Penicillin</span> <span class="tag warn">Shellfish</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Tan Wei Ming · W2 B14')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
+                  <tr data-status="pre-admission" data-ward="Pending" data-cubicle="Pending" data-rn="RN Mei Lin" onclick="openPatientProfile('Mdm Lim Siew Eng · Pending bed')"><td><b>Mdm Lim Siew Eng</b><br><span class="note">DOB: dd/mm/yyyy · +65 8XXX XXXX</span></td><td>S7654321B</td><td><span class="tag info">Pre-admission</span></td><td>Pending</td><td>Pending</td><td>Pending</td><td>RN Mei Lin</td><td>Diabetic diet</td><td><span class="tag warn">Incomplete form</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mdm Lim Siew Eng · Pending bed')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
+                  <tr data-status="admission" data-ward="Ward 1" data-cubicle="Cubicle 1" data-rn="RN Daniel" onclick="openPatientProfile('Mr Ahmad Rahman · W1 B08')"><td><b>Mr Ahmad Rahman</b><br><span class="note">DOB: dd/mm/yyyy · +65 8123 0000</span></td><td>S2222333C</td><td><span class="tag warn">Admission</span></td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 08</td><td>RN Daniel</td><td>Soft diet</td><td><span class="tag warn">Fall risk</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Ahmad Rahman · W1 B08')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
+                  <tr data-status="discharged" data-ward="Ward 3" data-cubicle="Cubicle 1" data-rn="RN Sarah" onclick="openPatientProfile('Mr Ravi Kumar · W3 B07')"><td><b>Mr Ravi Kumar</b><br><span class="note">DOB: dd/mm/yyyy · +65 9111 2222</span></td><td>G4321987C</td><td><span class="tag teal">Discharged</span></td><td>Ward 3</td><td>Cubicle 1</td><td>Bed 07</td><td>RN Sarah</td><td>Low-salt diet</td><td><span class="tag info">Billing</span></td><td><button class="btn sm" onclick="event.stopPropagation();openPatientProfile('Mr Ravi Kumar · W3 B07')"><span class="ic" data-icon="arrow"></span>Open</button></td></tr>
                 </tbody>
               </table>
               <div class="note">Pre-admission and admission flow are merged — use <b>Add Pre-admission</b> to start a new patient record. Auto-timestamp captures the pre-admission → admission transition.</div>
@@ -413,7 +432,8 @@
                   <button class="tab-btn" data-sub="cl-assessment" onclick="showSubTab('cl','cl-assessment',this)"><span class="ic" data-icon="clipboard"></span>Initial Care Assessment</button>
                   <button class="tab-btn" data-sub="cl-wound" onclick="showSubTab('cl','cl-wound',this)"><span class="ic" data-icon="bandage"></span>Wound Chart</button>
                   <button class="tab-btn" data-sub="cl-behaviour" onclick="showSubTab('cl','cl-behaviour',this)"><span class="ic" data-icon="alert"></span>Behavioural Reports</button>
-                  <button class="tab-btn" data-sub="cl-intake" onclick="showSubTab('cl','cl-intake',this)"><span class="ic" data-icon="droplet"></span>Food Intake (24h)</button>
+                  <button class="tab-btn" data-sub="cl-intake" onclick="showSubTab('cl','cl-intake',this)"><span class="ic" data-icon="droplet"></span>Intake / Output</button>
+                  <button class="tab-btn" data-sub="cl-therapy-session" onclick="showSubTab('cl','cl-therapy-session',this)"><span class="ic" data-icon="therapy"></span>Therapy Session Grid</button>
                 </div>
 
                 <!-- Notes timeline -->
@@ -429,22 +449,30 @@
                           <button class="tab-btn" onclick="filterNotes('pt',this)">PT</button>
                           <button class="tab-btn" onclick="filterNotes('ot',this)">OT</button>
                           <button class="tab-btn" onclick="filterNotes('st',this)">ST</button>
+                          <button class="tab-btn" onclick="filterNotes('ta',this)">TA</button>
+                          <button class="tab-btn" onclick="filterNotes('visiting_specialist',this)">Visiting Specialist</button>
+                          <button class="tab-btn" onclick="filterNotes('dietician',this)">Dietician</button>
+                          <button class="tab-btn" onclick="filterNotes('psychologist',this)">Psychologist</button>
                         </div>
                         <div class="timeline" id="timeline">
                           <div class="timeline-item" data-note="nurse"><div class="timeline-meta"><span class="tag warn"><span class="ic" data-icon="nurse"></span>Nurse</span><span class="pill">Today 12:10 · RN Sarah</span><span class="tag bad"><span class="ic" data-icon="alert"></span>Allergy visible</span><span class="tag warn"><span class="ic" data-icon="clock"></span>Action needed</span></div><b>Feeding observation</b><br>Patient coughed during feeding. Thickened fluids started. SLP review requested.</div>
                           <div class="timeline-item" data-note="doctor"><div class="timeline-meta"><span class="tag info"><span class="ic" data-icon="doctor"></span>Doctor</span><span class="pill">Yesterday 17:40 · Dr Lim</span><span class="tag"><span class="ic" data-icon="lock"></span>Editable (within 72h)</span></div><b>Plan</b><br>Continue monitoring. Review medication after renal panel.</div>
                           <div class="timeline-item" data-note="st"><div class="timeline-meta"><span class="tag teal"><span class="ic" data-icon="speech"></span>ST</span><span class="pill">2 days ago</span><span class="tag"><span class="ic" data-icon="lock"></span>Addendum only</span></div><b>Swallowing review</b><br>IDDSI Level 3 tolerated. Reassess in one week.</div>
+                          <div class="timeline-item" data-note="ta"><div class="timeline-meta"><span class="tag purple"><span class="ic" data-icon="therapy"></span>TA</span><span class="pill">Today 15:20 · Therapy Assistant</span><span class="tag"><span class="ic" data-icon="edit"></span>Own notes only</span></div><b>Therapy assistance session</b><br><b>Subjective:</b> Patient reports mild fatigue.<br><b>Objective:</b> Supervised transfer practice completed.<br><b>Assessment:</b> Tolerated session with rests.<br><b>Plan:</b> Continue next scheduled TA session.</div>
                         </div>
                       </div>
                     </div>
 
                     <div class="card col-5">
-                      <div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Create Note</strong><span class="pill">clinical_notes</span></div>
+                      <div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Create Note</strong><span class="pill">clinical_notes · note_type includes ta · sub_type communication</span></div>
                       <div class="card-bd">
-                        <div class="cols">
-                          <div><label>Note Type</label><select class="select" id="noteType" onchange="renderTemplate()"><option value="doctor">Doctor</option><option value="nurse">Nurse</option><option value="pt">PT</option><option value="ot">OT</option><option value="st">ST</option></select></div>
+                        <div class="cols3">
+                          <div><label>Note Type</label><select class="select" id="noteType" onchange="renderTemplate()"><option value="doctor">Doctor</option><option value="nurse">Nurse</option><option value="pt">PT</option><option value="ot">OT</option><option value="ta">TA</option><option value="st">ST</option><option value="visiting_specialist">Visiting Specialist</option><option value="dietician">Dietician</option><option value="psychologist">Psychologist</option></select></div>
+                          <div><label>Template Type</label><select class="select" id="noteSubType" onchange="renderTemplate()"><option value="standard">Standard Documentation</option><option value="communication">Communication</option></select><div class="note">For PT / OT / TA only. Communication saves as sub_type = communication.</div></div>
                           <div><label>72h Rule</label><select class="select"><option>Editable</option><option>Addendum only</option></select></div>
                         </div>
+                        <div class="hint" style="margin-top:12px"><b><span class="ic" data-icon="cloud"></span>Rehab Notes UX</b><br>Periodic auto-save every 15 seconds while composing. Forced logout/disconnect resumes as a recoverable draft. PT / OT / TA also support Copy from last session and Repeat last note.</div>
+                        <div class="row" style="margin:10px 0 4px"><button class="btn sm" onclick="toast('Recoverable draft resumed')"><span class="ic" data-icon="refresh"></span>Resume draft</button><button class="btn sm" onclick="toast('Repeated last note for same patient and role')"><span class="ic" data-icon="copy"></span>Repeat last note</button></div>
 
                         <div id="tmpl-doctor" class="template-block active">
                           <div class="section-hd"><span class="ic" data-icon="doctor"></span>Doctor Template</div>
@@ -465,31 +493,74 @@
                           <label>Image upload</label><input class="input" type="file">
                           <div class="note">Auto-save · Save and Cancel only.</div>
                         </div>
-                        <div id="tmpl-pt" class="template-block">
-                          <div class="section-hd"><span class="ic" data-icon="therapy"></span>PT Template</div>
-                          <input class="input" placeholder="Mobility level">
-                          <input class="input" placeholder="Range of motion / strength (MMT)">
-                          <input class="input" placeholder="Balance / Gait">
-                          <input class="input" placeholder="Pain score">
-                          <textarea placeholder="Exercise prescribed / goals / progress"></textarea>
-                          <button class="btn sm"><span class="ic" data-icon="copy"></span>Copy from previous session</button>
+
+                        <div id="tmpl-pt" class="template-block rehab-standard">
+                          <div class="section-hd"><span class="ic" data-icon="therapy"></span>PT Standard Documentation — SOAP</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">note_type = pt</span><span class="tag good">No word limit</span><span class="tag warn">Blank subheadings allowed</span></div>
+                          <textarea placeholder="Subjective: precautions; discharge plans; home environment / social history; subjective history"></textarea>
+                          <textarea placeholder="Objective: observation; range of motion; manual muscle testing; functional mobility (rolling, sit over edge of bed, sitting balance, sit-to-stand, standing balance, transfers, ambulation, stairs); outcome measures"></textarea>
+                          <textarea placeholder="Assessment: intervention; evaluation"></textarea>
+                          <textarea placeholder="Plan: free text"></textarea>
+                          <button class="btn sm" onclick="toast('Copied PT content from last session')"><span class="ic" data-icon="copy"></span>Copy from last session (same role)</button>
                         </div>
-                        <div id="tmpl-ot" class="template-block">
-                          <div class="section-hd"><span class="ic" data-icon="therapy"></span>OT Template</div>
-                          <input class="input" placeholder="ADL / IADL assessment">
-                          <input class="input" placeholder="Fine motor">
-                          <input class="input" placeholder="Cognition">
-                          <textarea placeholder="Home recommendations / adaptive equipment / goals"></textarea>
-                          <button class="btn sm"><span class="ic" data-icon="copy"></span>Copy from previous session</button>
+                        <div id="tmpl-ot" class="template-block rehab-standard">
+                          <div class="section-hd"><span class="ic" data-icon="therapy"></span>OT Standard Documentation — SOAP</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">note_type = ot</span><span class="tag good">No word limit</span><span class="tag warn">Blank subheadings allowed</span></div>
+                          <textarea placeholder="Subjective: precautions; discharge plans; home environment / social history; subjective history"></textarea>
+                          <textarea placeholder="Objective: observation; cognition; range of motion; manual muscle testing; functional mobility (bed mobility, transfers, ambulation); outcome measures; activities"></textarea>
+                          <textarea placeholder="Assessment: intervention; evaluation"></textarea>
+                          <textarea placeholder="Plan: free text"></textarea>
+                          <button class="btn sm" onclick="toast('Copied OT content from last session')"><span class="ic" data-icon="copy"></span>Copy from last session (same role)</button>
+                        </div>
+                        <div id="tmpl-ta" class="template-block rehab-standard">
+                          <div class="section-hd"><span class="ic" data-icon="therapy"></span>TA Standard Documentation — SOAP</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">note_type = ta</span><span class="tag purple">users.role = therapy_assistant</span><span class="tag warn">Blank subheadings allowed</span></div>
+                          <textarea placeholder="Subjective: precautions; subjective history"></textarea>
+                          <textarea placeholder="Objective: observation; functional mobility; others"></textarea>
+                          <textarea placeholder="Assessment: intervention; evaluation"></textarea>
+                          <textarea placeholder="Plan: free text"></textarea>
+                          <button class="btn sm" onclick="toast('Copied TA content from last session')"><span class="ic" data-icon="copy"></span>Copy from last session (same role)</button>
+                        </div>
+                        <div id="tmpl-rehab-communication" class="template-block">
+                          <div class="section-hd"><span class="ic" data-icon="message"></span>Communication Template — PT / OT / TA</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">sub_type = communication</span><span class="tag teal">Family communication</span><span class="tag warn">Therapy refusal reason</span></div>
+                          <textarea placeholder="Subjective: family communication details or patient's stated reason for refusing therapy"></textarea>
+                          <textarea placeholder="Plans: follow-up plan, reattempt plan, escalation, family update, or next review"></textarea>
+                        </div>
+
+                        <div id="tmpl-visiting_specialist" class="template-block">
+                          <div class="section-hd"><span class="ic" data-icon="doctor"></span>Visiting Specialist Note</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">users.role = visiting_specialist</span><span class="tag warn">Own notes editable only</span></div>
+                          <textarea placeholder="Reason for review / referral question"></textarea>
+                          <textarea placeholder="Findings / specialist assessment"></textarea>
+                          <textarea placeholder="Recommendations / medication or care plan changes"></textarea>
+                          <textarea placeholder="Follow-up plan"></textarea>
+                        </div>
+                        <div id="tmpl-dietician" class="template-block">
+                          <div class="section-hd"><span class="ic" data-icon="food"></span>Dietician Note</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">users.role = dietician</span><span class="tag warn">Own notes editable only</span></div>
+                          <textarea placeholder="Nutrition assessment / intake concerns"></textarea>
+                          <textarea placeholder="Diet texture / IDDSI / restrictions / allergies reviewed"></textarea>
+                          <textarea placeholder="Nutrition intervention / supplement plan"></textarea>
+                          <textarea placeholder="Monitoring and follow-up plan"></textarea>
+                        </div>
+                        <div id="tmpl-psychologist" class="template-block">
+                          <div class="section-hd"><span class="ic" data-icon="speech"></span>Psychologist Note</div>
+                          <div class="row" style="margin-bottom:10px"><span class="tag info">users.role = psychologist</span><span class="tag warn">Own notes editable only</span></div>
+                          <textarea placeholder="Reason for review / presenting concern"></textarea>
+                          <textarea placeholder="Mental state / behavioural observations"></textarea>
+                          <textarea placeholder="Assessment / formulation"></textarea>
+                          <textarea placeholder="Intervention and follow-up plan"></textarea>
                         </div>
                         <div id="tmpl-st" class="template-block">
                           <div class="section-hd"><span class="ic" data-icon="speech"></span>ST Template</div>
-                          <input class="input" placeholder="Communication">
-                          <input class="input" placeholder="Swallowing / Dysphagia">
-                          <input class="input" placeholder="Diet texture (IDDSI level)">
-                          <input class="input" placeholder="Voice / articulation">
-                          <textarea placeholder="Cognitive communication / goals"></textarea>
-                          <button class="btn sm"><span class="ic" data-icon="copy"></span>Copy from previous session</button>
+                          <textarea placeholder="Communication"></textarea>
+                          <textarea placeholder="Swallowing / Dysphagia"></textarea>
+                          <input class="input" placeholder="Diet texture (IDDSI)">
+                          <textarea placeholder="Voice / Articulation"></textarea>
+                          <textarea placeholder="Cognitive communication"></textarea>
+                          <textarea placeholder="Goals / Progress to date"></textarea>
+                          <button class="btn sm" onclick="toast('Copied ST content from last session')"><span class="ic" data-icon="copy"></span>Copy from previous session</button>
                         </div>
 
                         <div class="divider"></div>
@@ -531,22 +602,36 @@
                 <!-- Wound -->
                 <div id="cl-wound" class="sub-pane" data-group="cl">
                   <div class="grid">
-                    <div class="card col-5">
-                      <div class="card-hd"><strong><span class="ic" data-icon="bandage"></span>Add Wound Entry</strong><span class="pill">Size · type · image · notes</span></div>
+                    <div class="card col-7">
+                      <div class="card-hd"><strong><span class="ic" data-icon="bandage"></span>Structured Wound Assessment</strong><span class="pill">ECcare ER#1 · wound_observations</span></div>
                       <div class="card-bd">
-                        <div class="cols"><div><label>Wound Size</label><input class="input" placeholder="2.1 × 1.4 cm"></div><div><label>Type</label><select class="select"><option>Pressure injury</option><option>Surgical wound</option><option>Diabetic foot</option><option>Other</option></select></div></div>
-                        <div style="margin-top:10px"><label>Image</label><input class="input" type="file"></div>
-                        <div style="margin-top:10px"><label>Notes</label><textarea placeholder="Wound bed, exudate, dressing plan..."></textarea></div>
-                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Wound entry saved')"><span class="ic" data-icon="check"></span>Save Wound Entry</button>
+                        <div class="cols3">
+                          <div><label>Length (cm)</label><input class="input" type="number" step="0.1" placeholder="2.1"></div>
+                          <div><label>Width (cm)</label><input class="input" type="number" step="0.1" placeholder="1.4"></div>
+                          <div><label>Depth (cm)</label><input class="input" type="number" step="0.1" placeholder="0.3"></div>
+                        </div>
+                        <div class="cols" style="margin-top:10px">
+                          <div><label>Pressure-injury staging <span class="field-tip" title="Stage I: intact skin with non-blanchable redness. Stage II: partial-thickness skin loss. Stage III: full-thickness skin loss. Stage IV: exposed bone/tendon/muscle. Unstageable: base obscured. DTI: deep tissue injury.">definitions</span></label><select class="select"><option>Stage I</option><option>Stage II</option><option>Stage III</option><option>Stage IV</option><option>Unstageable</option><option>DTI</option><option>Not pressure injury</option></select></div>
+                          <div><label>Next dressing due</label><input class="input" type="datetime-local"><div class="note">Surfaces in patient task list for follow-up planning.</div></div>
+                        </div>
+                        <div style="margin-top:10px"><label>Wound Description</label><textarea placeholder="Free text wound bed, exudate, surrounding skin, odour, pain, undermining/tunnelling..."></textarea></div>
+                        <div style="margin-top:10px"><label>Intervention Provided</label><textarea placeholder="Dressing performed, debridement support, pressure relief, education, escalation..."></textarea></div>
+                        <div class="cols" style="margin-top:10px">
+                          <div><label>Dressing Product Category</label><select class="select"><option>Foam</option><option>Hydrofiber</option><option>Hydrocolloid</option><option>Alginate</option><option>Film</option><option>Gauze</option><option>Silver</option><option>Other admin-managed item</option></select><div class="note">Managed in Admin → Templates → Wound Catalogue.</div></div>
+                          <div><label>Cleansing Solution Used</label><select class="select"><option>Normal saline</option><option>Sterile water</option><option>Antiseptic</option><option>Other admin-managed item</option></select></div>
+                        </div>
+                        <div style="margin-top:10px"><label>Photo Attachments</label><input class="input" type="file" multiple accept="image/*"><div class="note">Multi-image upload per observation: wound_observations.image_id → image_ids[].</div></div>
+                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Structured wound observation saved and task due date updated')"><span class="ic" data-icon="check"></span>Save Wound Observation</button>
                       </div>
                     </div>
-                    <div class="card col-7">
-                      <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>Wound Progress</strong><span class="pill">Time-based comparison</span></div>
+                    <div class="card col-5">
+                      <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>Wound Progress</strong><span class="pill">Structured comparison</span></div>
                       <div class="card-bd">
-                        <table class="tbl"><thead><tr><th>Date</th><th>Size</th><th>Type</th><th>Image</th><th>Notes</th></tr></thead><tbody>
-                          <tr><td>30 Apr</td><td>2.1 × 1.4 cm</td><td>Pressure injury</td><td><span class="tag info"><span class="ic" data-icon="image"></span>Uploaded</span></td><td>Reduced redness</td></tr>
-                          <tr><td>27 Apr</td><td>2.4 × 1.6 cm</td><td>Pressure injury</td><td><span class="tag info"><span class="ic" data-icon="image"></span>Uploaded</span></td><td>Initial baseline</td></tr>
+                        <table class="tbl"><thead><tr><th>Date</th><th>L×W×D</th><th>Stage</th><th>Product</th><th>Next Due</th></tr></thead><tbody>
+                          <tr><td>30 Apr</td><td>2.1 × 1.4 × 0.3 cm</td><td><span class="tag warn">Stage II</span></td><td>Foam</td><td>1 May 09:00</td></tr>
+                          <tr><td>27 Apr</td><td>2.4 × 1.6 × 0.4 cm</td><td><span class="tag warn">Stage II</span></td><td>Hydrofiber</td><td>28 Apr 09:00</td></tr>
                         </tbody></table>
+                        <div class="hint" style="margin-top:12px"><b><span class="ic" data-icon="image"></span>Photos</b><br>Observation supports multiple images and keeps each image linked to the same wound observation record.</div>
                         <button class="btn sm" style="margin-top:12px" onclick="fakeExport('Wound progress report')"><span class="ic" data-icon="download"></span>Export Progress Report</button>
                       </div>
                     </div>
@@ -581,78 +666,152 @@
                 <div id="cl-intake" class="sub-pane" data-group="cl">
                   <div class="grid">
                     <div class="card col-12">
-                      <div class="card-hd"><strong><span class="ic" data-icon="droplet"></span>Food Intake (24-hour log)</strong><span class="pill">Fluid in/out · solid · urine/bowel · auto-totals</span></div>
+                      <div class="card-hd"><strong><span class="ic" data-icon="droplet"></span>Intake / Output Chart</strong><span class="pill">Typed-row model · intake_output_logs.sub_category</span></div>
                       <div class="card-bd">
-                        <table class="tbl"><thead><tr><th>Time</th><th>Fluid In</th><th>Fluid Out</th><th>Solid Intake</th><th>Urine / Bowel</th><th>Notes</th></tr></thead><tbody>
-                          <tr><td>08:00</td><td>250 ml</td><td>—</td><td>75% breakfast</td><td>Urine passed</td><td>Normal diet</td></tr>
-                          <tr><td>12:00</td><td>300 ml</td><td>120 ml</td><td>60% lunch</td><td>—</td><td>Coughing noted</td></tr>
-                          <tr><td>18:00</td><td>200 ml</td><td>—</td><td>80% dinner</td><td>Bowel opened</td><td>Upright feeding</td></tr>
-                          <tr><td><b>24h Total</b></td><td><b>750 ml</b></td><td><b>120 ml</b></td><td><b>Avg 72%</b></td><td><b>Urine 2× · Bowel 1×</b></td><td><span class="tag warn">Monitor intake</span></td></tr>
+                        <div class="row" style="margin-bottom:12px">
+                          <button class="tab-btn active">All</button><button class="tab-btn">Food intake</button><button class="tab-btn">Fluid intake</button><button class="tab-btn">Vomit</button><button class="tab-btn">Stool output</button><button class="tab-btn">Fluid output</button>
+                        </div>
+                        <div class="cols3" style="margin-bottom:12px">
+                          <div class="mini-metric"><b>1,250 mL</b><span>Total In today</span></div>
+                          <div class="mini-metric"><b>880 mL</b><span>Total Out today</span></div>
+                          <div class="mini-metric"><b>+370 mL</b><span>Net gain / loss</span></div>
+                        </div>
+                        <table class="tbl"><thead><tr><th>Time</th><th>I/O Type</th><th>Sub-category</th><th>Volume</th><th>Details</th><th>Entered by</th></tr></thead><tbody>
+                          <tr><td>08:00</td><td><span class="tag good">Fluid intake</span></td><td>Oral fluids</td><td>250 mL</td><td>Water with medication</td><td>RN Sarah</td></tr>
+                          <tr><td>10:00</td><td><span class="tag info">Fluid output</span></td><td>urine_void</td><td>400 mL</td><td>Typed directly; unit normalised on save</td><td>RN Sarah</td></tr>
+                          <tr><td>12:00</td><td><span class="tag good">Food intake</span></td><td>Lunch</td><td>—</td><td>60% meal taken</td><td>TA Nur</td></tr>
+                          <tr><td>14:00</td><td><span class="tag warn">Fluid output</span></td><td>urine_catheter</td><td>300 mL</td><td>Consolidated urine chart row</td><td>RN Mei</td></tr>
+                          <tr><td>18:00</td><td><span class="tag purple">Stool output</span></td><td>stool</td><td>—</td><td>Bowel opened</td><td>RN Mei</td></tr>
                         </tbody></table>
                         <div class="divider"></div>
-                        <div class="cols4"><div><label>Fluid In</label><input class="input" placeholder="ml"></div><div><label>Fluid Out</label><input class="input" placeholder="ml"></div><div><label>Solid Intake</label><input class="input" placeholder="% / meal details"></div><div><label>Urine / Bowel</label><input class="input" placeholder="urine passed / bowel opened"></div></div>
-                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Food intake entry saved')"><span class="ic" data-icon="check"></span>Add Intake Entry</button>
+                        <div class="cols4">
+                          <div><label>I/O Type</label><select class="select"><option>Food intake</option><option>Fluid intake</option><option>Fluid output</option><option>Vomit</option><option>Stool output</option></select></div>
+                          <div><label>Sub-category</label><select class="select"><option>urine_void</option><option>urine_catheter</option><option>urine_pad</option><option>drain</option><option>vomit</option><option>stool</option><option>oral_fluids</option></select><div class="note">Optional schema column for reporting.</div></div>
+                          <div><label>Volume (mL)</label><input class="input" placeholder="400 or 400 mL or 400 cc"><div class="note">Urine entry is free numeric; suffix normalised to mL.</div></div>
+                          <div><label>Shift / Time</label><input class="input" type="datetime-local"></div>
+                        </div>
+                        <div style="margin-top:10px"><label>Details</label><textarea placeholder="Catheter / void / incontinence pad weight / meal details / drain site / notes..."></textarea></div>
+                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Intake/output row saved and daily totals recalculated')"><span class="ic" data-icon="check"></span>Add I/O Row</button>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <div id="cl-therapy-session" class="sub-pane" data-group="cl">
+                  <div class="grid">
+                    <div class="card col-12">
+                      <div class="card-hd"><strong><span class="ic" data-icon="therapy"></span>Therapy Session Table</strong><span class="pill">PT / OT session · one patient · clinical_notes.structured_fields.exercise</span></div>
+                      <div class="card-bd exercise-grid">
+                        <div class="row" style="margin-bottom:12px"><span class="tag info">Specific patient only</span><span class="tag good">Rows by exercise category</span><span class="tag purple">Stored as JSON</span></div>
+                        <div class="id-header" style="margin-bottom:12px"><div><span>Patient</span><b>Mr Tan Wei Ming</b></div><div><span>IC No.</span><b>S1234567A</b></div><div><span>Bed / Cubicle / Ward</span><b>Ward 1 · Cubicle 2 · Bed 14</b></div><div><span>Session Type</span><b>PT / OT</b></div></div>
+                        <table class="tbl"><thead><tr><th>Exercise Category</th><th>Patient Entry: reps × sets / aid used / assistance level</th></tr></thead><tbody>
+                          <tr><td>Warm-up</td><td><input class="input" value="10 reps × 2 sets · supervision"></td></tr>
+                          <tr><td>Mobility</td><td><input class="input" placeholder="reps × sets / aid / assistance"></td></tr>
+                          <tr><td>Transfer</td><td><input class="input" placeholder="e.g. sit-to-stand frame / mod assist"></td></tr>
+                          <tr><td>Functional Mobility</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>STS</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Marching on Spot</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Heel Raise</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Side Stepping</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Step Up</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Standing Task</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Pedal / Arm Bike</td><td><input class="input" placeholder="..."></td></tr>
+                          <tr><td>Others</td><td><input class="input" placeholder="..."></td></tr>
+                        </tbody></table>
+                        <button class="btn primary" style="margin-top:12px" onclick="submit('note','Therapy session grid saved as structured JSON')"><span class="ic" data-icon="check"></span>Save Therapy Grid</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
               </div>
 
               <!-- MEDICATION (sub-tabs) -->
               <div id="profile-medication" class="profile-tab" style="display:none">
+                <div class="id-header">
+                  <div><span>Name</span><b>Mr Tan Wei Ming</b></div>
+                  <div><span>IC No.</span><b>S1234567A</b></div>
+                  <div><span>Bed / Cubicle / Ward</span><b>Ward 1 · Cubicle 2 · Bed 14</b></div>
+                  <div><span class="tag bad"><span class="ic" data-icon="alert"></span>Drug allergy: Penicillin</span></div>
+                </div>
+
                 <div class="row" style="margin-bottom:14px">
-                  <button class="tab-btn active" data-sub="md-meds" onclick="showSubTab('md','md-meds',this)"><span class="ic" data-icon="pill"></span>Patient Medications</button>
+                  <button class="tab-btn active" data-sub="md-serving" onclick="showSubTab('md','md-serving',this)"><span class="ic" data-icon="pill"></span>Medication Serving</button>
+                  <button class="tab-btn" data-sub="md-meds" onclick="showSubTab('md','md-meds',this)"><span class="ic" data-icon="folder"></span>Active Medication List</button>
+                  <button class="tab-btn" data-sub="md-prescribe" onclick="showSubTab('md','md-prescribe',this)"><span class="ic" data-icon="edit"></span>Prescribe / Order</button>
                   <button class="tab-btn" data-sub="md-allergy" onclick="showSubTab('md','md-allergy',this)"><span class="ic" data-icon="alert"></span>Allergies</button>
                   <button class="tab-btn" data-sub="md-schedule" onclick="showSubTab('md','md-schedule',this)"><span class="ic" data-icon="calendar"></span>Schedule</button>
-                  <button class="tab-btn" data-sub="md-fast" onclick="showSubTab('md','md-fast',this)"><span class="ic" data-icon="ban"></span>Withholding (Fasting)</button>
+                  <button class="tab-btn" data-sub="md-fast" onclick="showSubTab('md','md-fast',this)"><span class="ic" data-icon="ban"></span>Withholding</button>
                 </div>
-                <div id="md-meds" class="sub-pane active" data-group="md">
-                  <div class="grid">
-                    <div class="card col-12">
-                      <div class="card-hd"><strong><span class="ic" data-icon="pill"></span>Active Medications</strong><span class="pill">Multi-medication entry</span></div>
-                      <div class="card-bd">
-                        <table class="tbl"><thead><tr><th>Drug</th><th>Dose</th><th>Route</th><th>Frequency</th><th>Prescribed by</th><th>Linked note</th></tr></thead><tbody>
-                          <tr><td>Aspirin</td><td>100 mg</td><td>PO</td><td>OD</td><td>Dr Lim</td><td><span class="tag info">Note 28 Apr</span></td></tr>
-                          <tr><td>Omeprazole</td><td>20 mg</td><td>PO</td><td>OD</td><td>Dr Lim</td><td><span class="tag info">Note 27 Apr</span></td></tr>
-                        </tbody></table>
-                        <div class="divider"></div>
-                        <div class="cols4"><div><label>Drug</label><input class="input" placeholder="e.g. Metformin"></div><div><label>Dose</label><input class="input" placeholder="500 mg"></div><div><label>Route</label><select class="select"><option>PO</option><option>IV</option><option>IM</option><option>SC</option><option>Topical</option></select></div><div><label>Frequency</label><select class="select"><option>OD</option><option>BD</option><option>TDS</option><option>QDS</option><option>PRN</option></select></div></div>
-                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Medication added')"><span class="ic" data-icon="plus"></span>Add Medication</button>
+
+                <div id="md-serving" class="sub-pane active" data-group="md">
+                  <div class="card col-12">
+                    <div class="card-hd"><strong><span class="ic" data-icon="pill"></span>Medication Administration</strong><span class="pill">ER#3 · ER#5 · ER#6 · ER#7</span></div>
+                    <div class="card-bd">
+                      <div class="sticky-alert"><span class="tag bad"><span class="ic" data-icon="alert"></span>Drug allergy: Penicillin — always visible and cannot be collapsed</span><div class="note">If patient_allergies has no drug category, this area renders green: “No known drug allergies”.</div></div>
+                      <div class="row" style="margin-bottom:12px">
+                        <button class="med-action" onclick="showSubTab('md','md-meds',document.querySelector('[data-sub=md-meds]'));toast('Opened active medication list for this patient')"><span class="ic" data-icon="pill"></span>Direct Medication List</button>
+                        <button class="btn sm" onclick="showSubTab('md','md-prescribe',document.querySelector('[data-sub=md-prescribe]'))"><span class="ic" data-icon="edit"></span>Doctor Prescribe Shortcut</button>
+                      </div>
+                      <table class="tbl"><thead><tr><th>Dose Time</th><th>Drug</th><th>Frequency</th><th>Last-dose check</th><th>Status</th><th>Action</th></tr></thead><tbody>
+                        <tr><td>08:00</td><td>Aspirin 100 mg PO</td><td>OD</td><td>Not required</td><td><span class="tag warn">Pending</span></td><td><button class="btn sm" onclick="showMedConfirm('Aspirin 100 mg')">Mark Given</button></td></tr>
+                        <tr><td>09:00</td><td>Vitamin D 50,000 IU PO</td><td>Weekly</td><td><span class="dose-pop" title="Drug: Vitamin D 50,000 IU | Last administered: 6 May 2026 09:10 | Administered by: RN Sarah | Status: given">Hover / click last dose</span></td><td><span class="tag warn">Check before serving</span></td><td><button class="btn sm" onclick="showMedConfirm('Vitamin D 50,000 IU')">Mark Given</button></td></tr>
+                        <tr><td>12:00</td><td>Metformin 500 mg PO</td><td>BD</td><td>Today 08:03</td><td><span class="tag good">Scheduled</span></td><td><button class="btn sm" onclick="showMedConfirm('Metformin 500 mg')">Mark Given</button></td></tr>
+                      </tbody></table>
+                      <div id="medConfirmBox" class="confirm-card" style="display:none">
+                        <div class="row" style="justify-content:space-between"><b>Pre-serve confirmation</b><span class="tag bad"><span class="ic" data-icon="alert"></span>Re-check Penicillin allergy</span></div>
+                        <div class="note" id="medConfirmText">Selected medication will appear here.</div>
+                        <button class="btn primary sm" style="margin-top:10px" onclick="submit('profile','Medication marked as given after allergy confirmation');document.getElementById('medConfirmBox').style.display='none'">Confirm Given</button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div id="md-allergy" class="sub-pane" data-group="md">
+
+                <div id="md-meds" class="sub-pane" data-group="md">
                   <div class="card col-12">
-                    <div class="card-hd"><strong><span class="ic" data-icon="alert"></span>Allergy Registry</strong><span class="pill">Highlighted across timeline</span></div>
+                    <div class="card-hd"><strong><span class="ic" data-icon="folder"></span>Active Medication List</strong><span class="pill">Direct patient context</span></div>
                     <div class="card-bd">
-                      <div class="row"><span class="tag bad"><span class="ic" data-icon="alert"></span>Penicillin</span><span class="tag warn"><span class="ic" data-icon="alert"></span>Shellfish</span></div>
-                      <div class="cols" style="margin-top:12px"><div><label>Add Allergy</label><input class="input" placeholder="Drug or food"></div><div><label>Severity</label><select class="select"><option>Mild</option><option>Moderate</option><option>Severe / anaphylaxis</option></select></div></div>
-                      <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Allergy added')"><span class="ic" data-icon="plus"></span>Add Allergy</button>
-                    </div>
-                  </div>
-                </div>
-                <div id="md-schedule" class="sub-pane" data-group="md">
-                  <div class="card col-12">
-                    <div class="card-hd"><strong><span class="ic" data-icon="calendar"></span>Medication Schedule</strong><span class="pill">Calendar view</span></div>
-                    <div class="card-bd">
-                      <table class="tbl"><thead><tr><th>Time</th><th>Drug</th><th>Dose</th><th>Status</th></tr></thead><tbody>
-                        <tr><td>08:00</td><td>Aspirin</td><td>100 mg PO</td><td><span class="tag good">Administered</span></td></tr>
-                        <tr><td>12:00</td><td>Metformin</td><td>500 mg PO</td><td><span class="tag warn">Pending</span></td></tr>
-                        <tr><td>20:00</td><td>Omeprazole</td><td>20 mg PO</td><td><span class="tag info">Scheduled</span></td></tr>
+                      <div class="sticky-alert"><span class="tag bad"><span class="ic" data-icon="alert"></span>Drug allergy: Penicillin</span></div>
+                      <table class="tbl"><thead><tr><th></th><th>Drug</th><th>Dose</th><th>Route</th><th>Frequency</th><th>Last Administered</th><th>Prescribed By</th><th>Notes</th></tr></thead><tbody>
+                        <tr><td><button class="btn sm" title="Open serving page" onclick="showSubTab('md','md-serving',document.querySelector('[data-sub=md-serving]'))"><span class="ic" data-icon="pill"></span></button></td><td>Aspirin</td><td>100 mg</td><td>PO</td><td>OD</td><td>Today 08:00</td><td>Dr Lim</td><td>Routine</td></tr>
+                        <tr><td><button class="btn sm" title="Open serving page" onclick="showSubTab('md','md-serving',document.querySelector('[data-sub=md-serving]'))"><span class="ic" data-icon="pill"></span></button></td><td>Vitamin D</td><td>50,000 IU</td><td>PO</td><td>Weekly</td><td><span class="dose-pop" title="Last administered 6 May 2026 09:10 by RN Sarah, status: given">6 May 09:10</span></td><td>Dr Lim</td><td>Non-daily medication</td></tr>
                       </tbody></table>
                     </div>
                   </div>
                 </div>
-                <div id="md-fast" class="sub-pane" data-group="md">
+
+                <div id="md-prescribe" class="sub-pane" data-group="md">
                   <div class="card col-12">
-                    <div class="card-hd"><strong><span class="ic" data-icon="ban"></span>Withholding (Fasting)</strong><span class="pill">Visible to doctor + nurse</span></div>
+                    <div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Prescribe / Order Medication</strong><span class="pill">Doctor shortcut reduces patient mismatch</span></div>
                     <div class="card-bd">
-                      <div class="cols3"><div><label>Type</label><select class="select"><option>None</option><option>Fasting for procedure</option><option>Medication withholding</option></select></div><div><label>Start</label><input class="input" type="datetime-local"></div><div><label>End</label><input class="input" type="datetime-local"></div></div>
-                      <div style="margin-top:10px"><label>Reason / Notes</label><textarea placeholder="Procedure pre-op, drug interaction..."></textarea></div>
-                      <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Withholding order saved')"><span class="ic" data-icon="check"></span>Save Withholding Order</button>
+                      <div class="id-header"><div><span>Selected Patient</span><b>Mr Tan Wei Ming</b></div><div><span>IC No.</span><b>S1234567A</b></div><div><span>Location</span><b>Ward 1 · Cubicle 2 · Bed 14</b></div><div><button class="med-action" onclick="showSubTab('md','md-meds',document.querySelector('[data-sub=md-meds]'))"><span class="ic" data-icon="pill"></span>Medication List</button></div></div>
+                      <div class="cols4"><div><label>Drug</label><input class="input" placeholder="e.g. Metformin"></div><div><label>Dose / Strength</label><input class="input" placeholder="500 mg"></div><div><label>Route</label><select class="select"><option>PO</option><option>IV</option><option>IM</option><option>SC</option><option>Topical</option></select></div><div><label>Frequency</label><select class="select"><option>OD</option><option>BD</option><option>EOD</option><option>Weekly</option><option>Monthly</option><option>Q72H / hourly_N where N≥72</option></select></div></div>
+                      <label style="margin-top:10px">Instructions / Indication</label><textarea placeholder="Clinical indication, duration, hold parameters, special instructions..."></textarea>
+                      <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Medication order saved for selected patient')"><span class="ic" data-icon="check"></span>Save Medication Order</button>
                     </div>
                   </div>
+                </div>
+
+                <div id="md-allergy" class="sub-pane" data-group="md">
+                  <div class="card col-12">
+                    <div class="card-hd"><strong><span class="ic" data-icon="alert"></span>Allergy Registry</strong><span class="pill">Medication admin banner source</span></div>
+                    <div class="card-bd">
+                      <div class="row"><span class="tag bad"><span class="ic" data-icon="alert"></span>Drug: Penicillin</span><span class="tag warn"><span class="ic" data-icon="alert"></span>Food: Shellfish</span><span class="tag good">No known drug allergies state supported</span></div>
+                      <div class="cols" style="margin-top:12px"><div><label>Add Allergy</label><input class="input" placeholder="Drug or food"></div><div><label>Severity</label><select class="select"><option>Mild</option><option>Moderate</option><option>Severe / anaphylaxis</option></select></div></div>
+                      <label style="margin-top:10px">Reaction / Notes</label><textarea placeholder="Rash, anaphylaxis, intolerance, unknown reaction..."></textarea>
+                      <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Allergy added and med-admin banner updated')"><span class="ic" data-icon="plus"></span>Add Allergy</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="md-schedule" class="sub-pane" data-group="md">
+                  <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="calendar"></span>Medication Schedule</strong><span class="pill">Calendar / dose tile view</span></div><div class="card-bd">
+                    <table class="tbl"><thead><tr><th>Time</th><th>Drug</th><th>Dose</th><th>Frequency</th><th>Status</th></tr></thead><tbody><tr><td>08:00</td><td>Aspirin</td><td>100 mg PO</td><td>OD</td><td><span class="tag good">Administered</span></td></tr><tr><td>09:00</td><td>Vitamin D</td><td>50,000 IU PO</td><td>Weekly</td><td><span class="tag warn">Last-dose check required</span></td></tr><tr><td>12:00</td><td>Metformin</td><td>500 mg PO</td><td>BD</td><td><span class="tag warn">Pending</span></td></tr></tbody></table>
+                  </div></div>
+                </div>
+
+                <div id="md-fast" class="sub-pane" data-group="md">
+                  <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="ban"></span>Medication Withholding / Fasting</strong></div><div class="card-bd"><div class="cols"><div><label>Medication</label><select class="select"><option>Metformin</option><option>Aspirin</option><option>Vitamin D</option></select></div><div><label>Reason</label><select class="select"><option>Fasting</option><option>Procedure</option><option>Refused</option><option>Clinical review</option></select></div></div><label style="margin-top:10px">Notes</label><textarea placeholder="Reason and follow-up"></textarea><button class="btn primary" style="margin-top:12px" onclick="submit('profile','Withholding status recorded')"><span class="ic" data-icon="check"></span>Record Withholding</button></div></div>
                 </div>
               </div>
 
@@ -691,9 +850,9 @@
                   <div class="card-hd"><strong><span class="ic" data-icon="folder"></span>Attachments &amp; Documents</strong><span class="pill">All uploads</span></div>
                   <div class="card-bd">
                     <table class="tbl"><thead><tr><th>File</th><th>Type</th><th>Uploaded</th><th>By</th><th>Action</th></tr></thead><tbody>
-                      <tr><td>referral_letter.pdf</td><td>Referral</td><td>26 Apr</td><td>Ops</td><td><button class="btn sm"><span class="ic" data-icon="download"></span>Download</button></td></tr>
-                      <tr><td>consent_form.pdf</td><td>Consent</td><td>26 Apr</td><td>RN Sarah</td><td><button class="btn sm"><span class="ic" data-icon="download"></span>Download</button></td></tr>
-                      <tr><td>wound_30apr.jpg</td><td>Wound photo</td><td>30 Apr</td><td>RN Sarah</td><td><button class="btn sm"><span class="ic" data-icon="download"></span>Download</button></td></tr>
+                      <tr><td>referral_letter.pdf</td><td>Referral</td><td>26 Apr</td><td>Ops</td><td><button class="btn sm" onclick="fakeExport('Document preview')"><span class="ic" data-icon="download"></span>Download</button></td></tr>
+                      <tr><td>consent_form.pdf</td><td>Consent</td><td>26 Apr</td><td>RN Sarah</td><td><button class="btn sm" onclick="fakeExport('Document preview')"><span class="ic" data-icon="download"></span>Download</button></td></tr>
+                      <tr><td>wound_30apr.jpg</td><td>Wound photo</td><td>30 Apr</td><td>RN Sarah</td><td><button class="btn sm" onclick="fakeExport('Document preview')"><span class="ic" data-icon="download"></span>Download</button></td></tr>
                     </tbody></table>
                     <div class="divider"></div>
                     <label>Upload new document</label><input class="input" type="file" multiple>
@@ -846,131 +1005,45 @@
 
     <!-- FACILITY (sub-tabs) -->
     <div id="view-facility" class="view">
-      <div class="topbar">
-        <div class="topbar-left"><h2>Facility</h2><div class="sub">Staff Roster · Bed / Ward Management</div></div>
-        <div class="topbar-right"><button class="btn sm primary" onclick="submit('facility','Facility record saved')"><span class="ic" data-icon="check"></span>Save</button></div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h2>Facility</h2><div class="sub">Staff Roster · Block → Ward → Cubicle → Bed Management</div></div><div class="topbar-right"><button class="btn sm primary" onclick="submit('facility','Facility record saved')"><span class="ic" data-icon="check"></span>Save</button></div></div>
       <div class="content-area">
-        <div class="row" style="margin-bottom:14px">
-          <button class="tab-btn active" data-sub="fc-roster" onclick="showSubTab('fc','fc-roster',this)"><span class="ic" data-icon="users"></span>Staff Roster</button>
-          <button class="tab-btn" data-sub="fc-beds" onclick="showSubTab('fc','fc-beds',this)"><span class="ic" data-icon="bed"></span>Bed / Ward Management</button>
-        </div>
-
-        <div id="fc-roster" class="sub-pane active" data-group="fc">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="users"></span>Staff Roster</strong><span class="pill">Drives meals + leave</span></div>
-            <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Staff</th><th>Role</th><th>Shift</th><th>Leave</th><th>Action</th></tr></thead><tbody>
-                <tr><td>Sarah Lim</td><td>Nurse</td><td>Morning</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
-                <tr><td>Daniel Ong</td><td>Facility</td><td>Afternoon</td><td>AL tomorrow</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
-                <tr><td>Dr Lim</td><td>Doctor</td><td>On call</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
-              </tbody></table>
-            </div>
-          </div>
-        </div>
-
+        <div class="row" style="margin-bottom:14px"><button class="tab-btn active" data-sub="fc-roster" onclick="showSubTab('fc','fc-roster',this)"><span class="ic" data-icon="users"></span>Staff Roster</button><button class="tab-btn" data-sub="fc-beds" onclick="showSubTab('fc','fc-beds',this)"><span class="ic" data-icon="bed"></span>Bed / Ward Management</button></div>
+        <div id="fc-roster" class="sub-pane active" data-group="fc"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="users"></span>Staff Roster</strong><span class="pill">Drives meals + leave</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>Staff</th><th>Role</th><th>Shift</th><th>Leave</th><th>Action</th></tr></thead><tbody><tr><td>Sarah Lim</td><td>Nurse</td><td>Morning</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr><tr><td>Daniel Ong</td><td>Facility</td><td>Afternoon</td><td>AL tomorrow</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr><tr><td>Dr Lim</td><td>Doctor</td><td>On call</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr></tbody></table></div></div></div>
         <div id="fc-beds" class="sub-pane" data-group="fc">
           <div class="grid">
-            <div class="card col-7">
-              <div class="card-hd"><strong><span class="ic" data-icon="bed"></span>Bed / Ward Status</strong></div>
-              <div class="card-bd">
-                <div class="cols3">
-                  <div class="hint"><b><span class="ic" data-icon="bed"></span>Ward 1</b><br>18 / 20 occupied</div>
-                  <div class="hint"><b><span class="ic" data-icon="bed"></span>Ward 2</b><br>14 / 20 occupied</div>
-                  <div class="hint"><b><span class="ic" data-icon="bed"></span>Ward 3</b><br>20 / 20 occupied</div>
-                </div>
-              </div>
-            </div>
-            <div class="card col-5">
-              <div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Assign / Move Bed</strong></div>
-              <div class="card-bd">
-                <div class="cols"><div><label>Patient</label><select class="select"><option>Mr Tan</option><option>Mdm Lim</option></select></div><div><label>Target bed</label><input class="input" placeholder="W2 · B14"></div></div>
-                <button class="btn primary" style="margin-top:10px" onclick="submit('facility','Bed assignment updated')"><span class="ic" data-icon="check"></span>Apply</button>
-              </div>
-            </div>
+            <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="bed"></span>Bed / Ward Status</strong><span class="pill">ECcare ER#8 · beds.cubicle_code</span></div><div class="card-bd">
+              <div class="row" style="margin-bottom:12px"><span class="tag info">Default sort: Ward → Cubicle → Bed</span><span class="tag good">Filter chips for ward rounds</span><span class="tag purple">eVendor Excel grouped by cubicle</span></div>
+              <div class="row" style="margin-bottom:12px"><button class="tab-btn active">All Wards</button><button class="tab-btn">Ward 1</button><button class="tab-btn">Ward 1 · Cubicle 1</button><button class="tab-btn">Ward 1 · Cubicle 2</button><button class="tab-btn">Ward 2</button></div>
+              <table class="tbl"><thead><tr><th>Block</th><th>Ward</th><th>Cubicle</th><th>Bed</th><th>Bed Type</th><th>Status</th><th>Patient</th></tr></thead><tbody>
+                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 1</td><td>Ordinary</td><td><span class="tag good">Available</span></td><td>—</td></tr>
+                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 2</td><td>Air-Mattress</td><td><span class="tag warn">Reserved</span></td><td>Mdm Lim</td></tr>
+                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 2</td><td>Bed 14</td><td>Ordinary</td><td><span class="tag bad">Occupied</span></td><td>Mr Tan</td></tr>
+                <tr><td>Block C</td><td>Ward 3</td><td>Cubicle 1</td><td>Bed 7</td><td>Isolation</td><td><span class="tag bad">Occupied</span></td><td>Mr Ravi</td></tr>
+                <tr><td>Block B</td><td>Ward 2</td><td>—</td><td>Bed 3</td><td>Ordinary</td><td><span class="tag">Out-of-service</span></td><td>—</td></tr>
+              </tbody></table>
+            </div></div>
+            <div class="card col-5"><div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Assign / Move Bed</strong></div><div class="card-bd"><div class="cols"><div><label>Patient</label><select class="select"><option>Mr Tan</option><option>Mdm Lim</option></select></div><div><label>Bed Type</label><select class="select"><option>Ordinary</option><option>Air-Mattress</option><option>Isolation</option><option>Other</option></select></div></div><div class="cols3" style="margin-top:10px"><div><label>Ward</label><select class="select"><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div><div><label>Cubicle</label><input class="input" placeholder="Cubicle 1"></div><div><label>Bed</label><input class="input" placeholder="Bed 14"></div></div><button class="btn primary" style="margin-top:10px" onclick="submit('facility','Bed assignment updated')"><span class="ic" data-icon="check"></span>Apply</button></div></div>
+            <div class="card col-7"><div class="card-hd"><strong><span class="ic" data-icon="download"></span>eVendor Ward Sheet Export</strong></div><div class="card-bd"><div class="hint"><b>WARD-N sheet packing layout</b><br>Rows are grouped by cubicle with a sub-header row inside each ward sheet so vendor packing follows ward-round physical layout.</div><button class="btn sm" style="margin-top:12px" onclick="fakeExport('eVendor Excel grouped by cubicle')"><span class="ic" data-icon="download"></span>Export eVendor Excel</button></div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- FINANCE (sub-tabs) -->
+    <!-- FINANCE<!-- FINANCE (sub-tabs) -->
     <div id="view-finance" class="view">
-      <div class="topbar">
-        <div class="topbar-left"><h2>Finance</h2><div class="sub">Ward Bills · Claims · Charges Configuration · AIC Reimbursement</div></div>
-        <div class="topbar-right">
-          <button class="btn sm" onclick="qfill('finance')"><span class="ic" data-icon="zap"></span>Quick fill</button>
-          <button class="btn sm primary" onclick="submit('finance','Finance record saved')"><span class="ic" data-icon="check"></span>Save Draft</button>
-        </div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h2>Finance</h2><div class="sub">Ward Bills · Tax Invoice · Interim Invoice · Monthly Payment Reporting</div></div><div class="topbar-right"><button class="btn sm" onclick="qfill('finance')"><span class="ic" data-icon="zap"></span>Quick fill</button><button class="btn sm primary" onclick="submit('finance','Finance record saved')"><span class="ic" data-icon="check"></span>Save Draft</button></div></div>
       <div class="content-area">
-        <div class="row" style="margin-bottom:14px">
-          <button class="tab-btn active" data-sub="fn-bills" onclick="showSubTab('fn','fn-bills',this)"><span class="ic" data-icon="finance"></span>Ward Bills</button>
-          <button class="tab-btn" data-sub="fn-claims" onclick="showSubTab('fn','fn-claims',this)"><span class="ic" data-icon="shield"></span>Claims</button>
-          <button class="tab-btn" data-sub="fn-charges" onclick="showSubTab('fn','fn-charges',this)"><span class="ic" data-icon="settings"></span>Charges Configuration</button>
-          <button class="tab-btn" data-sub="fn-aic" onclick="showSubTab('fn','fn-aic',this)"><span class="ic" data-icon="bank"></span>AIC Reimbursement</button>
-        </div>
-
-        <div id="fn-bills" class="sub-pane active" data-group="fn">
-          <div class="grid">
-            <div class="card col-8">
-              <div class="card-hd"><strong><span class="ic" data-icon="finance"></span>Discharge → Billing</strong><span class="pill">Draft bill flow</span></div>
-              <div class="card-bd">
-                <div class="cols"><div><label>Bill Reference</label><input class="input" id="fin_ref" placeholder="WB-2026-0001"></div><div><label>Patient</label><select class="select"><option>Mr Ravi Kumar</option><option>Mdm Lim Siew Eng</option></select></div></div>
-                <div class="cols" style="margin-top:10px"><div><label>HRN Number</label><input class="input" id="fin_hrn" placeholder="HRN123456"></div><div><label>Payment Source</label><select class="select"><option>AIC</option><option>Medisave</option><option>MediShield</option><option>Patient (cash)</option></select></div></div>
-                <div style="margin-top:10px"><label>Notes</label><textarea placeholder="Cross-match Ops daily report vs Finance pivot..."></textarea></div>
-              </div>
-            </div>
-            <div class="card col-4">
-              <div class="card-hd"><strong><span class="ic" data-icon="search"></span>Search &amp; Pivot</strong></div>
-              <div class="card-bd">
-                <label>Bill reference search</label><input class="input" placeholder="WB-2026-0001">
-                <div class="hint" style="margin-top:10px"><b><span class="ic" data-icon="reports"></span>Pivot</b><br>Discharged patients per day</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="fn-claims" class="sub-pane" data-group="fn">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="shield"></span>Claims</strong><span class="pill">AIC · Medisave · MediShield</span></div>
-            <div class="card-bd">
-              <div class="cols"><div><label>Medisave split</label><input class="input" placeholder="Auto-calculated"></div><div><label>MediShield split</label><input class="input" placeholder="Auto-calculated"></div></div>
-              <table class="tbl" style="margin-top:12px"><thead><tr><th>HRN</th><th>Source</th><th>Amount</th><th>Status</th></tr></thead><tbody>
-                <tr><td>HRN123456</td><td>AIC</td><td>$1,200.00</td><td><span class="tag info">Submitted</span></td></tr>
-                <tr><td>HRN654321</td><td>Medisave</td><td>$420.00</td><td><span class="tag good">Approved</span></td></tr>
-              </tbody></table>
-            </div>
-          </div>
-        </div>
-
-        <div id="fn-charges" class="sub-pane" data-group="fn">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="settings"></span>Charges Configuration</strong><span class="pill">Preset · no manual entry</span></div>
-            <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Item</th><th>Rule</th><th>Amount</th><th>Status</th></tr></thead><tbody>
-                <tr><td>Ward daily charge</td><td>Auto, by ward type</td><td>$120 / day</td><td><span class="tag good">Configured</span></td></tr>
-                <tr><td>Therapy session</td><td>Auto, per session</td><td>$80</td><td><span class="tag good">Configured</span></td></tr>
-                <tr><td>Procedure surcharge</td><td>Itemised</td><td>variable</td><td><span class="tag warn">Review</span></td></tr>
-              </tbody></table>
-            </div>
-          </div>
-        </div>
-
-        <div id="fn-aic" class="sub-pane" data-group="fn">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="bank"></span>AIC Reimbursement</strong><span class="pill">Ops + Finance</span></div>
-            <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Patient</th><th>Period</th><th>Amount claimed</th><th>Status</th></tr></thead><tbody>
-                <tr><td>Mr Ravi Kumar</td><td>Apr 2026</td><td>$1,200.00</td><td><span class="tag info">In review</span></td></tr>
-                <tr><td>Mdm Lim Siew Eng</td><td>Apr 2026</td><td>$840.00</td><td><span class="tag good">Reimbursed</span></td></tr>
-              </tbody></table>
-            </div>
-          </div>
-        </div>
+        <div class="row" style="margin-bottom:14px"><button class="tab-btn active" data-sub="fn-bills" onclick="showSubTab('fn','fn-bills',this)"><span class="ic" data-icon="finance"></span>Ward Bills</button><button class="tab-btn" data-sub="fn-tax" onclick="showSubTab('fn','fn-tax',this)"><span class="ic" data-icon="finance"></span>Tax Invoice</button><button class="tab-btn" data-sub="fn-interim" onclick="showSubTab('fn','fn-interim',this)"><span class="ic" data-icon="clipboard"></span>Interim Invoice</button><button class="tab-btn" data-sub="fn-monthly" onclick="showSubTab('fn','fn-monthly',this)"><span class="ic" data-icon="reports"></span>Monthly Payment Report</button><button class="tab-btn" data-sub="fn-claims" onclick="showSubTab('fn','fn-claims',this)"><span class="ic" data-icon="shield"></span>Claims</button><button class="tab-btn" data-sub="fn-charges" onclick="showSubTab('fn','fn-charges',this)"><span class="ic" data-icon="settings"></span>Charges</button></div>
+        <div id="fn-bills" class="sub-pane active" data-group="fn"><div class="grid"><div class="card col-8"><div class="card-hd"><strong><span class="ic" data-icon="finance"></span>Discharge → Billing</strong><span class="pill">Auto invoice when status = ISSUED</span></div><div class="card-bd"><div class="cols"><div><label>Bill Reference</label><input class="input" id="fin_ref" placeholder="WB-2026-0001"></div><div><label>Patient</label><select class="select"><option>Mr Ravi Kumar</option><option>Mdm Lim Siew Eng</option></select></div></div><div class="cols" style="margin-top:10px"><div><label>HRN Number</label><input class="input" id="fin_hrn" placeholder="HRN123456"></div><div><label>Bill Status</label><select class="select"><option>Draft</option><option>Reviewed</option><option>ISSUED</option></select></div></div><div style="margin-top:10px"><label>Notes</label><textarea placeholder="Ward bill uses bill_line_items. No manual line entry at invoice-render time."></textarea></div></div></div><div class="card col-4"><div class="card-hd"><strong><span class="ic" data-icon="search"></span>Search & Pivot</strong></div><div class="card-bd"><label>Bill reference search</label><input class="input" placeholder="WB-2026-0001"><div class="hint" style="margin-top:10px"><b><span class="ic" data-icon="reports"></span>Pivot</b><br>Discharged patients per day</div></div></div></div></div>
+        <div id="fn-tax" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="finance"></span>System-Generated Tax Invoice</strong><span class="pill">PDF · emailed to NOK · stored in Attachments → Finance</span></div><div class="card-bd"><div class="cols3"><div><label>Invoice No.</label><input class="input" value="2026INVTCFE00123"></div><div><label>Facility Code</label><select class="select"><option>TCFE</option><option>TCFW</option></select></div><div><label>Issued Date</label><input class="input" type="date"></div></div><table class="tbl" style="margin-top:12px"><thead><tr><th>Description</th><th>Unit Price</th><th>QTY</th><th>Fee</th></tr></thead><tbody><tr><td>TCF Ward Stay</td><td>S$225.00</td><td>10</td><td>S$2,250.00</td></tr><tr><td>Therapy Session</td><td>S$80.00</td><td>4</td><td>S$320.00</td></tr></tbody></table><div class="divider"></div><table class="tbl"><tbody><tr><td>Sub-Total</td><td>S$2,570.00</td></tr><tr><td>Add GST 9%</td><td>S$231.30</td></tr><tr><td>Total Amount Payable</td><td>S$2,801.30</td></tr><tr><td>MSAVE Payment Received</td><td>S$500.00</td></tr><tr><td>Medishield Payment Received</td><td>S$800.00</td></tr><tr><td>Private Insurance Payment Received</td><td>S$0.00</td></tr><tr><td>Cash Payment Received</td><td>S$300.00</td></tr><tr><td>GST Absorbed by GOVT</td><td>S$0.00</td></tr><tr><td><b>Outstanding Balance</b></td><td><b>S$1,201.30</b></td></tr></tbody></table><div class="hint" style="margin-top:12px"><b>Mandatory issuer line</b><br>This tax invoice is issued on behalf of HHOM Pte Ltd, GST registration no: 201810452N, 1 North Buona Vista Link, #09-01, Singapore 139691.</div><div class="row" style="margin-top:12px"><button class="btn primary" onclick="submit('finance','Tax invoice rendered, emailed to NOK and stored under Finance attachments')"><span class="ic" data-icon="check"></span>Issue Tax Invoice</button><button class="btn" onclick="submit('finance','Tax invoice reprinted and audit_log row written')"><span class="ic" data-icon="refresh"></span>Reprint</button></div></div></div></div>
+        <div id="fn-interim" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="clipboard"></span>Interim Invoice / Pre-Discharge Letter</strong><span class="pill">interim = true · not posted to GL</span></div><div class="card-bd"><div class="cols4"><div><label>Date</label><input class="input" type="date"></div><div><label>Patient_Name</label><input class="input" value="Mr Tan Wei Ming"></div><div><label>Admission_Date</label><input class="input" type="date"></div><div><label>Tentative_Discharge</label><input class="input" type="date"></div></div><div style="margin-top:10px"><label>Standard Body</label><textarea>As of «Tentative_Discharge», your current charge is «Total_Payable». Your final bill will include any financial assistance and adjustments. Approved Medisave and Medishield Life claims will be processed by CPF Board after your discharge.</textarea></div><table class="tbl" style="margin-top:12px"><thead><tr><th>Admission date</th><th>Discharge date</th><th>Estimated bill as of tentative discharge</th></tr></thead><tbody><tr><td>1 May 2026</td><td>To be determined</td><td>S$1,680.00</td></tr></tbody></table><div class="note"><i>As this is an interim invoice, final charges may vary based on actual stay and services rendered.</i></div><button class="btn primary" style="margin-top:12px" onclick="fakeExport('Interim invoice Word/PDF letter')"><span class="ic" data-icon="download"></span>Generate Interim Letter</button></div></div></div>
+        <div id="fn-monthly" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="reports"></span>Monthly Payment Reporting — Nominal Roll</strong><span class="pill">MOH / AIC Excel export</span></div><div class="card-bd"><div class="cols3"><div><label>Sheet Name</label><input class="input" value="Payment Template TCF East May’26"></div><div><label>Reporting Month</label><input class="input" type="month"></div><div><label>Facility</label><select class="select"><option>East</option><option>West</option></select></div></div><table class="tbl" style="margin-top:12px"><thead><tr><th>S/N</th><th>Full Name</th><th>Pass Type</th><th>Bill Ref</th><th>TCF Charge</th><th>GST</th><th>Finalised Amount</th><th>2Ms</th><th>OOP</th><th>Outstanding</th><th>Status</th></tr></thead><tbody><tr><td>1</td><td>Mr Ravi Kumar</td><td>SC</td><td>2026INVTCFE00123</td><td>2,570.00</td><td>231.30</td><td>2,801.30</td><td>1,300.00</td><td>300.00</td><td>1,201.30</td><td>Made Partial Payments</td></tr><tr><td>2</td><td>Mdm Lim</td><td>PR</td><td>2026INVTCFE00124</td><td>1,500.00</td><td>135.00</td><td>1,635.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>On Waiver</td></tr></tbody></table><div class="hint" style="margin-top:12px"><b>Pre-export validation</b><br>GST tie-out, GST absorption tie-out, OOP non-negative, Outstanding = Finalised − 2Ms − OOP − Waived − Subsequent Collections, and Reminder Regime required for Pending Full Payments.</div><button class="btn primary" style="margin-top:12px" onclick="fakeExport('Monthly Payment Template TCF Excel')"><span class="ic" data-icon="download"></span>Generate Monthly Excel</button></div></div></div>
+        <div id="fn-claims" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="shield"></span>Claims</strong><span class="pill">AIC · Medisave · MediShield</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>HRN</th><th>Source</th><th>Amount</th><th>Status</th></tr></thead><tbody><tr><td>HRN123456</td><td>AIC</td><td>$1,200.00</td><td><span class="tag info">Submitted</span></td></tr><tr><td>HRN654321</td><td>Medisave</td><td>$420.00</td><td><span class="tag good">Approved</span></td></tr></tbody></table></div></div></div>
+        <div id="fn-charges" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="settings"></span>Charges Configuration</strong><span class="pill">Pass-type default day rate</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>Pass Type</th><th>Default Day Rate</th><th>Configurable</th></tr></thead><tbody><tr><td>SC</td><td>S$225</td><td><span class="tag good">Admin → Charges</span></td></tr><tr><td>PR</td><td>S$150</td><td><span class="tag good">Admin → Charges</span></td></tr><tr><td>CG</td><td>S$116</td><td><span class="tag good">Admin → Charges</span></td></tr></tbody></table></div></div></div>
       </div>
     </div>
 
-    <!-- REPORTS (sub-tabs) -->
+    <!-- REPORTS<!-- REPORTS (sub-tabs) -->
     <div id="view-reports" class="view">
       <div class="topbar">
         <div class="topbar-left"><h2>Reports</h2><div class="sub">Cross-module · role-scoped</div></div>
@@ -1025,12 +1098,12 @@
             <div class="card-bd">
               <table class="tbl"><thead><tr><th>Role</th><th>Can create</th><th>Restriction</th></tr></thead><tbody>
                 <tr><td>Super Admin</td><td>All users including Admin</td><td>Full CRUD</td></tr>
-                <tr><td>Administrator</td><td>Doctor / Nurse / Ops / Facility / Finance / Therapist</td><td>Cannot create Admin or Super Admin</td></tr>
+                <tr><td>Administrator</td><td>Doctor / Nurse / Ops / Facility / Finance / Therapist / Therapy Assistant</td><td>Cannot create Admin or Super Admin</td></tr>
                 <tr><td>Operations</td><td>—</td><td>View &amp; operational only</td></tr>
-                <tr><td>Doctor / Nurse / Therapist</td><td>—</td><td>Clinical role only</td></tr>
+                <tr><td>Doctor / Nurse / Therapist / Therapy Assistant</td><td>—</td><td>Clinical role only</td></tr>
               </tbody></table>
               <div class="divider"></div>
-              <div class="cols3"><div><label>New user — Name</label><input class="input" placeholder="Dr Lim Wei"></div><div><label>Role</label><select class="select"><option>Doctor</option><option>Nurse</option><option>Therapist</option><option>Operations</option><option>Facility</option><option>Finance</option><option>Administrator</option></select></div><div><label>Email</label><input class="input" placeholder="user@oursmartfuture.com"></div></div>
+              <div class="cols3"><div><label>New user — Name</label><input class="input" placeholder="Dr Lim Wei"></div><div><label>Role</label><select class="select"><option>Doctor</option><option>Nurse</option><option>Therapist</option><option>Therapy Assistant</option><option>Visiting Specialist</option><option>Dietician</option><option>Psychologist</option><option>Operations</option><option>Facility</option><option>Finance</option><option>Administrator</option></select></div><div><label>Email</label><input class="input" placeholder="user@oursmartfuture.com"></div></div>
               <button class="btn primary" style="margin-top:12px" onclick="submit('admin','User created')"><span class="ic" data-icon="userplus"></span>Create User</button>
             </div>
           </div>
@@ -1049,12 +1122,12 @@
             </div>
             <div class="card-bd" style="overflow-x:auto">
               <table class="tbl perm-tbl" id="permMatrix"><thead><tr>
-                <th>Module</th><th>SA</th><th>Adm</th><th>Ops</th><th>Fac</th><th>Fin</th><th>Doc</th><th>Nur</th><th>Ther</th>
+                <th>Module</th><th>SA</th><th>Adm</th><th>Ops</th><th>Fac</th><th>Fin</th><th>Doc</th><th>Nur</th><th>Ther</th><th>TA</th><th>Visit Spec</th><th>Diet</th><th>Psych</th>
               </tr></thead><tbody></tbody></table>
               <div class="note" style="margin-top:10px">
                 * Doctor and nurse notes lock edit after 72 hours; addendum-only thereafter.<br>
                 ** Each therapist edits within their own discipline (PT edits PT notes, etc.); cross-discipline access is View-only by default.<br>
-                *** Admin can create Doctor / Nurse / Ops / Facility / Finance / Therapist users; cannot create other Admins or Super Admins.
+                *** Admin can create Doctor / Nurse / Ops / Facility / Finance / Therapist / TA / Visiting Specialist / Dietician / Psychologist users; cannot create other Admins or Super Admins.
               </div>
             </div>
           </div>
@@ -1074,32 +1147,35 @@
         </div>
 
         <div id="ad-tmpl" class="sub-pane" data-group="ad">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="clipboard"></span>Templates</strong><span class="pill">Doctor / Nurse / PT / OT / ST / Smart Text</span></div>
-            <div class="card-bd">
-              <div class="cols3">
-                <div class="hint"><b><span class="ic" data-icon="doctor"></span>Doctor</b><br>Chief complaint · history · plan</div>
-                <div class="hint"><b><span class="ic" data-icon="nurse"></span>Nurse</b><br>Notes · plans · vitals · image</div>
-                <div class="hint"><b><span class="ic" data-icon="therapy"></span>PT / OT / ST</b><br>Discipline-specific structured fields</div>
-              </div>
-              <div class="divider"></div>
-              <label>Smart Text snippets</label><textarea placeholder="e.g. {{vitals_snapshot}} → BP/HR/RR/SpO2/Temp"></textarea>
-            </div>
+          <div class="grid">
+            <div class="card col-7"><div class="card-hd"><strong><span class="ic" data-icon="clipboard"></span>Templates</strong><span class="pill">Doctor / Nurse / PT / OT / TA / ST / Visiting Specialist / Dietician / Psychologist / Smart Text</span></div><div class="card-bd"><div class="cols3"><div class="hint"><b><span class="ic" data-icon="doctor"></span>Doctor</b><br>Chief complaint · history · plan</div><div class="hint"><b><span class="ic" data-icon="nurse"></span>Nurse</b><br>Notes · plans · vitals · image</div><div class="hint"><b><span class="ic" data-icon="therapy"></span>PT / OT / TA</b><br>SOAP-style documentation plus communication template, auto-save and copy-forward.</div><div class="hint"><b><span class="ic" data-icon="speech"></span>ST</b><br>Communication · swallowing/dysphagia · IDDSI · voice/articulation · cognitive communication · goals/progress</div><div class="hint"><b><span class="ic" data-icon="bandage"></span>Wound Catalogue</b><br>Dressing products and cleansing solutions for structured wound observations.</div><div class="hint"><b><span class="ic" data-icon="finance"></span>Charges</b><br>Pass-type rates and waiver categories.</div></div><div class="divider"></div><label>Smart Text snippets</label><textarea placeholder="e.g. {{vitals_snapshot}} → BP/HR/RR/SpO2/Temp"></textarea></div></div>
+            <div class="card col-5"><div class="card-hd"><strong><span class="ic" data-icon="bandage"></span>Wound Catalogue</strong><span class="pill">Admin-managed lists</span></div><div class="card-bd"><label>Dressing product categories</label><textarea>Foam
+Hydrofiber
+Hydrocolloid
+Alginate
+Film
+Gauze
+Silver</textarea><label>Cleansing solutions</label><textarea>Normal saline
+Sterile water
+Antiseptic</textarea><button class="btn primary" style="margin-top:12px" onclick="submit('admin','Wound catalogue updated')"><span class="ic" data-icon="check"></span>Save Catalogue</button></div></div>
+            <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="settings"></span>Charges / Waiver Configuration</strong><span class="pill">Monthly reporting drivers</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>Config</th><th>Value</th><th>Used For</th></tr></thead><tbody><tr><td>SC default day rate</td><td>S$225</td><td>TCF Charge</td></tr><tr><td>PR default day rate</td><td>S$150</td><td>TCF Charge</td></tr><tr><td>CG default day rate</td><td>S$116</td><td>TCF Charge</td></tr><tr><td>Waiver categories</td><td>Waiver-Eligible Financial Assistance / Others</td><td>Nominal roll remarks and $0 issued logic</td></tr></tbody></table></div></div>
           </div>
         </div>
 
-        <div id="ad-abbr" class="sub-pane" data-group="ad">
+        <div id="ad-abbr"<div id="ad-abbr" class="sub-pane" data-group="ad">
           <div class="card col-12">
             <div class="card-hd"><strong><span class="ic" data-icon="book"></span>Abbreviation Library</strong></div>
             <div class="card-bd">
               <table class="tbl"><thead><tr><th>Abbr.</th><th>Expansion</th><th>Discipline</th></tr></thead><tbody>
                 <tr><td>SOB</td><td>Shortness of breath</td><td>All</td></tr>
-                <tr><td>ROM</td><td>Range of motion</td><td>PT</td></tr>
+                <tr><td>ROM</td><td>Range of motion</td><td>PT / OT</td></tr>
                 <tr><td>IDDSI</td><td>International Dysphagia Diet Standardisation Initiative</td><td>ST</td></tr>
                 <tr><td>ADL</td><td>Activities of daily living</td><td>OT</td></tr>
+                <tr><td>SOAP</td><td>Subjective, Objective, Assessment, Plan</td><td>PT / OT / TA</td></tr>
+                <tr><td>MMT</td><td>Manual muscle testing</td><td>PT / OT</td></tr>
               </tbody></table>
               <div class="divider"></div>
-              <div class="cols3"><div><label>Abbreviation</label><input class="input" placeholder="MMT"></div><div><label>Expansion</label><input class="input" placeholder="Manual muscle test"></div><div><label>Discipline</label><select class="select"><option>All</option><option>Doctor</option><option>Nurse</option><option>PT</option><option>OT</option><option>ST</option></select></div></div>
+              <div class="cols3"><div><label>Abbreviation</label><input class="input" placeholder="MMT"></div><div><label>Expansion</label><input class="input" placeholder="Manual muscle test"></div><div><label>Discipline</label><select class="select"><option>All</option><option>Doctor</option><option>Nurse</option><option>PT</option><option>OT</option><option>ST</option><option>TA</option></select></div></div>
               <button class="btn primary" style="margin-top:12px" onclick="submit('admin','Abbreviation added')"><span class="ic" data-icon="plus"></span>Add</button>
             </div>
           </div>
@@ -1246,10 +1322,17 @@ function openPatientProfile(title){
 }
 function openOnboarding(){ showView('onboarding'); document.querySelector('.nav-btn[data-view="patients"]')?.classList.add('active'); }
 function showProfileTab(tab,btn){
-  document.querySelectorAll('.profile-tab').forEach(t=>t.style.display='none');
-  const el=$('profile-'+tab); if(el) el.style.display='block';
-  document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.classList.remove('active'));
-  (btn||document.querySelector(`.tab-btn[data-tab="${tab}"]`))?.classList.add('active');
+  // Limit the tab toggle to the main patient profile area so nested tabs do not break other views.
+  document.querySelectorAll('#view-profile > .topbar + .content-area .profile-tab').forEach(t=>{
+    if(t.id && t.id.startsWith('profile-')) t.style.display='none';
+  });
+  const el=$('profile-'+tab);
+  if(el) el.style.display='block';
+  document.querySelectorAll('#view-profile .profile-tabs .tab-btn[data-tab]').forEach(b=>b.classList.remove('active'));
+  (btn||document.querySelector(`#view-profile .tab-btn[data-tab="${tab}"]`))?.classList.add('active');
+  if(tab==='clinical'){ showSubTab('cl','cl-timeline',document.querySelector('#view-profile [data-sub="cl-timeline"]')); }
+  if(tab==='medication'){ showSubTab('md','md-serving',document.querySelector('#view-profile [data-sub="md-serving"]')); }
+  if(tab==='communication'){ showSubTab('cm','cm-family',document.querySelector('#view-profile [data-sub="cm-family"]')); }
 }
 
 /* ---------- GENERIC SUB-TAB ---------- */
@@ -1262,18 +1345,39 @@ function showSubTab(group,id,btn){
 /* ---------- TEMPLATES ---------- */
 function renderTemplate(){
   const v=$('noteType').value;
+  const sub=$('noteSubType')?.value || 'standard';
   document.querySelectorAll('.template-block').forEach(b=>b.classList.remove('active'));
-  $('tmpl-'+v)?.classList.add('active');
+  const subType=$('noteSubType');
+  const isRehab=['pt','ot','ta'].includes(v);
+  if(subType){ subType.disabled=!isRehab; if(!isRehab) subType.value='standard'; }
+  if(isRehab && sub==='communication'){
+    $('tmpl-rehab-communication')?.classList.add('active');
+  }else{
+    $('tmpl-'+v)?.classList.add('active');
+  }
 }
 
 /* ---------- PATIENT FILTER ---------- */
+function applyPatientFilters(){
+  const status=($('pat_status')?.value||'all').toLowerCase();
+  const ward=$('pat_ward')?.value||'All';
+  const cubicle=$('pat_cubicle')?.value||'All';
+  const rn=$('pat_rn')?.value||'All';
+  const q=($('pat_search')?.value||'').trim().toLowerCase();
+  document.querySelectorAll('.patient-table tbody tr').forEach(row=>{
+    const statusOk=status==='all'||row.dataset.status===status;
+    const wardOk=ward==='All'||row.dataset.ward===ward;
+    const cubicleOk=cubicle==='All'||row.dataset.cubicle===cubicle;
+    const rnOk=rn==='All'||row.dataset.rn===rn;
+    const searchOk=!q||row.innerText.toLowerCase().includes(q);
+    row.classList.toggle('is-hidden', !(statusOk && wardOk && cubicleOk && rnOk && searchOk));
+  });
+}
 function filterPatients(status,btn){
   const wanted=(status||'all').toLowerCase();
-  document.querySelectorAll('.patient-table tbody tr').forEach(row=>{
-    row.classList.toggle('is-hidden', wanted!=='all' && row.dataset.status!==wanted);
-  });
-  if(btn){ btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
   const select=$('pat_status'); if(select && [...select.options].some(o=>o.value===wanted)) select.value=wanted;
+  applyPatientFilters();
+  if(btn){ btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
 }
 function filterNotes(type,btn){
   document.querySelectorAll('#timeline .timeline-item').forEach(i=>i.style.display=(type==='all'||i.dataset.note===type)?'block':'none');
@@ -1324,63 +1428,92 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 /* ---------- PERMISSIONS MATRIX ---------- */
 const PERM_ROWS=[
   ['__section','Dashboard & Patient List'],
-  ['Dashboard',                 'F','F','V','V','V','V','V','V'],
-  ['Patient List (Pre-admission)','F','F','F','V','V','V','V','V'],
-  ['Patient List (Admission)',   'F','F','F','V','V','V','V','V'],
-  ['Patient List (Active)',      'F','F','F','V','V','F','F','V'],
-  ['Patient List (Discharged)',  'F','F','F','V','F','V','V','V'],
+  ['Dashboard',                 'F','F','V','V','V','V','V','V','V'],
+  ['Patient List (Pre-admission)','F','F','F','V','V','V','V','V','V'],
+  ['Patient List (Admission)',   'F','F','F','V','V','V','V','V','V'],
+  ['Patient List (Active)',      'F','F','F','V','V','F','F','V','V'],
+  ['Patient List (Discharged)',  'F','F','F','V','F','V','V','V','V'],
   ['__section','Patient Profile — Clinical Notes (rows = note_type create rights)'],
-  ['Doctor note (note_type=doctor)*','F','V','-','-','-','E','V','V'],
-  ['Nurse note (note_type=nurse)*', 'F','V','-','-','-','V','E','V'],
-  ['PT note (note_type=pt)**',      'F','V','-','-','-','V','V','E'],
-  ['OT note (note_type=ot)**',      'F','V','-','-','-','V','V','E'],
-  ['ST note (note_type=st)**',      'F','V','-','-','-','V','V','E'],
-  ['Initial Care Assessment',       'F','V','-','-','-','V','E','V'],
-  ['Wound Chart',                   'F','V','-','-','-','V','E','V'],
-  ['Behavioural Reports',           'F','V','-','-','-','V','E','V'],
-  ['Food Intake (24-hr)',           'F','V','-','V','-','V','F','-'],
+  ['Doctor note (note_type=doctor)*','F','V','-','-','-','E','V','V','V'],
+  ['Nurse note (note_type=nurse)*', 'F','V','-','-','-','V','E','V','V'],
+  ['PT note (note_type=pt)**',      'F','V','-','-','-','V','V','E','V'],
+  ['OT note (note_type=ot)**',      'F','V','-','-','-','V','V','E','V'],
+  ['ST note (note_type=st)**',      'F','V','-','-','-','V','V','E','V'],
+  ['TA note (note_type=ta)**',      'F','V','-','-','-','V','V','V','E'],
+  ['Visiting Specialist note',       'F','V','-','-','-','V','V','V','V'],
+  ['Dietician note',                 'F','V','-','-','-','V','V','V','V'],
+  ['Psychologist note',              'F','V','-','-','-','V','V','V','V'],
+  ['Initial Care Assessment',       'F','V','-','-','-','V','E','V','V'],
+  ['Wound Chart',                   'F','V','-','-','-','V','E','V','V'],
+  ['Behavioural Reports',           'F','V','-','-','-','V','E','V','V'],
+  ['Intake / Output Chart',         'F','V','-','V','-','V','F','-','-'],
+  ['Therapy Session Grid',          'F','V','-','-','-','V','V','E','E'],
   ['__section','Patient Profile — Medication'],
-  ['Prescribe',                     'F','-','-','-','-','F','-','-'],
-  ['Administer / Schedule',         'F','-','-','-','-','V','E','-'],
-  ['Allergy Registry',              'F','V','-','-','-','F','E','V'],
-  ['Withholding (Fasting)',         'F','-','-','V','-','F','E','-'],
+  ['Prescribe',                     'F','-','-','-','-','F','-','-','-'],
+  ['Administer / Schedule',         'F','-','-','-','-','V','E','-','-'],
+  ['Allergy Registry',              'F','V','-','-','-','F','E','V','V'],
+  ['Withholding (Fasting)',         'F','-','-','V','-','F','E','-','-'],
   ['__section','Patient Profile — Communication & Attachments'],
-  ['Family Chat (per patient)',     'F','V','V','-','-','E','E','E'],
-  ['Internal Discussion (per patient)','F','F','E','E','E','E','E','E'],
-  ['Attachments / Documents',       'F','F','F','E','E','E','E','E'],
+  ['Family Chat (per patient)',     'F','V','V','-','-','E','E','E','E'],
+  ['Internal Discussion (per patient)','F','F','E','E','E','E','E','E','E'],
+  ['Attachments / Documents',       'F','F','F','E','E','E','E','E','E'],
   ['__section','Facility & Operations'],
-  ['Visitor Management',            'F','F','F','V','-','-','V','-'],
-  ['Diet Plans (facility-level)',   'F','V','-','F','-','V','V','-'],
-  ['Meal Planning',                 'F','V','-','F','-','-','V','-'],
-  ['Staff Meals',                   'F','V','V','F','V','-','-','-'],
-  ['Staff Roster',                  'F','F','V','F','V','-','V','V'],
-  ['Bed / Ward Management',         'F','F','F','F','V','V','V','-'],
+  ['Visitor Management',            'F','F','F','V','-','-','V','-','-'],
+  ['Diet Plans (facility-level)',   'F','V','-','F','-','V','V','-','-'],
+  ['Meal Planning',                 'F','V','-','F','-','-','V','-','-'],
+  ['Staff Meals',                   'F','V','V','F','V','-','-','-','-'],
+  ['Staff Roster',                  'F','F','V','F','V','-','V','V','V'],
+  ['Bed / Ward Management',         'F','F','F','F','V','V','V','-','-'],
+  ['Wound Catalogue Templates',     'F','F','-','-','-','-','V','V','V'],
   ['__section','Finance'],
-  ['Ward Bills',                    'F','V','V','-','F','-','-','-'],
-  ['Claims (AIC / Medisave / MediShield)','F','V','-','-','F','-','-','-'],
-  ['Charges Configuration',         'F','E','V','-','F','-','-','-'],
-  ['AIC Reimbursement',             'F','V','F','-','F','-','-','-'],
+  ['Ward Bills',                    'F','V','V','-','F','-','-','-','-'],
+  ['Tax Invoice / Reprint Audit',   'F','V','-','-','F','-','-','-','-'],
+  ['Interim Invoice Letter',        'F','V','-','-','F','-','-','-','-'],
+  ['Monthly Payment Report',        'F','V','-','-','F','-','-','-','-'],
+  ['Claims (AIC / Medisave / MediShield)','F','V','-','-','F','-','-','-','-'],
+  ['Charges Configuration',         'F','E','V','-','F','-','-','-','-'],
+  ['AIC Reimbursement',             'F','V','F','-','F','-','-','-','-'],
   ['__section','Reports (cross-cut, role-scoped)'],
-  ['Payment Reports',               'F','F','V','-','F','-','-','-'],
-  ['Meal Reports',                  'F','F','V','F','V','-','V','-'],
-  ['Ward Stay / Discharge / HHOM',  'F','F','F','V','F','V','V','-'],
-  ['Wound Progress Reports',        'F','V','-','-','-','V','F','V'],
-  ['Custom Cross-Module Queries',   'F','F','V','V','V','V','V','V'],
+  ['Payment Reports',               'F','F','V','-','F','-','-','-','-'],
+  ['Meal Reports',                  'F','F','V','F','V','-','V','-','-'],
+  ['Ward Stay / Discharge / HHOM',  'F','F','F','V','F','V','V','-','-'],
+  ['Wound Progress Reports',        'F','V','-','-','-','V','F','V','V'],
+  ['Custom Cross-Module Queries',   'F','F','V','V','V','V','V','V','V'],
   ['__section','Admin'],
-  ['User & Role Management***',     'F','E','-','-','-','-','-','-'],
-  ['Audit Logs',                    'F','V','-','-','-','-','-','-'],
-  ['Templates (Doctor/Nurse/PT/OT/ST/Smart Text)','F','F','E','E','E','E','E','E'],
-  ['Abbreviation Library',          'F','F','V','V','V','E','E','E'],
+  ['User & Role Management***',     'F','E','-','-','-','-','-','-','-'],
+  ['Audit Logs',                    'F','V','-','-','-','-','-','-','-'],
+  ['Templates (Doctor/Nurse/PT/OT/TA/ST/Smart Text)','F','F','E','E','E','E','E','E','E'],
+  ['Abbreviation Library',          'F','F','V','V','V','E','E','E','E'],
   ['System Settings',               'F','V','-','-','-','-','-','-']
 ];
+function specialistPermsForRow(rowName){
+  const name=String(rowName||'');
+  const visit = (/Dashboard|Patient List|Doctor note|Initial Care|Wound Chart|Behavioural|Medication|Allergy|Family Chat|Internal Discussion|Attachments|Reports|Custom/.test(name)) ? 'V' : '-';
+  const diet = (/Dashboard|Patient List|Diet|Food|Meal|Intake|Family Chat|Internal Discussion|Attachments|Reports|Custom/.test(name)) ? 'V' : '-';
+  const psych = (/Dashboard|Patient List|Behavioural|Family Chat|Internal Discussion|Attachments|Reports|Custom/.test(name)) ? 'V' : '-';
+  if(/Visiting Specialist note/.test(name)) return ['E','V','V'];
+  if(/Dietician note/.test(name)) return ['V','E','V'];
+  if(/Psychologist note/.test(name)) return ['V','V','E'];
+  if(/Templates|Abbreviation/.test(name)) return ['E','E','E'];
+  return [visit,diet,psych];
+}
+function showMedConfirm(drug){
+  const box=document.getElementById('medConfirmBox');
+  const txt=document.getElementById('medConfirmText');
+  if(box){ box.style.display='block'; }
+  if(txt){ txt.textContent=`Before confirming ${drug}, nurse must review the persistent allergy banner and verify patient name, IC number, and bed/cubicle/ward.`; }
+  toast('Pre-serve confirmation opened with allergy banner.');
+}
 function renderPermMatrix(){
   const tbody=document.querySelector('#permMatrix tbody'); if(!tbody) return;
   let html='';
+  const totalCols=document.querySelectorAll('#permMatrix thead th').length || 13;
   PERM_ROWS.forEach(r=>{
-    if(r[0]==='__section'){ html+=`<tr class="section-row"><td colspan="9">${esc(r[1])}</td></tr>`; return; }
-    html+='<tr><td>'+esc(r[0])+'</td>';
-    for(let i=1;i<r.length;i++){
-      const c=r[i]; let cls='x', label='—';
+    if(r[0]==='__section'){ html+=`<tr class="section-row"><td colspan="${totalCols}">${esc(r[1])}</td></tr>`; return; }
+    const extended=[...r, ...specialistPermsForRow(r[0])];
+    html+='<tr><td>'+esc(extended[0])+'</td>';
+    for(let i=1;i<totalCols;i++){
+      const c=extended[i] || '-'; let cls='x', label='—';
       if(c==='F'){cls='f';label='F'} else if(c==='E'){cls='e';label='E'} else if(c==='V'){cls='v';label='V'}
       html+=`<td><span class="perm ${cls}">${label}</span></td>`;
     }
