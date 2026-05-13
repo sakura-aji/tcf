@@ -155,9 +155,27 @@
 
   .med-action{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(29,158,92,.22);background:var(--accent-light);color:#0a3520;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer}
   .med-action .ic svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  .med-calendar-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+  .med-calendar{display:grid;grid-template-columns:90px repeat(7,minmax(120px,1fr));border:1px solid var(--line);border-radius:16px;overflow:auto;background:#fff}
+  .med-cal-head,.med-cal-time{background:var(--bg);font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .med-cal-time{min-height:84px;text-transform:none;letter-spacing:0;display:flex;align-items:flex-start}
+  .med-cal-cell{min-height:84px;padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .dose-tile{width:100%;text-align:left;border:1px solid rgba(40,80,55,.12);background:linear-gradient(180deg,#fff,rgba(244,247,245,.7));border-radius:12px;padding:8px 9px;cursor:pointer;font-family:var(--font);transition:.12s ease;box-shadow:0 1px 3px rgba(10,30,18,.04)}
+  .dose-tile:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:rgba(29,158,92,.25)}
+  .dose-tile b{display:block;font-size:12.5px;color:var(--text);line-height:1.2}
+  .dose-tile span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .dose-tile.taken{background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.22)}
+  .dose-tile.pending{background:rgba(217,119,6,.08);border-color:rgba(217,119,6,.22)}
+  .dose-tile.check{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.20)}
+  .dose-tile.withheld{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.22)}
+  .dose-tile.missed{background:rgba(220,38,38,.10);border-color:rgba(220,38,38,.25)}
+  .dose-detail{margin-top:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.92);padding:14px;display:none}
+  .dose-detail.active{display:block}
   .confirm-card{border:1px solid rgba(220,38,38,.2);background:rgba(254,242,242,.7);border-radius:14px;padding:12px;margin-top:12px}
   .dose-pop{display:inline-block;border-bottom:1px dotted var(--muted);cursor:help;color:#0a3520;font-weight:600}
 
+  .btn:disabled{opacity:.42;cursor:not-allowed;pointer-events:none}
   @media(max-width:1000px){
     .col-8,.col-7,.col-6,.col-5,.col-4{grid-column:span 12}
     .kpi{grid-column:span 6}
@@ -256,7 +274,7 @@
                 <tbody>
                   <tr><td>Clinical</td><td>Mr Tan</td><td>W2 · B14</td><td>SLP review requested from nursing note</td><td><span class="tag warn">Action needed</span></td></tr>
                   <tr><td>Finance</td><td>Mdm Lim</td><td>Discharge</td><td>Ward bill saved as draft</td><td><span class="tag info">Draft</span></td></tr>
-                  <tr><td>Food</td><td>Mr Ravi</td><td>Ward 3</td><td>Fasting period overlaps dinner plan</td><td><span class="tag bad">Review</span></td></tr>
+                  <tr><td>Food</td><td>Mr Ravi</td><td>Ward 3</td><td>Withholding period overlaps dinner plan</td><td><span class="tag bad">Review</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -341,7 +359,7 @@
             <div class="card-bd">
               <label>Upload Patient Excel</label>
               <input class="input" id="onboard_excel" type="file" accept=".xls,.xlsx,.csv">
-              <div class="note">Expected columns: full name, NRIC/FIN, DOB, contact number, admission status, referral source, block/ward, room/bed, assigned RN, diet, food restrictions, fasting/withholding, drug allergies, notes.</div>
+              <div class="note">Expected columns: full name, NRIC/FIN, DOB, contact number, admission status, referral source, block/ward, room/bed, assigned RN, diet, food restrictions, withholding/withholding, drug allergies, notes.</div>
               <div class="divider"></div>
               <button class="btn primary" onclick="submit('onboard','Excel patient import staged')"><span class="ic" data-icon="upload"></span>Import Excel</button>
             </div>
@@ -357,7 +375,7 @@
               <div class="cols3"><div><label>Block / Ward</label><select class="select" id="on_ward"><option>Block A / Ward 1</option><option>Block B / Ward 2</option><option>Block C / Ward 3</option><option>Isolation Unit</option></select></div><div><label>Room / Bed</label><input class="input" id="on_bed" placeholder="W2 · B14"></div><div><label>Assigned RN</label><select class="select" id="on_rn"><option>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div></div>
 
               <div class="section-hd"><span class="ic" data-icon="food"></span>Diet &amp; Clinical Flags</div>
-              <div class="cols3"><div><label>Patient Diet</label><select class="select" id="on_diet"><option>Normal diet</option><option>Soft diet</option><option>Pureed diet</option><option>Tube feeding</option><option>Diabetic diet</option><option>Low-salt diet</option><option>IDDSI Level 3</option><option>IDDSI Level 4</option></select></div><div><label>Food Allergies / Restrictions</label><input class="input" id="on_food_allergy" placeholder="Shellfish, halal, vegetarian"></div><div><label>Fasting / Withholding</label><select class="select" id="on_fasting"><option>No active fasting order</option><option>Fasting for procedure</option><option>Medication withholding required</option></select></div></div>
+              <div class="cols3"><div><label>Patient Diet</label><select class="select" id="on_diet"><optgroup label="IDDSI Texture"><option>L7 Regular Diet</option><option>L7 Easy To Chew Diet</option><option>L6 Soft &amp; Bite-Sized Diet</option><option>L5 Minced &amp; Moist Diet</option><option>L4 Pureed Diet</option><option>L3 Liquidised Diet</option></optgroup><optgroup label="Other"><option>Vegetarian Diet</option><option>Special Diet</option><option>Tube Feeding</option></optgroup></select></div><div><label>Food Allergies / Restrictions</label><input class="input" id="on_food_allergy" placeholder="Shellfish, halal, vegetarian"></div><div><label>Withholding</label><select class="select" id="on_withholding"><option>No active withholding order</option><option>Withholding for procedure</option><option>Medication withholding required</option></select></div></div>
 
               <div class="cols" style="margin-top:10px"><div><label>Known Drug Allergies</label><input class="input" id="on_allergy" placeholder="Penicillin"></div><div><label>Upload Documents</label><input class="input" id="on_docs" type="file" multiple></div></div>
 
@@ -376,7 +394,7 @@
     <!-- PATIENT PROFILE -->
     <div id="view-profile" class="view">
       <div class="topbar">
-        <div class="topbar-left"><h2 id="profileTitleTop">Patient Profile</h2><div class="sub">Overview · Clinical · Medication · Communication · Documents</div></div>
+        <div class="topbar-left"><h2 id="profileTitleTop">Patient Profile</h2><div class="sub">Overview · Clinical · Medication · Meal Plan · Communication · Documents</div></div>
         <div class="topbar-right">
           <button class="btn sm" onclick="showView('patients')"><span class="ic" data-icon="arrow-left"></span>Back</button>
           <button class="btn sm primary" onclick="submit('profile','Patient profile updated')"><span class="ic" data-icon="check"></span>Save</button>
@@ -399,6 +417,7 @@
                   <button class="tab-btn active" data-tab="overview" onclick="showProfileTab('overview',this)"><span class="ic" data-icon="overview"></span>Overview</button>
                   <button class="tab-btn" data-tab="clinical" onclick="showProfileTab('clinical',this)"><span class="ic" data-icon="clinical"></span>Clinical</button>
                   <button class="tab-btn" data-tab="medication" onclick="showProfileTab('medication',this)"><span class="ic" data-icon="pill"></span>Medication</button>
+                  <button class="tab-btn" data-tab="mealplan" onclick="showProfileTab('mealplan',this)"><span class="ic" data-icon="food"></span>Meal Plan</button>
                   <button class="tab-btn" data-tab="communication" onclick="showProfileTab('communication',this)"><span class="ic" data-icon="message"></span>Communication</button>
                   <button class="tab-btn" data-tab="documents" onclick="showProfileTab('documents',this)"><span class="ic" data-icon="folder"></span>Documents</button>
                 </div>
@@ -417,13 +436,127 @@
                       <div class="section-hd"><span class="ic" data-icon="bed"></span>Bed Assignment</div>
                       <div class="cols3"><div><label>Block / Ward</label><select class="select"><option selected>Block A / Ward 1</option><option>Block B / Ward 2</option><option>Block C / Ward 3</option></select></div><div><label>Room / Bed</label><input class="input" value="W2 · B14"></div><div><label>Assigned RN</label><select class="select"><option selected>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div></div>
                       <div class="section-hd"><span class="ic" data-icon="food"></span>Diet &amp; Clinical Flags</div>
-                      <div class="cols3"><div><label>Patient Diet</label><select class="select"><option selected>Normal diet</option><option>Soft diet</option><option>Pureed diet</option><option>Tube feeding</option><option>Diabetic diet</option><option>Low-salt diet</option><option>IDDSI Level 3</option></select></div><div><label>Food Allergies / Restrictions</label><input class="input" value="Shellfish, halal"></div><div><label>Fasting / Withholding</label><select class="select"><option selected>No active fasting order</option><option>Fasting for procedure</option><option>Medication withholding required</option></select></div></div>
+                      <div class="cols3"><div><label>Patient Diet</label><select class="select"><optgroup label="IDDSI Texture"><option selected>L7 Regular Diet</option><option>L7 Easy To Chew Diet</option><option>L6 Soft &amp; Bite-Sized Diet</option><option>L5 Minced &amp; Moist Diet</option><option>L4 Pureed Diet</option><option>L3 Liquidised Diet</option></optgroup><optgroup label="Other"><option>Vegetarian Diet</option><option>Special Diet</option><option>Tube Feeding</option></optgroup></select></div><div><label>Food Allergies / Restrictions</label><input class="input" value="Shellfish, halal"></div><div><label>Withholding</label><select class="select"><option selected>No active withholding order</option><option>Withholding for procedure</option><option>Medication withholding required</option></select></div></div>
                       <div class="cols" style="margin-top:10px"><div><label>Known Drug Allergies</label><input class="input" value="Penicillin"></div><div><label>Upload Documents</label><input class="input" type="file" multiple></div></div>
                       <div style="margin-top:10px"><label>General Notes</label><textarea placeholder="Family instructions, mobility, diet remarks..."></textarea></div>
                     </div>
                   </div>
                 </div>
               </div>
+
+
+              <!-- MEAL PLAN -->
+              <div id="profile-mealplan" class="profile-tab" style="display:none" data-fasting="true">
+                <div id="fastingBanner" style="display:none;padding:10px 14px;margin-bottom:14px;border-radius:var(--radius-sm);border:1px solid rgba(220,38,38,.25);background:rgba(254,242,242,.96);color:#7a1010;font-size:13px;font-weight:600;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <span>⚠ Fasting active <span id="fastWindow">14:00 – 22:00</span> · meal excluded from next eVendor export</span>
+                  <button class="btn sm" style="color:var(--bad);border-color:rgba(220,38,38,.2);background:transparent" onclick="document.getElementById('fastingBanner').style.display='none'">Dismiss</button>
+                </div>
+                <div class="grid">
+                  <div class="card col-12">
+                    <div class="card-hd"><strong><span class="ic" data-icon="food"></span>Current Meal Plan</strong><span class="pill">Patient-specific · editable anytime</span></div>
+                    <div class="card-bd">
+                      <div class="hint" style="margin-bottom:12px"><b>Admission workflow</b><br>When Ops/Facility marks the patient as admitted, the system auto-stamps <b>admitted_at</b>, transitions the state to <b>ACTIVE</b>, assigns <b>bed_id</b>, creates a new <b>patient_episodes</b> row, and carries dietary data from pre-admission into the active Meal Plan. No Facility re-entry needed.</div>
+                      <div class="grid">
+                        <div class="mini-metric col-3"><span>Current Diet</span><b>L7 Regular Diet</b><span>Active meal_plan row</span></div>
+                        <div class="mini-metric col-3"><span>Location</span><b>Ward 1 · Cubicle 2 · Bed 14</b><span>Used for ward sheet/export</span></div>
+                        <div class="mini-metric col-3"><span>Withholding</span><b>None Active</b><span>No meal suppression now</span></div>
+                        <div class="mini-metric col-3"><span>Last Updated</span><b>13 May · 14:20</b><p style="font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4">Remarks: "no shellfish" → "low salt; no shellfish; additional bread if appetite poor"</p><span>RN Sarah · audit logged</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card col-8">
+                    <div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Meal Plan — Per Patient</strong><span class="pill">One editable record · no 24/72h lock</span></div>
+                    <div class="card-bd">
+                      <div class="row" style="margin-bottom:8px;flex-wrap:wrap;gap:6px">
+                        <span class="tag bad">Penicillin</span>
+                        <span class="tag warn">Shellfish</span>
+                        <span class="tag info">Halal</span>
+                        <span class="tag info">Low salt</span>
+                      </div>
+                      <p class="note" style="margin-bottom:10px">Read-only — edit on Overview tab.</p>
+                      <div class="hint" style="margin-bottom:12px"><b>Critical rule</b><br>Meal plan remains editable after admission and after every plan change. Every save updates the active <b>meal_plan</b> row in place, writes a <b>meal_plan_history</b> before/after row, and writes an <b>audit_log</b> row. The next eVendor export reflects the latest active value.</div>
+                      <div class="cols3">
+                        <div><label>Facility</label><input class="input" value="TCF @ East" readonly></div>
+                        <div><label>Patient</label><input class="input" value="Mr Tan Wei Ming" readonly></div>
+                        <div><label>Episode / Bed</label><input class="input" value="Episode #2026-00041 · Ward 1 · Cubicle 2 · Bed 14" readonly></div>
+                      </div>
+                      <div class="cols" style="margin-top:10px">
+                        <div><label>Diet Type <span class="tag bad" style="margin-left:6px">Required</span></label><select class="select" id="mealPlanDietType" onchange="markMealPlanDirty();toggleTubeFeed(this.value)">
+                          <optgroup label="IDDSI Texture">
+                            <option selected>L7 Regular Diet</option>
+                            <option>L7 Easy To Chew Diet</option>
+                            <option>L6 Soft &amp; Bite-Sized Diet</option>
+                            <option>L5 Minced &amp; Moist Diet</option>
+                            <option>L4 Pureed Diet</option>
+                            <option>L3 Liquidised Diet</option>
+                          </optgroup>
+                          <optgroup label="Other">
+                            <option>Vegetarian Diet</option>
+                            <option>Special Diet</option>
+                            <option>Tube Feeding</option>
+                          </optgroup>
+                        </select></div>
+                        <div><label>Change Reason</label><select class="select" onchange="markMealPlanDirty()"><option>Post-ST review</option><option>Doctor order</option><option>Dietician review</option><option>Family request</option><option>Clinical event</option><option>Discharge planning</option><option>Correction</option></select></div>
+                      </div>
+                      <div style="margin-top:10px"><label>Remarks <span class="pill" style="margin-left:6px">max 600 chars</span></label><textarea maxlength="600" placeholder="Current remarks visible to kitchen/vendor. Example: low salt; DM diet; restrict 1.5L/day; no fish / no egg / no tofu; porridge with bite-size diet." oninput="markMealPlanDirty()">Low salt; no shellfish; additional bread if appetite poor.</textarea></div>
+                      <div id="tubeFeedFields" style="display:none;margin-top:10px">
+                        <div class="section-hd">Tube Feeding Parameters</div>
+                        <div class="cols3">
+                          <div><label>Formula</label><input class="input" id="tf_formula" placeholder="Ensure Plus" oninput="markMealPlanDirty()"></div>
+                          <div><label>Rate ml/hr</label><input class="input" id="tf_rate" type="number" placeholder="80" oninput="markMealPlanDirty()"></div>
+                          <div><label>Total Volume ml/day</label><input class="input" id="tf_volume" type="number" placeholder="1500" oninput="markMealPlanDirty()"></div>
+                        </div>
+                        <div class="cols3" style="margin-top:10px">
+                          <div><label>Route</label><select class="select" id="tf_route" onchange="markMealPlanDirty()"><option>NGT</option><option>PEG</option><option>NJT</option></select></div>
+                          <div><label>Mode</label><select class="select" id="tf_mode" onchange="markMealPlanDirty();toggleBolusFreq(this.value)"><option>Continuous</option><option>Bolus</option><option>Intermittent</option></select></div>
+                          <div id="bolusFreqField" style="display:none"><label>Bolus Frequency</label><input class="input" id="tf_bolus_freq" placeholder="e.g. Every 4 hours" oninput="markMealPlanDirty()"></div>
+                        </div>
+                      </div>
+                      <div class="section-hd"><span class="ic" data-icon="ban"></span>Withholding — same source as Medication → Withholding</div>
+                      <div class="cols3">
+                        <div><label>Withholding Start Date</label><input class="input" type="datetime-local" oninput="markMealPlanDirty()"></div>
+                        <div><label>Withholding End Date</label><input class="input" type="datetime-local" oninput="markMealPlanDirty()"></div>
+                        <div><label>Withholding Remark <span class="tag warn" style="margin-left:6px">Mandatory in practice</span></label><input class="input" placeholder="Procedure / blood test / Ramadan / NBM" oninput="markMealPlanDirty()"></div>
+                      </div>
+                      <div class="row" style="margin-top:12px">
+                        <button class="btn" onclick="toast('Meal plan history opened')"><span class="ic" data-icon="timeline"></span>View Edit History</button>
+                        <button id="saveMealPlanBtn" class="btn primary" disabled onclick="submit('profile','Patient meal plan updated; meal_plan_history + audit_log written');document.getElementById('saveMealPlanBtn').disabled=true;"><span class="ic" data-icon="check"></span>Save Meal Plan</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card col-4">
+                    <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>What Staff Need to See</strong><span class="pill">At a glance</span></div>
+                    <div class="card-bd">
+                      <table class="tbl"><tbody>
+                        <tr><th>Source</th><td>Auto-carried from pre-admission form</td></tr>
+                        <tr><th>Active Since</th><td>13 May 2026 · admitted_at</td></tr>
+                        <tr><th>Last Change</th><td>Low salt remark added by RN Sarah</td></tr>
+                        <tr><th>Export Impact</th><td>Next eVendor ward sheet uses this latest value</td></tr>
+                        <tr><th>Meal Count</th><td>Included unless Withholding window is active</td></tr>
+                      </tbody></table>
+                      <div class="divider"></div>
+                      <div class="section-hd">Next eVendor Export Preview</div>
+                      <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Next export · <b style="color:var(--text)">14:00</b></div>
+                      <div style="font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px 10px;font-family:var(--mono);line-height:1.5">Bed 14 · L7 Regular Diet · Low salt; no shellfish; additional bread if appetite poor</div>
+                      <div style="margin-top:8px"><span class="tag warn">Excluded if fasting</span></div>
+                    </div>
+                  </div>
+
+                  <div class="card col-12">
+                    <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>Meal Plan History</strong><span class="pill">Before / after audit</span></div>
+                    <div class="card-bd">
+                      <table class="tbl"><thead><tr><th>Date / Time</th><th>Changed By</th><th>Before</th><th>After</th><th>Reason</th><th>Audit</th></tr></thead><tbody>
+                        <tr><td>13 May 14:20</td><td>RN Sarah</td><td>Remarks: no shellfish</td><td>Remarks: low salt; no shellfish; additional bread if appetite poor</td><td>Family request</td><td><span class="tag good">audit_log written</span></td></tr>
+                        <tr><td>13 May 09:05</td><td>System</td><td>Pre-admission diet draft</td><td>Active meal_plan linked to new patient_episodes row</td><td>Admission marked ACTIVE</td><td><span class="tag info">auto-stamped</span></td></tr>
+                        <tr><td>12 May 16:30</td><td>Ops</td><td>—</td><td>Draft meal_plan created from pre-admission form</td><td>PRE_ADMISSION</td><td><span class="tag info">system draft</span></td></tr>
+                      </tbody></table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
               <!-- CLINICAL (with sub-tabs) -->
               <div id="profile-clinical" class="profile-tab" style="display:none">
@@ -676,6 +809,19 @@
                           <div class="mini-metric"><b>880 mL</b><span>Total Out today</span></div>
                           <div class="mini-metric"><b>+370 mL</b><span>Net gain / loss</span></div>
                         </div>
+                        <div class="card" style="box-shadow:none;margin-bottom:14px">
+                          <div class="card-hd"><strong><span class="ic" data-icon="plus"></span>Add Intake / Output Entry</strong><span class="pill">Entry first, log below</span></div>
+                          <div class="card-bd">
+                            <div class="cols4">
+                              <div><label>I/O Type</label><select class="select"><option>Food intake</option><option>Fluid intake</option><option>Fluid output</option><option>Vomit</option><option>Stool output</option></select></div>
+                              <div><label>Sub-category</label><select class="select"><option>urine_void</option><option>urine_catheter</option><option>urine_pad</option><option>drain</option><option>vomit</option><option>stool</option><option>oral_fluids</option><option>meal_percentage</option></select><div class="note">Optional schema column for reporting.</div></div>
+                              <div><label>Volume (mL)</label><input class="input" placeholder="400 or 400 mL or 400 cc"><div class="note">Urine is free numeric; suffix normalised to mL.</div></div>
+                              <div><label>Shift / Time</label><input class="input" type="datetime-local"></div>
+                            </div>
+                            <div style="margin-top:10px"><label>Details</label><textarea placeholder="Catheter / void / incontinence pad weight / meal details / drain site / notes..."></textarea></div>
+                            <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Intake/output row saved and daily totals recalculated')"><span class="ic" data-icon="check"></span>Add I/O Row</button>
+                          </div>
+                        </div>
                         <table class="tbl"><thead><tr><th>Time</th><th>I/O Type</th><th>Sub-category</th><th>Volume</th><th>Details</th><th>Entered by</th></tr></thead><tbody>
                           <tr><td>08:00</td><td><span class="tag good">Fluid intake</span></td><td>Oral fluids</td><td>250 mL</td><td>Water with medication</td><td>RN Sarah</td></tr>
                           <tr><td>10:00</td><td><span class="tag info">Fluid output</span></td><td>urine_void</td><td>400 mL</td><td>Typed directly; unit normalised on save</td><td>RN Sarah</td></tr>
@@ -683,15 +829,6 @@
                           <tr><td>14:00</td><td><span class="tag warn">Fluid output</span></td><td>urine_catheter</td><td>300 mL</td><td>Consolidated urine chart row</td><td>RN Mei</td></tr>
                           <tr><td>18:00</td><td><span class="tag purple">Stool output</span></td><td>stool</td><td>—</td><td>Bowel opened</td><td>RN Mei</td></tr>
                         </tbody></table>
-                        <div class="divider"></div>
-                        <div class="cols4">
-                          <div><label>I/O Type</label><select class="select"><option>Food intake</option><option>Fluid intake</option><option>Fluid output</option><option>Vomit</option><option>Stool output</option></select></div>
-                          <div><label>Sub-category</label><select class="select"><option>urine_void</option><option>urine_catheter</option><option>urine_pad</option><option>drain</option><option>vomit</option><option>stool</option><option>oral_fluids</option></select><div class="note">Optional schema column for reporting.</div></div>
-                          <div><label>Volume (mL)</label><input class="input" placeholder="400 or 400 mL or 400 cc"><div class="note">Urine entry is free numeric; suffix normalised to mL.</div></div>
-                          <div><label>Shift / Time</label><input class="input" type="datetime-local"></div>
-                        </div>
-                        <div style="margin-top:10px"><label>Details</label><textarea placeholder="Catheter / void / incontinence pad weight / meal details / drain site / notes..."></textarea></div>
-                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Intake/output row saved and daily totals recalculated')"><span class="ic" data-icon="check"></span>Add I/O Row</button>
                       </div>
                     </div>
                   </div>
@@ -805,15 +942,78 @@
                 </div>
 
                 <div id="md-schedule" class="sub-pane" data-group="md">
-                  <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="calendar"></span>Medication Schedule</strong><span class="pill">Calendar / dose tile view</span></div><div class="card-bd">
-                    <table class="tbl"><thead><tr><th>Time</th><th>Drug</th><th>Dose</th><th>Frequency</th><th>Status</th></tr></thead><tbody><tr><td>08:00</td><td>Aspirin</td><td>100 mg PO</td><td>OD</td><td><span class="tag good">Administered</span></td></tr><tr><td>09:00</td><td>Vitamin D</td><td>50,000 IU PO</td><td>Weekly</td><td><span class="tag warn">Last-dose check required</span></td></tr><tr><td>12:00</td><td>Metformin</td><td>500 mg PO</td><td>BD</td><td><span class="tag warn">Pending</span></td></tr></tbody></table>
-                  </div></div>
+                  <div class="card col-12">
+                    <div class="card-hd"><strong><span class="ic" data-icon="calendar"></span>Medication Schedule</strong><span class="pill">Calendar view · clickable dose tiles</span></div>
+                    <div class="card-bd">
+                      <div class="sticky-alert"><span class="tag bad"><span class="ic" data-icon="alert"></span>Drug allergy: Penicillin — visible before any dose is marked taken</span></div>
+                      <div class="med-calendar-toolbar">
+                        <div class="row"><button class="btn sm" onclick="toast('Previous week opened')"><span class="ic" data-icon="arrow-left"></span>Previous</button><button class="btn sm primary" onclick="toast('Current medication week shown')">This Week</button><button class="btn sm" onclick="toast('Next week opened')">Next<span class="ic" data-icon="arrow"></span></button></div>
+                        <div class="row"><span class="tag warn">Due</span><span class="tag good">Given</span><span class="tag purple">Withheld</span><span class="tag bad">Missed / last-dose check</span></div>
+                      </div>
+                      <div class="med-calendar" aria-label="Medication weekly calendar">
+                        <div class="med-cal-head">Time</div>
+                        <div class="med-cal-head">Mon<br><span class="note">11 May</span></div><div class="med-cal-head">Tue<br><span class="note">12 May</span></div><div class="med-cal-head">Wed<br><span class="note">13 May</span></div><div class="med-cal-head">Thu<br><span class="note">14 May</span></div><div class="med-cal-head">Fri<br><span class="note">15 May</span></div><div class="med-cal-head">Sat<br><span class="note">16 May</span></div><div class="med-cal-head">Sun<br><span class="note">17 May</span></div>
+
+                        <div class="med-cal-time">08:00</div>
+                        <div class="med-cal-cell"><button class="dose-tile taken" id="dose-aspirin-mon" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Mon 11 May, 08:00','Taken','Today 08:01 by RN Sarah')"><b>Aspirin</b><span>100 mg PO · Taken</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile taken" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Tue 12 May, 08:00','Taken','Tue 08:04 by RN Daniel')"><b>Aspirin</b><span>100 mg PO · Taken</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" id="dose-aspirin-today" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Wed 13 May, 08:00','Pending','Not yet administered')"><b>Aspirin</b><span>100 mg PO · Pending</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Thu 14 May, 08:00','Pending','Upcoming')"><b>Aspirin</b><span>100 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Fri 15 May, 08:00','Pending','Upcoming')"><b>Aspirin</b><span>100 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Sat 16 May, 08:00','Pending','Upcoming')"><b>Aspirin</b><span>100 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Aspirin 100 mg PO','OD','Sun 17 May, 08:00','Pending','Upcoming')"><b>Aspirin</b><span>100 mg PO · Upcoming</span></button></div>
+
+                        <div class="med-cal-time">09:00</div>
+                        <div class="med-cal-cell"></div><div class="med-cal-cell"></div>
+                        <div class="med-cal-cell"><button class="dose-tile check" id="dose-vitd-today" onclick="openDoseDetail(this,'Vitamin D 50,000 IU PO','Weekly','Wed 13 May, 09:00','Last-dose check required','Last administered: 6 May 2026 09:10 by RN Sarah · status: given')"><b>Vitamin D</b><span>50,000 IU · Check last dose</span></button></div>
+                        <div class="med-cal-cell"></div><div class="med-cal-cell"></div><div class="med-cal-cell"></div><div class="med-cal-cell"></div>
+
+                        <div class="med-cal-time">10:00</div>
+                        <div class="med-cal-cell"></div><div class="med-cal-cell"></div>
+                        <div class="med-cal-cell"><button class="dose-tile withheld" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Wed 13 May, 10:00','Withheld - withholding','Withheld by RN Sarah at 10:02 · withholding/NBM until 14 May 08:00')"><b>Metformin</b><span>Withheld until 14 May 08:00</span></button></div>
+                        <div class="med-cal-cell"></div><div class="med-cal-cell"></div><div class="med-cal-cell"></div><div class="med-cal-cell"></div>
+
+                        <div class="med-cal-time">12:00</div>
+                        <div class="med-cal-cell"><button class="dose-tile taken" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Mon 11 May, 12:00','Taken','Mon 12:02 by RN Sarah')"><b>Metformin</b><span>500 mg PO · Taken</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile taken" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Tue 12 May, 12:00','Taken','Tue 12:01 by RN Daniel')"><b>Metformin</b><span>500 mg PO · Taken</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" id="dose-metformin-today" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Wed 13 May, 12:00','Pending','Not yet administered')"><b>Metformin</b><span>500 mg PO · Pending</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Thu 14 May, 12:00','Pending','Upcoming')"><b>Metformin</b><span>500 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Fri 15 May, 12:00','Pending','Upcoming')"><b>Metformin</b><span>500 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Sat 16 May, 12:00','Pending','Upcoming')"><b>Metformin</b><span>500 mg PO · Upcoming</span></button></div>
+                        <div class="med-cal-cell"><button class="dose-tile pending" onclick="openDoseDetail(this,'Metformin 500 mg PO','BD','Sun 17 May, 12:00','Pending','Upcoming')"><b>Metformin</b><span>500 mg PO · Upcoming</span></button></div>
+                      </div>
+                      <div id="doseDetailPanel" class="dose-detail">
+                        <div class="row" style="justify-content:space-between"><strong id="doseDetailDrug">Select a medication dose</strong><span id="doseDetailStatus" class="tag warn">Pending</span></div>
+                        <div class="id-header" style="margin-top:10px"><div><span>Patient</span><b>Mr Tan Wei Ming</b></div><div><span>IC No.</span><b>S1234567A</b></div><div><span>Location</span><b>Ward 1 · Cubicle 2 · Bed 14</b></div><div><span class="tag bad">Penicillin allergy</span></div></div>
+                        <div class="cols3"><div><label>Scheduled Date / Time</label><input class="input" id="doseDetailTime" readonly></div><div><label>Frequency</label><input class="input" id="doseDetailFreq" readonly></div><div><label>Last-dose / Admin Log</label><input class="input" id="doseDetailLast" readonly></div></div>
+                        <div class="confirm-card"><b>Before marking taken</b><br><span class="note">Nurse must verify Name + IC No. + Bed/Cubicle/Ward and review the allergy banner. Sign-off captures both user_id and per-nurse code for audit.</span></div>
+                        <div class="cols" style="margin-top:10px"><div><label>Nurse Code</label><input class="input" id="doseNurseCode" placeholder="Configured in Admin, e.g. RN-2041"></div><div><label>Administration Timestamp</label><input class="input" id="doseAdminAt" type="datetime-local"></div></div>
+                        <div class="row" style="margin-top:12px"><button class="btn primary" onclick="markSelectedDoseTaken()"><span class="ic" data-icon="check"></span>Mark Given / Taken</button><button class="btn" onclick="markSelectedDoseWithheld()"><span class="ic" data-icon="ban"></span>Mark Withheld / Refused</button></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div id="md-fast" class="sub-pane" data-group="md">
-                  <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="ban"></span>Medication Withholding / Fasting</strong></div><div class="card-bd"><div class="cols"><div><label>Medication</label><select class="select"><option>Metformin</option><option>Aspirin</option><option>Vitamin D</option></select></div><div><label>Reason</label><select class="select"><option>Fasting</option><option>Procedure</option><option>Refused</option><option>Clinical review</option></select></div></div><label style="margin-top:10px">Notes</label><textarea placeholder="Reason and follow-up"></textarea><button class="btn primary" style="margin-top:12px" onclick="submit('profile','Withholding status recorded')"><span class="ic" data-icon="check"></span>Record Withholding</button></div></div>
-                </div>
-              </div>
+                  <div class="grid">
+                    <div class="card col-12">
+                      <div class="card-hd"><strong><span class="ic" data-icon="ban"></span>Medication Withholding</strong><span class="pill">Specific patient only · meal plan withholding source</span></div>
+                      <div class="card-bd">
+                        <div class="id-header"><div><span>Patient</span><b>Mr Tan Wei Ming</b></div><div><span>IC No.</span><b>S1234567A</b></div><div><span>Location</span><b>Ward 1 · Cubicle 2 · Bed 14</b></div><div><span class="tag bad">Penicillin allergy</span></div></div>
+                        <div class="row" style="margin-bottom:12px"><span class="tag info">Only this opened patient is shown</span><span class="tag warn">Auto-suppresses withhold-on-fast doses</span><span class="tag purple">Served vs omitted audit shown</span></div>
+                        <table class="tbl"><thead><tr><th>Medication / Dose</th><th>Reason</th><th>Withheld From</th><th>Withheld Until</th><th>Status</th><th>Served / Omitted</th><th>Logged By</th><th>Timestamp</th></tr></thead><tbody>
+                          <tr><td>Metformin 500 mg PO<br><span class="tag warn">withhold-on-fast</span></td><td>NBM for procedure</td><td>13 May 2026, 18:00</td><td><b>14 May 2026, 08:00</b></td><td><span class="tag purple">Auto-withheld</span></td><td>Omitted</td><td>RN Sarah<br><span class="note">user_id + nurse code RN-2041</span></td><td>13 May 2026, 18:02</td></tr>
+                          <tr><td>Aspirin 100 mg PO</td><td>Refused by patient</td><td>13 May 2026, 08:00</td><td>Single dose only</td><td><span class="tag warn">Refused</span></td><td>Served, not taken</td><td>RN Daniel<br><span class="note">user_id + nurse code RN-1807</span></td><td>13 May 2026, 08:05</td></tr>
+                        </tbody></table>
+                        <div class="divider"></div>
+                        <div class="cols4"><div><label>Medication</label><select class="select"><option>Metformin</option><option>Aspirin</option><option>Vitamin D</option><option>All withhold-on-fast medication</option></select></div><div><label>Reason</label><select class="select"><option>Withholding</option><option>Procedure</option><option>Refused</option><option>Clinical review</option></select></div><div><label>Withheld From</label><input class="input" type="datetime-local"></div><div><label>Withheld Until</label><input class="input" type="datetime-local"></div></div>
+                        <div class="cols" style="margin-top:10px"><div><label>Nurse Code</label><input class="input" placeholder="Configured in Admin"></div><div><label>Status</label><select class="select"><option>withheld</option><option>refused</option><option>withheld_clinical_review</option><option>given_after_review</option></select></div></div>
+                        <label style="margin-top:10px">Notes</label><textarea placeholder="Reason, follow-up, and whether dose was served or omitted."></textarea>
+                        <button class="btn primary" style="margin-top:12px" onclick="submit('profile','Withholding status recorded for this patient with timestamp, nurse code and audit log')"><span class="ic" data-icon="check"></span>Record Withholding</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>              </div>
 
               <!-- COMMUNICATION (sub-tabs) -->
               <div id="profile-communication" class="profile-tab" style="display:none">
@@ -930,9 +1130,9 @@
           <div class="card col-12">
             <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>Visit Logs</strong><span class="pill">All sessions</span></div>
             <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Visitor</th><th>Patient</th><th>Check-in</th><th>Check-out</th><th>Status</th></tr></thead><tbody>
-                <tr><td>Ms Tan Mei</td><td>Mr Tan</td><td>14:00</td><td>—</td><td><span class="tag good">Checked in</span></td></tr>
-                <tr><td>Mr Lim</td><td>Mdm Lim</td><td>10:30</td><td>11:45</td><td><span class="tag info">Checked out</span></td></tr>
+              <table class="tbl"><thead><tr><th>Visitor</th><th>Patient</th><th>Check-in</th><th>Check-out</th><th>Status</th><th>Action</th></tr></thead><tbody>
+                <tr><td>Ms Tan Mei</td><td>Mr Tan</td><td>14:00</td><td>—</td><td><span class="tag good">Checked in</span></td><td><button class="btn sm primary" onclick="submit('visitor','Visitor checked out at current time')"><span class="ic" data-icon="logout"></span>Check Out</button></td></tr>
+                <tr><td>Mr Lim</td><td>Mdm Lim</td><td>10:30</td><td>11:45</td><td><span class="tag info">Checked out</span></td><td><span class="note">Completed</span></td></tr>
               </tbody></table>
             </div>
           </div>
@@ -943,61 +1143,174 @@
     <!-- FOOD &amp; DIET (sub-tabs) -->
     <div id="view-food" class="view">
       <div class="topbar">
-        <div class="topbar-left"><h2>Food &amp; Diet</h2><div class="sub">Diet Plans · Meal Planning · Staff Meals</div></div>
+        <div class="topbar-left"><h2>Food &amp; Diet</h2><div class="sub">Ward meal plan operations · IDDSI diet types · withholding · staff meals · MOH/eVendor outputs</div></div>
         <div class="topbar-right">
-          <button class="btn sm" onclick="fakeExport('eVendor ward listing')"><span class="ic" data-icon="download"></span>eVendor export</button>
-          <button class="btn sm primary" onclick="submit('food','Diet plan updated')"><span class="ic" data-icon="check"></span>Save</button>
+          <button class="btn sm" onclick="fakeExport('MOH monthly food report PDF')"><span class="ic" data-icon="download"></span>MOH PDF</button>
+          <button class="btn sm" onclick="fakeExport('MealPlan_YYYYMMDD_HHMMPM.xlsx')"><span class="ic" data-icon="download"></span>eVendor Excel</button>
+          <button class="btn sm primary" onclick="submit('food','Meal plan saved with history and audit log')"><span class="ic" data-icon="check"></span>Save</button>
         </div>
       </div>
       <div class="content-area">
         <div class="row" style="margin-bottom:14px">
-          <button class="tab-btn active" data-sub="fd-plans" onclick="showSubTab('fd','fd-plans',this)"><span class="ic" data-icon="food"></span>Diet Plans</button>
-          <button class="tab-btn" data-sub="fd-planning" onclick="showSubTab('fd','fd-planning',this)"><span class="ic" data-icon="calendar"></span>Meal Planning</button>
+          <button class="tab-btn active" data-sub="fd-meal-plan" onclick="showSubTab('fd','fd-meal-plan',this)"><span class="ic" data-icon="food"></span>Ward Meal Plans</button>
+          <button class="tab-btn" data-sub="fd-diet-types" onclick="showSubTab('fd','fd-diet-types',this)"><span class="ic" data-icon="clipboard"></span>Diet Types</button>
+          <button class="tab-btn" data-sub="fd-withholding" onclick="showSubTab('fd','fd-withholding',this)"><span class="ic" data-icon="ban"></span>Withholding</button>
           <button class="tab-btn" data-sub="fd-staff" onclick="showSubTab('fd','fd-staff',this)"><span class="ic" data-icon="users"></span>Staff Meals</button>
+          <button class="tab-btn" data-sub="fd-moh" onclick="showSubTab('fd','fd-moh',this)"><span class="ic" data-icon="reports"></span>MOH Monthly Report</button>
+          <button class="tab-btn" data-sub="fd-evendor" onclick="showSubTab('fd','fd-evendor',this)"><span class="ic" data-icon="download"></span>eVendor Excel</button>
         </div>
 
-        <div id="fd-plans" class="sub-pane active" data-group="fd">
+        <div id="fd-meal-plan" class="sub-pane active" data-group="fd">
           <div class="grid">
             <div class="card col-8">
-              <div class="card-hd"><strong><span class="ic" data-icon="food"></span>Diet View</strong><span class="pill">Active + discharged</span></div>
+              <div class="card-hd"><strong><span class="ic" data-icon="food"></span>Meal Plan — Per Patient</strong><span class="pill">One editable record per patient · no 24/72h lock</span></div>
               <div class="card-bd">
-                <div class="cols4" style="margin-bottom:12px"><div><label>Month</label><input class="input" type="month"></div><div><label>Meal Type</label><select class="select"><option>All</option><option>Tube feeding</option><option>Soft diet</option><option>IDDSI 3</option><option>IDDSI 4</option></select></div><div><label>Ward</label><select class="select"><option>All</option><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div><div><label>Status</label><select class="select"><option>Active + discharged</option><option>Active only</option><option>Discharged only</option></select></div></div>
-                <table class="tbl"><thead><tr><th>Patient</th><th>Ward</th><th>Diet</th><th>Fasting</th><th>Action</th></tr></thead><tbody>
-                  <tr><td>Mr Tan</td><td>Ward 1</td><td>IDDSI Level 3</td><td><span class="tag warn">No dinner</span></td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
-                  <tr><td>Mdm Lim</td><td>Ward 2</td><td>Diabetic</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
-                </tbody></table>
+                <div class="hint" style="margin-bottom:12px"><b>Critical rule</b><br>Meal plan remains editable after admission and after every plan change. All changes are captured in <b>meal_plan_history</b> and <b>audit_log</b>; no 24/72-hour lock applies.</div>
+                <div class="cols3">
+                  <div><label>Facility</label><input class="input" value="TCF @ East" readonly></div>
+                  <div><label>Patient <span class="tag bad" style="margin-left:6px">Required</span></label><select class="select"><option>Mr Tan Wei Ming · Ward 1 · Cubicle 2 · Bed 14</option><option>Mdm Lim Siew Eng · Pending bed</option><option>Mr Ahmad Rahman · Ward 1 · Cubicle 1 · Bed 08</option><option>Mr Ravi Kumar · Ward 3 · Cubicle 1 · Bed 07</option></select></div>
+                  <div><label>Diet Type <span class="tag bad" style="margin-left:6px">Required</span></label><select class="select">
+                    <optgroup label="IDDSI Texture"><option>L7 Regular Diet</option><option>L7 Easy To Chew Diet</option><option>L6 Soft &amp; Bite-Sized Diet</option><option>L5 Minced &amp; Moist Diet</option><option>L4 Pureed Diet</option><option>L3 Liquidised Diet</option></optgroup><optgroup label="Other"><option>Vegetarian Diet</option><option>Special Diet</option><option>Tube Feeding</option></optgroup>
+                  </select></div>
+                </div>
+                <div style="margin-top:10px"><label>Remarks <span class="pill" style="margin-left:6px">max 600 chars</span></label><textarea maxlength="600" placeholder="Examples: low fat, low salt; DM diet, low purine; restrict 1.5L/day; L0 Thin Fluid; L2 Fluid Restrict; ESRF/fluid restrict 800mL/day; no fish / no egg / no tofu; porridge with bite-size diet; additional 2 slices of bread per meal."></textarea></div>
+                <div class="section-hd"><span class="ic" data-icon="ban"></span>Withholding Fields — same source as Medication → Withholding</div>
+                <div class="cols3">
+                  <div><label>Withholding Start Date</label><input class="input" type="datetime-local"></div>
+                  <div><label>Withholding End Date</label><input class="input" type="datetime-local"></div>
+                  <div><label>Withholding Remark <span class="tag warn" style="margin-left:6px">Mandatory in practice</span></label><input class="input" placeholder="Procedure / withholding blood test / Ramadan / NBM"></div>
+                </div>
+                <div class="row" style="margin-top:12px">
+                  <button class="btn" onclick="toast('Meal plan history opened')"><span class="ic" data-icon="timeline"></span>View Edit History</button>
+                  <button class="btn primary" onclick="submit('food','Meal plan updated and meal_plan_history + audit_log written')"><span class="ic" data-icon="check"></span>Save Meal Plan</button>
+                </div>
               </div>
             </div>
             <div class="card col-4">
-              <div class="card-hd"><strong><span class="ic" data-icon="info"></span>Facility Notes</strong></div>
+              <div class="card-hd"><strong><span class="ic" data-icon="timeline"></span>Meal Plan History</strong><span class="pill">Audit visible</span></div>
               <div class="card-bd">
-                <div class="hint">Dietary data carries from pre-admission to facility (no double entry). Excel migration and eVendor-compatible export included.</div>
+                <table class="tbl"><thead><tr><th>Date</th><th>Change</th><th>User</th></tr></thead><tbody>
+                  <tr><td>13 May</td><td>L4 Pureed → L3 Liquidised post-ST review</td><td>Dietician</td></tr>
+                  <tr><td>12 May</td><td>Added low salt, restrict 1.5L/day</td><td>RN Sarah</td></tr>
+                  <tr><td>10 May</td><td>Initial plan from pre-admission form</td><td>Admin</td></tr>
+                </tbody></table>
+                <div class="note">This replaces Excel-only diet tracking and removes double entry.</div>
+              </div>
+            </div>
+
+            <div class="card col-12">
+              <div class="card-hd"><strong><span class="ic" data-icon="patients"></span>Current Meal Plans</strong><span class="pill">Active patient list source</span></div>
+              <div class="card-bd">
+                <div class="cols4" style="margin-bottom:12px">
+                  <div><label>Ward</label><select class="select"><option>All</option><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div>
+                  <div><label>Cubicle</label><select class="select"><option>All</option><option>Cubicle 1</option><option>Cubicle 2</option><option>Pending</option></select></div>
+                  <div><label>Diet Type</label><select class="select"><option>All</option><option>L7 Regular Diet</option><option>L6 Soft &amp; Bite-Sized Diet</option><option>L5 Minced &amp; Moist Diet</option><option>L4 Pureed Diet</option><option>L3 Liquidised Diet</option><option>Tube Feeding</option></select></div>
+                  <div><label>Status</label><select class="select"><option>Active only</option><option>Active + discharged</option><option>Discharged only</option></select></div>
+                </div>
+                <table class="tbl"><thead><tr><th>Patient</th><th>Location</th><th>Diet Type</th><th>Remarks</th><th>Withholding</th><th>Action</th></tr></thead><tbody>
+                  <tr><td>Mr Tan Wei Ming</td><td>Ward 1 · Cubicle 2 · Bed 14</td><td>L3 Liquidised Diet</td><td>L2 fluid restrict 1.5L/day; no shellfish</td><td><span class="tag warn">Dinner excluded</span></td><td><button class="btn sm" onclick="toast('Opened editable meal plan')"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
+                  <tr><td>Mdm Lim Siew Eng</td><td>Pending</td><td>Special Diet</td><td>DM, low fat / low salt</td><td>—</td><td><button class="btn sm" onclick="toast('Opened editable meal plan')"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
+                  <tr><td>Mr Ahmad Rahman</td><td>Ward 1 · Cubicle 1 · Bed 08</td><td>L6 Soft &amp; Bite-Sized Diet</td><td>Porridge with bite-size diet</td><td>—</td><td><button class="btn sm" onclick="toast('Opened editable meal plan')"><span class="ic" data-icon="edit"></span>Edit</button></td></tr>
+                </tbody></table>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="fd-planning" class="sub-pane" data-group="fd">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="calendar"></span>Meal Planning</strong><span class="pill">Handles fasting periods</span></div>
-            <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th>Conflicts</th></tr></thead><tbody>
-                <tr><td>30 Apr</td><td>52 trays</td><td>50 trays</td><td>49 trays</td><td><span class="tag warn">1 fasting</span></td></tr>
-                <tr><td>1 May</td><td>54 trays</td><td>52 trays</td><td>52 trays</td><td>—</td></tr>
+        <div id="fd-diet-types" class="sub-pane" data-group="fd">
+          <div class="grid">
+            <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="clipboard"></span>IDDSI-Aligned Diet Type Dropdown</strong><span class="pill">Controlled dropdown</span></div><div class="card-bd">
+              <table class="tbl"><thead><tr><th>Dropdown Value</th><th>Usage Note</th></tr></thead><tbody>
+                <tr><td>L7 Regular Diet</td><td>Default normal texture diet.</td></tr>
+                <tr><td>L7 Easy To Chew Diet</td><td>Regular foods with easier chewing requirement.</td></tr>
+                <tr><td>L6 Soft &amp; Bite-Sized Diet</td><td>Soft bite-sized texture.</td></tr>
+                <tr><td>L5 Minced &amp; Moist Diet</td><td>Minced and moist texture.</td></tr>
+                <tr><td>L4 Pureed Diet</td><td>Pureed texture.</td></tr>
+                <tr><td>L3 Liquidised Diet</td><td>Liquidised texture.</td></tr>
+                <tr><td>Vegetarian Diet</td><td>Vegetarian meal plan.</td></tr>
+                <tr><td>Special Diet</td><td>Special clinical or operational diet plan.</td></tr>
+                <tr><td>Tube Feeding</td><td>Tube feeding plan.</td></tr>
               </tbody></table>
-            </div>
+            </div></div>
+          </div>
+        </div>
+
+        <div id="fd-withholding" class="sub-pane" data-group="fd">
+          <div class="grid">
+            <div class="card col-8"><div class="card-hd"><strong><span class="ic" data-icon="ban"></span>Withholding</strong><span class="pill">Single source of truth</span></div><div class="card-bd">
+              <div class="row" style="margin-bottom:12px"><span class="tag info">Meal plan withholding fields drive this view</span><span class="tag warn">Excluded from ward meal counts</span><span class="tag purple">Also surfaced in Medication → Withholding</span></div>
+              <table class="tbl"><thead><tr><th>Patient</th><th>Location</th><th>Withheld Item</th><th>Start</th><th>Until</th><th>Reason / Remark</th><th>Meal Count Impact</th><th>Medication Link</th><th>Logged By</th></tr></thead><tbody>
+                <tr><td>Mr Tan Wei Ming</td><td>Ward 1 · Cubicle 2 · Bed 14</td><td>Meals + withhold-on-fast meds</td><td>13 May 2026, 18:00</td><td><b>14 May 2026, 08:00</b></td><td>NBM for procedure</td><td><span class="tag warn">Dinner / pre-dawn excluded</span></td><td><span class="tag info">Medication withholding</span></td><td>RN Sarah</td></tr>
+                <tr><td>Mdm Lim Siew Eng</td><td>Pending</td><td>Pre-dawn/lunch pattern</td><td>Daily 05:00</td><td>Daily 19:15 until Ramadan end</td><td>Religious fast</td><td><span class="tag warn">Bulk withholding pattern</span></td><td><span class="tag info">Medication withholding</span></td><td>Operations</td></tr>
+              </tbody></table>
+              <button class="btn primary" style="margin-top:12px" onclick="submit('food','Bulk withholding update applied using Religion filter')"><span class="ic" data-icon="zap"></span>Bulk Update Withholding</button>
+            </div></div>
+            <div class="card col-4"><div class="card-hd"><strong><span class="ic" data-icon="search"></span>Bulk Update Filter</strong><span class="pill">Religious withholding use case</span></div><div class="card-bd">
+              <div><label>Religion</label><select class="select"><option>Muslim</option><option>Buddhist</option><option>Christian</option><option>Hindu</option><option>Others</option></select></div>
+              <div style="margin-top:10px"><label>Apply withholding remark</label><input class="input" value="Ramadan withholding"></div>
+              <div class="cols" style="margin-top:10px"><div><label>Start</label><input class="input" type="date"></div><div><label>End</label><input class="input" type="date"></div></div>
+            </div></div>
           </div>
         </div>
 
         <div id="fd-staff" class="sub-pane" data-group="fd">
-          <div class="card col-12">
-            <div class="card-hd"><strong><span class="ic" data-icon="users"></span>Staff Meals</strong><span class="pill">Driven by roster</span></div>
-            <div class="card-bd">
-              <table class="tbl"><thead><tr><th>Shift</th><th>Headcount</th><th>Meal</th><th>On leave</th></tr></thead><tbody>
-                <tr><td>Morning</td><td>14</td><td>Lunch</td><td>1</td></tr>
-                <tr><td>Afternoon</td><td>10</td><td>Dinner</td><td>—</td></tr>
+          <div class="grid">
+            <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="users"></span>Staff Meal Plan — Daily Block Review</strong><span class="pill">Roster roll-up + final kitchen override</span></div><div class="card-bd">
+              <div class="row" style="margin-bottom:12px"><span class="tag info">00:00 roster roll-up seeds the count</span><span class="tag warn">Facility reviews before vendor cutoff</span><span class="tag purple">Manual overrides are audit-logged</span></div>
+              <div class="cols4" style="margin-bottom:12px">
+                <div><label>Service Date</label><input class="input" type="date"></div>
+                <div><label>Block</label><select class="select"><option>All blocks</option><option>BLK-B</option><option>BLK-D</option><option>BLK-E</option></select></div>
+                <div><label>Meal Period</label><select class="select"><option>All meals</option><option>Pre-Dawn</option><option>Lunch</option><option>Dinner</option></select></div>
+                <div><label>Cut-off Status</label><select class="select"><option>Before cut-off</option><option>Locked for vendor export</option></select></div>
+              </div>
+              <table class="tbl"><thead><tr><th>Block</th><th>Shift Coverage</th><th>Pre-Dawn Reg</th><th>Pre-Dawn Veg</th><th>Lunch Reg</th><th>Lunch Veg</th><th>Dinner Reg</th><th>Dinner Veg</th><th>Roster Source</th><th>Manual Adjustment</th><th>Final Total</th><th>Audit</th></tr></thead><tbody>
+                <tr><td><b>BLK-B</b></td><td>Day: 14 · Night: 8</td><td>6</td><td>2</td><td>18</td><td>4</td><td>14</td><td>3</td><td>Auto from Staff Roster</td><td><button class="btn sm" onclick="toast('Override panel opened for BLK-B')"><span class="ic" data-icon="edit"></span>Adjust</button></td><td><b>47</b></td><td><span class="tag good">Auto</span></td></tr>
+                <tr><td><b>BLK-D</b></td><td>Day: 12 · Night: 7</td><td>4</td><td>1</td><td>15</td><td>2</td><td>12</td><td>2</td><td>Roster + leave update</td><td><button class="btn sm" onclick="toast('Override panel opened for BLK-D')"><span class="ic" data-icon="edit"></span>Adjust</button></td><td><b>36</b></td><td><span class="tag warn">Manual override</span></td></tr>
+                <tr><td><b>BLK-E</b></td><td>Day: 9 · Night: 5</td><td>3</td><td>1</td><td>12</td><td>2</td><td>9</td><td>1</td><td>Auto from Staff Roster</td><td><button class="btn sm" onclick="toast('Override panel opened for BLK-E')"><span class="ic" data-icon="edit"></span>Adjust</button></td><td><b>28</b></td><td><span class="tag good">Auto</span></td></tr>
               </tbody></table>
-            </div>
+              <div class="divider"></div>
+              <div class="cols4"><div><label>Block</label><input class="input" placeholder="BLK-B"></div><div><label>Meal</label><select class="select"><option>Pre-Dawn</option><option>Lunch</option><option>Dinner</option></select></div><div><label>Regular Count Override</label><input class="input" type="number" placeholder="0"></div><div><label>Vegetarian Count Override</label><input class="input" type="number" placeholder="0"></div></div>
+              <div style="margin-top:10px"><label>Override Reason</label><textarea placeholder="Last-minute leave, extra coverage, agency staff, training day, kitchen correction..."></textarea></div>
+              <div class="row" style="margin-top:12px"><button class="btn primary" onclick="submit('food','Staff meal override saved and audit_log written')"><span class="ic" data-icon="check"></span>Save Staff Meal Override</button><button class="btn" onclick="fakeExport('Staff meal vendor block')"><span class="ic" data-icon="download"></span>Preview Vendor Block</button></div>
+            </div></div>
+          </div>
+        </div>
+
+        <div id="fd-moh" class="sub-pane" data-group="fd">
+          <div class="grid">
+            <div class="card col-5"><div class="card-hd"><strong><span class="ic" data-icon="reports"></span>MOH Monthly Report</strong><span class="pill">Printable PDF</span></div><div class="card-bd">
+              <div class="cols"><div><label>Start Date</label><input class="input" type="date"></div><div><label>End Date</label><input class="input" type="date"></div></div>
+              <div class="hint" style="margin-top:12px">Aggregates patient meals + staff meals across the date range. Withholding days are excluded. Breakdown by diet type: L7, L6, L5, L4, L3, Vegetarian, Special, Tube Feeding.</div>
+              <button class="btn primary" style="margin-top:12px" onclick="fakeExport('MOH monthly meal report PDF')"><span class="ic" data-icon="download"></span>Generate Printable PDF</button>
+            </div></div>
+            <div class="card col-7"><div class="card-hd"><strong><span class="ic" data-icon="food"></span>Monthly Summary Preview</strong></div><div class="card-bd">
+              <table class="tbl"><thead><tr><th>Category</th><th>Patient Meals</th><th>Staff Meals</th><th>Withholding Exclusions</th></tr></thead><tbody>
+                <tr><td>L7 Regular Diet</td><td>820</td><td>—</td><td>14</td></tr>
+                <tr><td>L6 Soft &amp; Bite-Sized Diet</td><td>210</td><td>—</td><td>3</td></tr>
+                <tr><td>L3 Liquidised Diet</td><td>96</td><td>—</td><td>8</td></tr>
+                <tr><td>Tube Feeding</td><td>44</td><td>—</td><td>0</td></tr>
+                <tr><td>Staff Meals</td><td>—</td><td>1,240</td><td>—</td></tr>
+              </tbody></table>
+            </div></div>
+          </div>
+        </div>
+
+        <div id="fd-evendor" class="sub-pane" data-group="fd">
+          <div class="grid">
+            <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="download"></span>eVendor Excel Export</strong><span class="pill">MealPlan_YYYYMMDD_HHMMPM.xlsx</span></div><div class="card-bd">
+              <div class="row" style="margin-bottom:12px"><span class="tag info">Sheets: WARD-1…WARD-N</span><span class="tag good">Header A1: Date Exported</span><span class="tag warn">Withholding block separated</span><span class="tag purple">Summary + Inpro-Outpro + Staff Meal block</span></div>
+              <table class="tbl"><thead><tr><th>Sheet / Block</th><th>Exact Structure</th></tr></thead><tbody>
+                <tr><td>WARD-1…WARD-N</td><td>Header row: Bed# | Name | Admission Date | Patient Status | Diet Type | Remarks. Body has one row per active bed, blank row if bed empty.</td></tr>
+                <tr><td>Withholding block</td><td>Bed# | Name | Admission Date | Patient Status | Diet Type | Remarks | Withholding Start | Withholding End | Withholding Remarks.</td></tr>
+                <tr><td>Ward summary</td><td>Count per Diet Type + TOTAL DESSERTS: Normal / Blended / Tube Feeding.</td></tr>
+                <tr><td>Summary sheet</td><td>Roll-up of all WARD-N summaries.</td></tr>
+                <tr><td>Inpro-Outpro</td><td>Pre-Admission / Request Pre-Admission / Discharge Pending for the day, with Breakfast/Lunch/Dinner = 1 if patient should receive.</td></tr>
+                <tr><td>Staff Meal block</td><td>Per-block BLK-B / BLK-D Pre-Dawn, Lunch, Dinner — Reg vs Veg vs Total.</td></tr>
+              </tbody></table>
+              <div class="divider"></div>
+              <div class="hint"><b>Every sheet A1:</b> Date Exported: DD-MMM-YYYY HH:MM PM</div>
+              <button class="btn primary" style="margin-top:12px" onclick="fakeExport('MealPlan_YYYYMMDD_HHMMPM.xlsx')"><span class="ic" data-icon="download"></span>Generate eVendor Excel</button>
+            </div></div>
           </div>
         </div>
       </div>
@@ -1008,7 +1321,237 @@
       <div class="topbar"><div class="topbar-left"><h2>Facility</h2><div class="sub">Staff Roster · Block → Ward → Cubicle → Bed Management</div></div><div class="topbar-right"><button class="btn sm primary" onclick="submit('facility','Facility record saved')"><span class="ic" data-icon="check"></span>Save</button></div></div>
       <div class="content-area">
         <div class="row" style="margin-bottom:14px"><button class="tab-btn active" data-sub="fc-roster" onclick="showSubTab('fc','fc-roster',this)"><span class="ic" data-icon="users"></span>Staff Roster</button><button class="tab-btn" data-sub="fc-beds" onclick="showSubTab('fc','fc-beds',this)"><span class="ic" data-icon="bed"></span>Bed / Ward Management</button></div>
-        <div id="fc-roster" class="sub-pane active" data-group="fc"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="users"></span>Staff Roster</strong><span class="pill">Drives meals + leave</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>Staff</th><th>Role</th><th>Shift</th><th>Leave</th><th>Action</th></tr></thead><tbody><tr><td>Sarah Lim</td><td>Nurse</td><td>Morning</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr><tr><td>Daniel Ong</td><td>Facility</td><td>Afternoon</td><td>AL tomorrow</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr><tr><td>Dr Lim</td><td>Doctor</td><td>On call</td><td>—</td><td><button class="btn sm"><span class="ic" data-icon="edit"></span>Edit</button></td></tr></tbody></table></div></div></div>
+        <div id="fc-roster" class="sub-pane active" data-group="fc">
+          <div class="grid">
+
+            <!-- ── STAFF DIRECTORY CARD ── -->
+            <div class="card col-12">
+              <div class="card-hd">
+                <strong><span class="ic" data-icon="users"></span>Staff Directory</strong>
+                <div class="row" style="gap:6px">
+                  <span class="pill">Master list · feeds daily roster &amp; roll-up</span>
+                  <button class="btn sm primary" onclick="toggleStaffForm()"><span class="ic" data-icon="userplus"></span>Add Staff</button>
+                </div>
+              </div>
+              <div class="card-bd">
+                <div id="addStaffPanel" style="display:none;margin-bottom:14px;border:1px dashed rgba(40,80,55,.18);border-radius:var(--radius-sm);padding:14px;background:var(--line2)">
+                  <div class="section-hd" style="margin-top:0"><span class="ic" data-icon="userplus"></span>Register New Staff Member</div>
+                  <div class="cols4">
+                    <div><label>Full Name</label><input class="input" id="ns_name" placeholder="e.g. Mei Lin"></div>
+                    <div><label>Role</label><select class="select" id="ns_role"><option>Nurse</option><option>Doctor</option><option>Therapist</option><option>Facility</option><option>Admin</option></select></div>
+                    <div><label>Default Block</label><select class="select" id="ns_block"><option>BLK-B</option><option>BLK-D</option><option>BLK-E</option></select></div>
+                    <div><label>Diet Preference</label><select class="select" id="ns_diet"><option>Regular</option><option>Vegetarian</option></select></div>
+                  </div>
+                  <div class="row" style="margin-top:10px">
+                    <button class="btn primary sm" onclick="addStaffToDirectory()"><span class="ic" data-icon="check"></span>Add Staff</button>
+                    <button class="btn sm" onclick="toggleStaffForm()">Cancel</button>
+                  </div>
+                </div>
+                <table class="tbl" id="staffDirectoryTable">
+                  <thead>
+                    <tr><th>#</th><th>Name</th><th>Role</th><th>Default Block</th><th>Diet Preference</th><th>Status</th><th style="width:60px">Remove</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td><b>Sarah Lim</b></td><td>Nurse</td><td>BLK-B</td><td><span class="tag">Regular</span></td><td><span class="tag good">Active</span></td><td><button class="btn sm ghost" onclick="removeStaff(this)" style="color:var(--bad)" title="Remove">✕</button></td></tr>
+                    <tr><td>2</td><td><b>Daniel Ong</b></td><td>Facility</td><td>BLK-D</td><td><span class="tag">Vegetarian</span></td><td><span class="tag warn">AL 14 May</span></td><td><button class="btn sm ghost" onclick="removeStaff(this)" style="color:var(--bad)" title="Remove">✕</button></td></tr>
+                    <tr><td>3</td><td><b>Dr Lim</b></td><td>Doctor</td><td>BLK-B</td><td><span class="tag">Regular</span></td><td><span class="tag good">Active</span></td><td><button class="btn sm ghost" onclick="removeStaff(this)" style="color:var(--bad)" title="Remove">✕</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── ROSTER TABLE CARD ── -->
+            <div class="card col-12">
+              <div class="card-hd">
+                <strong><span class="ic" data-icon="users"></span>Staff Roster</strong>
+                <div class="row" style="gap:6px;align-items:center;flex-wrap:wrap">
+                  <button class="btn sm ghost" onclick="rosterDate(-1)" title="Previous day"><span class="ic" data-icon="arrow-left"></span></button>
+                  <span id="rosterDateLabel" style="font-size:13px;font-weight:600;min-width:90px;text-align:center">13 May 2026</span>
+                  <button class="btn sm ghost" onclick="rosterDate(1)" title="Next day"><span class="ic" data-icon="arrow"></span></button>
+                  <button class="btn sm" onclick="toast('Jumped to today · 13 May 2026')">Today</button>
+                  <button class="btn sm primary" onclick="toggleAddRoster()"><span class="ic" data-icon="userplus"></span>Add Entry</button>
+                </div>
+              </div>
+              <div class="card-bd">
+
+                <!-- Add Entry panel (hidden by default) -->
+                <div id="addRosterPanel" style="display:none;margin-bottom:14px;border:1px dashed rgba(40,80,55,.18);border-radius:var(--radius-sm);padding:14px;background:var(--line2)">
+                  <div class="section-hd" style="margin-top:0"><span class="ic" data-icon="userplus"></span>New Roster Entry — 13 May 2026</div>
+                  <div class="cols3">
+                    <div><label>Block</label><select class="select" id="nr_block"><option>BLK-B</option><option>BLK-D</option><option>BLK-E</option></select></div>
+                    <div><label>Staff</label><select class="select" id="nr_name"><option>Sarah Lim</option><option>Daniel Ong</option><option>Dr Lim</option></select></div>
+                    <div><label>Shift</label><select class="select" id="nr_shift"><option>Pre-Dawn</option><option>Morning</option><option>Afternoon</option><option>Night</option><option>On-call</option></select></div>
+                  </div>
+                  <div class="cols" style="margin-top:10px">
+                    <div><label>Diet Preference</label><select class="select" id="nr_diet"><option>Regular</option><option>Vegetarian</option></select></div>
+                    <div><label>Leave / Status</label><select class="select" id="nr_leave"><option value="">None</option><option>AL</option><option>MC</option><option>Off-Day</option></select></div>
+                  </div>
+                  <div class="row" style="margin-top:10px">
+                    <button class="btn primary sm" onclick="addRosterRow()"><span class="ic" data-icon="check"></span>Add to Roster</button>
+                    <button class="btn sm" onclick="toggleAddRoster()">Cancel</button>
+                  </div>
+                </div>
+
+                <!-- Roster table -->
+                <table class="tbl" id="rosterTable">
+                  <thead>
+                    <tr>
+                      <th>Block</th><th>Staff</th><th>Shift</th>
+                      <th>Diet Pref</th><th>Leave / Status</th><th>Meals Counted Today</th><th style="width:110px">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- ── Row: Sarah Lim ── -->
+                    <tr>
+                      <td>BLK-B</td>
+                      <td><select class="select" style="font-size:12px;padding:5px 8px"><option selected>Sarah Lim</option><option>Daniel Ong</option><option>Dr Lim</option></select></td>
+                      <td>Morning</td>
+                      <td><span class="tag">Regular</span></td>
+                      <td>—</td>
+                      <td><span class="tag good">Lunch · Dinner</span></td>
+                      <td>
+                        <button class="btn sm" onclick="toggleRosterEdit(this)"><span class="ic" data-icon="edit"></span>Edit</button>
+                        <button class="btn sm ghost" onclick="removeRosterRow(this)" style="color:var(--bad);padding:6px 7px" title="Remove">✕</button>
+                      </td>
+                    </tr>
+                    <tr class="roster-edit" style="display:none;background:rgba(241,250,243,.5)">
+                      <td colspan="7" style="padding:12px 10px">
+                        <div class="cols3">
+                          <div><label>Block</label><select class="select"><option selected>BLK-B</option><option>BLK-D</option><option>BLK-E</option></select></div>
+                          <div><label>Staff</label><select class="select"><option selected>Sarah Lim</option><option>Daniel Ong</option><option>Dr Lim</option></select></div>
+                          <div><label>Shift</label><select class="select"><option>Pre-Dawn</option><option selected>Morning</option><option>Afternoon</option><option>Night</option><option>On-call</option></select></div>
+                        </div>
+                        <div class="cols" style="margin-top:10px">
+                          <div><label>Diet Preference</label><select class="select"><option selected>Regular</option><option>Vegetarian</option></select></div>
+                          <div><label>Leave / Status</label><select class="select"><option selected value="">None</option><option>AL</option><option>MC</option><option>Off-Day</option></select></div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+                          <button class="btn primary sm" onclick="submit('facility','Staff roster updated · Sarah Lim');closeRosterEdit(this)"><span class="ic" data-icon="check"></span>Save</button>
+                          <button class="btn sm" onclick="closeRosterEdit(this)">Cancel</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- ── Row: Daniel Ong ── -->
+                    <tr>
+                      <td>BLK-D</td>
+                      <td><select class="select" style="font-size:12px;padding:5px 8px"><option>Sarah Lim</option><option selected>Daniel Ong</option><option>Dr Lim</option></select></td>
+                      <td>Afternoon</td>
+                      <td><span class="tag">Vegetarian</span></td>
+                      <td><span class="tag warn">AL 14 May</span></td>
+                      <td><span class="tag good">Lunch · Dinner</span> <span class="tag warn" style="margin-left:4px">14 May excluded</span></td>
+                      <td>
+                        <button class="btn sm" onclick="toggleRosterEdit(this)"><span class="ic" data-icon="edit"></span>Edit</button>
+                        <button class="btn sm ghost" onclick="removeRosterRow(this)" style="color:var(--bad);padding:6px 7px" title="Remove">✕</button>
+                      </td>
+                    </tr>
+                    <tr class="roster-edit" style="display:none;background:rgba(241,250,243,.5)">
+                      <td colspan="7" style="padding:12px 10px">
+                        <div class="cols3">
+                          <div><label>Block</label><select class="select"><option>BLK-B</option><option selected>BLK-D</option><option>BLK-E</option></select></div>
+                          <div><label>Staff</label><select class="select"><option>Sarah Lim</option><option selected>Daniel Ong</option><option>Dr Lim</option></select></div>
+                          <div><label>Shift</label><select class="select"><option>Pre-Dawn</option><option>Morning</option><option selected>Afternoon</option><option>Night</option><option>On-call</option></select></div>
+                        </div>
+                        <div class="cols" style="margin-top:10px">
+                          <div><label>Diet Preference</label><select class="select"><option>Regular</option><option selected>Vegetarian</option></select></div>
+                          <div><label>Leave / Status</label><select class="select"><option value="">None</option><option selected>AL</option><option>MC</option><option>Off-Day</option></select></div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+                          <button class="btn primary sm" onclick="submit('facility','Staff roster updated · Daniel Ong');closeRosterEdit(this)"><span class="ic" data-icon="check"></span>Save</button>
+                          <button class="btn sm" onclick="closeRosterEdit(this)">Cancel</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- ── Row: Dr Lim ── -->
+                    <tr>
+                      <td>BLK-B</td>
+                      <td><select class="select" style="font-size:12px;padding:5px 8px"><option>Sarah Lim</option><option>Daniel Ong</option><option selected>Dr Lim</option></select></td>
+                      <td>On-call</td>
+                      <td><span class="tag">Regular</span></td>
+                      <td>—</td>
+                      <td><span class="tag good">Dinner</span></td>
+                      <td>
+                        <button class="btn sm" onclick="toggleRosterEdit(this)"><span class="ic" data-icon="edit"></span>Edit</button>
+                        <button class="btn sm ghost" onclick="removeRosterRow(this)" style="color:var(--bad);padding:6px 7px" title="Remove">✕</button>
+                      </td>
+                    </tr>
+                    <tr class="roster-edit" style="display:none;background:rgba(241,250,243,.5)">
+                      <td colspan="7" style="padding:12px 10px">
+                        <div class="cols3">
+                          <div><label>Block</label><select class="select"><option selected>BLK-B</option><option>BLK-D</option><option>BLK-E</option></select></div>
+                          <div><label>Staff</label><select class="select"><option>Sarah Lim</option><option>Daniel Ong</option><option selected>Dr Lim</option></select></div>
+                          <div><label>Shift</label><select class="select"><option>Pre-Dawn</option><option>Morning</option><option>Afternoon</option><option>Night</option><option selected>On-call</option></select></div>
+                        </div>
+                        <div class="cols" style="margin-top:10px">
+                          <div><label>Diet Preference</label><select class="select"><option selected>Regular</option><option>Vegetarian</option></select></div>
+                          <div><label>Leave / Status</label><select class="select"><option selected value="">None</option><option>AL</option><option>MC</option><option>Off-Day</option></select></div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+                          <button class="btn primary sm" onclick="submit('facility','Staff roster updated · Dr Lim');closeRosterEdit(this)"><span class="ic" data-icon="check"></span>Save</button>
+                          <button class="btn sm" onclick="closeRosterEdit(this)">Cancel</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── MEAL ROLL-UP CARD ── -->
+            <div class="card col-12">
+              <div class="card-hd">
+                <strong><span class="ic" data-icon="food"></span>Today's Meal Roll-Up</strong>
+                <div class="row" style="gap:6px">
+                  <span class="pill">Auto-derived from roster above</span>
+                  <span class="tag info">Seeds staff_meal_counts at 00:00</span>
+                  <span class="tag warn">1 leave flag tomorrow</span>
+                </div>
+              </div>
+              <div class="card-bd">
+                <table class="tbl">
+                  <thead>
+                    <tr>
+                      <th>Block</th>
+                      <th>Pre-Dawn (Reg / Veg)</th>
+                      <th>Lunch (Reg / Veg)</th>
+                      <th>Dinner (Reg / Veg)</th>
+                      <th>Day Total</th>
+                      <th>Source</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><b>BLK-B</b></td>
+                      <td style="color:var(--muted)">— / —</td>
+                      <td><b>1</b> / 0</td>
+                      <td><b>2</b> / 0</td>
+                      <td><b>3</b></td>
+                      <td><span class="tag good">Auto</span></td>
+                    </tr>
+                    <tr>
+                      <td><b>BLK-D</b></td>
+                      <td style="color:var(--muted)">— / —</td>
+                      <td>0 / <b>1</b></td>
+                      <td>0 / <b>1</b></td>
+                      <td><b>2</b></td>
+                      <td><span class="tag good">Auto</span></td>
+                    </tr>
+                    <tr style="background:rgba(254,249,231,.5)">
+                      <td><b>BLK-D</b> <span class="tag warn" style="font-size:10px;margin-left:4px">14 May</span></td>
+                      <td style="color:var(--muted)">— / —</td>
+                      <td colspan="2"><span class="tag warn">Daniel Ong on AL — excluded from all meals 14 May</span></td>
+                      <td><b>0</b></td>
+                      <td><span class="tag warn">Leave</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="note" style="margin-top:8px">Adjust final counts before eVendor cutoff in <b>Food &amp; Diet → Staff Meals</b>. Every manual override writes an audit_log row.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
         <div id="fc-beds" class="sub-pane" data-group="fc">
           <div class="grid">
             <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="bed"></span>Bed / Ward Status</strong><span class="pill">ECcare ER#8 · beds.cubicle_code</span></div><div class="card-bd">
@@ -1037,7 +1580,98 @@
         <div id="fn-bills" class="sub-pane active" data-group="fn"><div class="grid"><div class="card col-8"><div class="card-hd"><strong><span class="ic" data-icon="finance"></span>Discharge → Billing</strong><span class="pill">Auto invoice when status = ISSUED</span></div><div class="card-bd"><div class="cols"><div><label>Bill Reference</label><input class="input" id="fin_ref" placeholder="WB-2026-0001"></div><div><label>Patient</label><select class="select"><option>Mr Ravi Kumar</option><option>Mdm Lim Siew Eng</option></select></div></div><div class="cols" style="margin-top:10px"><div><label>HRN Number</label><input class="input" id="fin_hrn" placeholder="HRN123456"></div><div><label>Bill Status</label><select class="select"><option>Draft</option><option>Reviewed</option><option>ISSUED</option></select></div></div><div style="margin-top:10px"><label>Notes</label><textarea placeholder="Ward bill uses bill_line_items. No manual line entry at invoice-render time."></textarea></div></div></div><div class="card col-4"><div class="card-hd"><strong><span class="ic" data-icon="search"></span>Search & Pivot</strong></div><div class="card-bd"><label>Bill reference search</label><input class="input" placeholder="WB-2026-0001"><div class="hint" style="margin-top:10px"><b><span class="ic" data-icon="reports"></span>Pivot</b><br>Discharged patients per day</div></div></div></div></div>
         <div id="fn-tax" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="finance"></span>System-Generated Tax Invoice</strong><span class="pill">PDF · emailed to NOK · stored in Attachments → Finance</span></div><div class="card-bd"><div class="cols3"><div><label>Invoice No.</label><input class="input" value="2026INVTCFE00123"></div><div><label>Facility Code</label><select class="select"><option>TCFE</option><option>TCFW</option></select></div><div><label>Issued Date</label><input class="input" type="date"></div></div><table class="tbl" style="margin-top:12px"><thead><tr><th>Description</th><th>Unit Price</th><th>QTY</th><th>Fee</th></tr></thead><tbody><tr><td>TCF Ward Stay</td><td>S$225.00</td><td>10</td><td>S$2,250.00</td></tr><tr><td>Therapy Session</td><td>S$80.00</td><td>4</td><td>S$320.00</td></tr></tbody></table><div class="divider"></div><table class="tbl"><tbody><tr><td>Sub-Total</td><td>S$2,570.00</td></tr><tr><td>Add GST 9%</td><td>S$231.30</td></tr><tr><td>Total Amount Payable</td><td>S$2,801.30</td></tr><tr><td>MSAVE Payment Received</td><td>S$500.00</td></tr><tr><td>Medishield Payment Received</td><td>S$800.00</td></tr><tr><td>Private Insurance Payment Received</td><td>S$0.00</td></tr><tr><td>Cash Payment Received</td><td>S$300.00</td></tr><tr><td>GST Absorbed by GOVT</td><td>S$0.00</td></tr><tr><td><b>Outstanding Balance</b></td><td><b>S$1,201.30</b></td></tr></tbody></table><div class="hint" style="margin-top:12px"><b>Mandatory issuer line</b><br>This tax invoice is issued on behalf of HHOM Pte Ltd, GST registration no: 201810452N, 1 North Buona Vista Link, #09-01, Singapore 139691.</div><div class="row" style="margin-top:12px"><button class="btn primary" onclick="submit('finance','Tax invoice rendered, emailed to NOK and stored under Finance attachments')"><span class="ic" data-icon="check"></span>Issue Tax Invoice</button><button class="btn" onclick="submit('finance','Tax invoice reprinted and audit_log row written')"><span class="ic" data-icon="refresh"></span>Reprint</button></div></div></div></div>
         <div id="fn-interim" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="clipboard"></span>Interim Invoice / Pre-Discharge Letter</strong><span class="pill">interim = true · not posted to GL</span></div><div class="card-bd"><div class="cols4"><div><label>Date</label><input class="input" type="date"></div><div><label>Patient_Name</label><input class="input" value="Mr Tan Wei Ming"></div><div><label>Admission_Date</label><input class="input" type="date"></div><div><label>Tentative_Discharge</label><input class="input" type="date"></div></div><div style="margin-top:10px"><label>Standard Body</label><textarea>As of «Tentative_Discharge», your current charge is «Total_Payable». Your final bill will include any financial assistance and adjustments. Approved Medisave and Medishield Life claims will be processed by CPF Board after your discharge.</textarea></div><table class="tbl" style="margin-top:12px"><thead><tr><th>Admission date</th><th>Discharge date</th><th>Estimated bill as of tentative discharge</th></tr></thead><tbody><tr><td>1 May 2026</td><td>To be determined</td><td>S$1,680.00</td></tr></tbody></table><div class="note"><i>As this is an interim invoice, final charges may vary based on actual stay and services rendered.</i></div><button class="btn primary" style="margin-top:12px" onclick="fakeExport('Interim invoice Word/PDF letter')"><span class="ic" data-icon="download"></span>Generate Interim Letter</button></div></div></div>
-        <div id="fn-monthly" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="reports"></span>Monthly Payment Reporting — Nominal Roll</strong><span class="pill">MOH / AIC Excel export</span></div><div class="card-bd"><div class="cols3"><div><label>Sheet Name</label><input class="input" value="Payment Template TCF East May’26"></div><div><label>Reporting Month</label><input class="input" type="month"></div><div><label>Facility</label><select class="select"><option>East</option><option>West</option></select></div></div><table class="tbl" style="margin-top:12px"><thead><tr><th>S/N</th><th>Full Name</th><th>Pass Type</th><th>Bill Ref</th><th>TCF Charge</th><th>GST</th><th>Finalised Amount</th><th>2Ms</th><th>OOP</th><th>Outstanding</th><th>Status</th></tr></thead><tbody><tr><td>1</td><td>Mr Ravi Kumar</td><td>SC</td><td>2026INVTCFE00123</td><td>2,570.00</td><td>231.30</td><td>2,801.30</td><td>1,300.00</td><td>300.00</td><td>1,201.30</td><td>Made Partial Payments</td></tr><tr><td>2</td><td>Mdm Lim</td><td>PR</td><td>2026INVTCFE00124</td><td>1,500.00</td><td>135.00</td><td>1,635.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>On Waiver</td></tr></tbody></table><div class="hint" style="margin-top:12px"><b>Pre-export validation</b><br>GST tie-out, GST absorption tie-out, OOP non-negative, Outstanding = Finalised − 2Ms − OOP − Waived − Subsequent Collections, and Reminder Regime required for Pending Full Payments.</div><button class="btn primary" style="margin-top:12px" onclick="fakeExport('Monthly Payment Template TCF Excel')"><span class="ic" data-icon="download"></span>Generate Monthly Excel</button></div></div></div>
+        <div id="fn-monthly" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="reports"></span>Monthly Payment Reporting — Nominal Roll</strong><span class="pill">MOH / AIC Excel export</span></div><div class="card-bd"><div class="cols3"><div><label>Sheet Name</label><input class="input" value="Payment Template TCF East May’26"></div><div><label>Reporting Month</label><input class="input" type="month"></div><div><label>Facility</label><select class="select"><option>East</option><option>West</option></select></div></div><div style="overflow-x:auto;margin-top:12px">
+<table class="tbl" style="min-width:3000px;font-size:11.5px">
+  <thead>
+    <tr style="background:var(--bg)">
+      <th style="min-width:36px;position:sticky;left:0;z-index:2;background:var(--bg)">S/N</th>
+      <th style="min-width:140px;position:sticky;left:36px;z-index:2;background:var(--bg)">Full Name</th>
+      <th style="min-width:75px">Pass Type</th>
+      <th style="min-width:110px">Categories</th>
+      <th style="min-width:75px">Overstayer?</th>
+      <th style="min-width:140px">Bill Reference No</th>
+      <th style="min-width:95px">Admission Date</th>
+      <th style="min-width:95px">Discharge Date</th>
+      <th style="min-width:95px">TCF Charge (S$)</th>
+      <th style="min-width:90px">GST Charged (S$)</th>
+      <th style="min-width:95px">GST Absorbed (S$)</th>
+      <th style="min-width:110px">Finalised Amount Payable (S$)</th>
+      <th style="min-width:105px">Date of Finalised Bill</th>
+      <th style="min-width:110px">Utilisation of MediShield / 3Ms (S$)</th>
+      <th style="min-width:100px">Amount Utilised from 2Ms (S$)</th>
+      <th style="min-width:115px;background:rgba(220,38,38,.07);color:#7a1010">Patient Not at Pocket / Amount Waived (S$)</th>
+      <th style="min-width:110px">Outstanding Amount to Date (S$)</th>
+      <th style="min-width:120px">Total Amount Collected During Month of Reporting (S$)</th>
+      <th style="min-width:100px">Subsequent Collection 1 (S$)</th>
+      <th style="min-width:100px">Date of Payment 1</th>
+      <th style="min-width:100px">Subsequent Collection 2 (S$)</th>
+      <th style="min-width:100px">Date of Payment 2</th>
+      <th style="min-width:115px">Outstanding Amount After Subsequent Collections (S$)</th>
+      <th style="min-width:150px">Payment Status</th>
+      <th style="min-width:150px">Reminder Regime</th>
+      <th style="min-width:120px">Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="position:sticky;left:0;background:#fff;z-index:1">1</td>
+      <td style="position:sticky;left:36px;background:#fff;z-index:1"><b>Mr Ravi Kumar</b></td>
+      <td>SC</td>
+      <td>Paying Patient</td>
+      <td>N</td>
+      <td style="font-family:var(--mono);font-size:11px">2026INVTCFE00123</td>
+      <td>1 May 2026</td>
+      <td>6 May 2026</td>
+      <td>2,570.00</td>
+      <td>231.30</td>
+      <td>0.00</td>
+      <td><b>2,801.30</b></td>
+      <td>8 May 2026</td>
+      <td>1,300.00</td>
+      <td>300.00</td>
+      <td style="background:rgba(220,38,38,.05)">0.00</td>
+      <td>1,201.30</td>
+      <td>300.00</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td><b>1,201.30</b></td>
+      <td><span class="tag warn">Partial payment</span></td>
+      <td>1st reminder sent</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td style="position:sticky;left:0;background:#fff;z-index:1">2</td>
+      <td style="position:sticky;left:36px;background:#fff;z-index:1"><b>Mdm Lim Siew Eng</b></td>
+      <td>PR</td>
+      <td>LTAP+</td>
+      <td>N</td>
+      <td style="font-family:var(--mono);font-size:11px">2026INVTCFE00124</td>
+      <td>3 Apr 2026</td>
+      <td>—</td>
+      <td>1,500.00</td>
+      <td>135.00</td>
+      <td>135.00</td>
+      <td><b>1,500.00</b></td>
+      <td>—</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td style="background:rgba(220,38,38,.05)"><b>1,500.00</b></td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td><b>0.00</b></td>
+      <td><span class="tag good">On Waiver</span></td>
+      <td>N/A</td>
+      <td>FA approved</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="hint" style="margin-top:12px"><b>Pre-export validation</b><br>GST tie-out, GST absorption tie-out, OOP non-negative, Outstanding = Finalised − 2Ms − OOP − Waived − Subsequent Collections, and Reminder Regime required for Pending Full Payments.</div><button class="btn primary" style="margin-top:12px" onclick="fakeExport('Monthly Payment Template TCF Excel')"><span class="ic" data-icon="download"></span>Generate Monthly Excel</button></div></div></div>
         <div id="fn-claims" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="shield"></span>Claims</strong><span class="pill">AIC · Medisave · MediShield</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>HRN</th><th>Source</th><th>Amount</th><th>Status</th></tr></thead><tbody><tr><td>HRN123456</td><td>AIC</td><td>$1,200.00</td><td><span class="tag info">Submitted</span></td></tr><tr><td>HRN654321</td><td>Medisave</td><td>$420.00</td><td><span class="tag good">Approved</span></td></tr></tbody></table></div></div></div>
         <div id="fn-charges" class="sub-pane" data-group="fn"><div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="settings"></span>Charges Configuration</strong><span class="pill">Pass-type default day rate</span></div><div class="card-bd"><table class="tbl"><thead><tr><th>Pass Type</th><th>Default Day Rate</th><th>Configurable</th></tr></thead><tbody><tr><td>SC</td><td>S$225</td><td><span class="tag good">Admin → Charges</span></td></tr><tr><td>PR</td><td>S$150</td><td><span class="tag good">Admin → Charges</span></td></tr><tr><td>CG</td><td>S$116</td><td><span class="tag good">Admin → Charges</span></td></tr></tbody></table></div></div></div>
       </div>
@@ -1071,7 +1705,7 @@
           <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="bandage"></span>Wound Progress</strong><span class="pill">Time-based comparison</span></div><div class="card-bd"><div class="hint">Generates wound progress report from longitudinal entries (size, type, image, notes).</div></div></div>
         </div>
         <div id="rp-custom" class="sub-pane" data-group="rp">
-          <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="search"></span>Custom Cross-Module Query</strong></div><div class="card-bd"><label>Query</label><textarea placeholder="Example: active patients with fasting orders and pending ward bills"></textarea><button class="btn primary" style="margin-top:10px" onclick="fakeExport('Custom query result')"><span class="ic" data-icon="download"></span>Run &amp; Export</button></div></div>
+          <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="search"></span>Custom Cross-Module Query</strong></div><div class="card-bd"><label>Query</label><textarea placeholder="Example: active patients with withholding orders and pending ward bills"></textarea><button class="btn primary" style="margin-top:10px" onclick="fakeExport('Custom query result')"><span class="ic" data-icon="download"></span>Run &amp; Export</button></div></div>
         </div>
       </div>
     </div>
@@ -1333,6 +1967,7 @@ function showProfileTab(tab,btn){
   if(tab==='clinical'){ showSubTab('cl','cl-timeline',document.querySelector('#view-profile [data-sub="cl-timeline"]')); }
   if(tab==='medication'){ showSubTab('md','md-serving',document.querySelector('#view-profile [data-sub="md-serving"]')); }
   if(tab==='communication'){ showSubTab('cm','cm-family',document.querySelector('#view-profile [data-sub="cm-family"]')); }
+  if(tab==='mealplan'){ initFastingBanner(); }
 }
 
 /* ---------- GENERIC SUB-TAB ---------- */
@@ -1412,7 +2047,7 @@ function seedSample(){
   submit('patient','Pre-admission converted to admission with auto-timestamp');
   submit('note','Nurse note saved with action-needed flag');
   submit('finance','Ward bill saved as draft');
-  submit('food','Fasting conflict flagged in meal plan');
+  submit('food','Withholding conflict flagged in meal plan');
   toast('Sample data seeded.');
 }
 function clearPreviews(){ previews.length=0; refreshRecent(); toast('Activity cleared.'); }
@@ -1452,7 +2087,7 @@ const PERM_ROWS=[
   ['Prescribe',                     'F','-','-','-','-','F','-','-','-'],
   ['Administer / Schedule',         'F','-','-','-','-','V','E','-','-'],
   ['Allergy Registry',              'F','V','-','-','-','F','E','V','V'],
-  ['Withholding (Fasting)',         'F','-','-','V','-','F','E','-','-'],
+  ['Withholding (Withholding)',         'F','-','-','V','-','F','E','-','-'],
   ['__section','Patient Profile — Communication & Attachments'],
   ['Family Chat (per patient)',     'F','V','V','-','-','E','E','E','E'],
   ['Internal Discussion (per patient)','F','F','E','E','E','E','E','E','E'],
@@ -1497,6 +2132,51 @@ function specialistPermsForRow(rowName){
   if(/Templates|Abbreviation/.test(name)) return ['E','E','E'];
   return [visit,diet,psych];
 }
+
+let selectedDoseTile=null;
+function openDoseDetail(tile,drug,freq,time,status,lastLog){
+  selectedDoseTile=tile;
+  const panel=document.getElementById('doseDetailPanel');
+  const drugEl=document.getElementById('doseDetailDrug');
+  const statusEl=document.getElementById('doseDetailStatus');
+  const timeEl=document.getElementById('doseDetailTime');
+  const freqEl=document.getElementById('doseDetailFreq');
+  const lastEl=document.getElementById('doseDetailLast');
+  if(panel){ panel.classList.add('active'); }
+  if(drugEl){ drugEl.textContent=drug; }
+  if(statusEl){
+    statusEl.className='tag '+(String(status).toLowerCase().includes('taken')?'good':String(status).toLowerCase().includes('check')?'bad':'warn');
+    statusEl.textContent=status;
+  }
+  if(timeEl){ timeEl.value=time; }
+  if(freqEl){ freqEl.value=freq; }
+  if(lastEl){ lastEl.value=lastLog; }
+  toast('Dose details opened. You can mark this schedule as taken.');
+}
+function markSelectedDoseTaken(){
+  if(!selectedDoseTile){ toast('Select a scheduled dose first.'); return; }
+  selectedDoseTile.classList.remove('pending','check');
+  selectedDoseTile.classList.add('taken');
+  const span=selectedDoseTile.querySelector('span');
+  if(span){ span.textContent=span.textContent.replace(/Pending|Upcoming|Check last dose|Last-dose check required/i,'Taken'); }
+  const statusEl=document.getElementById('doseDetailStatus');
+  if(statusEl){ statusEl.className='tag good'; statusEl.textContent='Taken'; }
+  const lastEl=document.getElementById('doseDetailLast');
+  if(lastEl){ lastEl.value='Just administered by current user · status: given'; }
+  submit('profile','Medication schedule dose marked as taken');
+}
+function markSelectedDoseWithheld(){
+  if(!selectedDoseTile){ toast('Select a scheduled dose first.'); return; }
+  selectedDoseTile.classList.remove('taken','check','pending','missed');
+  selectedDoseTile.classList.add('withheld');
+  const span=selectedDoseTile.querySelector('span');
+  if(span){ span.textContent=span.textContent.replace(/Taken|Upcoming|Pending|Check last dose/i,'Withheld / refused'); }
+  const statusEl=document.getElementById('doseDetailStatus');
+  if(statusEl){ statusEl.className='tag purple'; statusEl.textContent='Withheld / refused'; }
+  const lastEl=document.getElementById('doseDetailLast');
+  if(lastEl){ lastEl.value='Just withheld/refused by current user · timestamp + nurse code captured'; }
+  submit('profile','Medication schedule dose marked as withheld/refused with timestamp and nurse code');
+}
 function showMedConfirm(drug){
   const box=document.getElementById('medConfirmBox');
   const txt=document.getElementById('medConfirmText');
@@ -1522,6 +2202,127 @@ function renderPermMatrix(){
   tbody.innerHTML=html;
 }
 renderPermMatrix();
+
+/* ── STAFF ROSTER ── */
+function toggleRosterEdit(btn){
+  var dataRow = btn.closest('tr');
+  var editRow = dataRow ? dataRow.nextElementSibling : null;
+  if(!editRow || !editRow.classList.contains('roster-edit')) return;
+  var opening = editRow.style.display === 'none';
+  document.querySelectorAll('tr.roster-edit').forEach(function(r){ r.style.display='none'; });
+  if(opening){ editRow.style.display='table-row'; renderIcons(editRow); }
+}
+function closeRosterEdit(el){
+  var row = el.closest('tr.roster-edit');
+  if(row) row.style.display='none';
+}
+function toggleAddRoster(){
+  var p = document.getElementById('addRosterPanel');
+  if(p){ p.style.display = p.style.display==='none' ? 'block' : 'none'; renderIcons(p); }
+}
+function rosterMeals(shift, leave){
+  if(leave) return '<span class="tag warn">Excluded ('+leave+')</span>';
+  if(shift==='Morning'||shift==='Afternoon') return '<span class="tag good">Lunch · Dinner</span>';
+  if(shift==='Night') return '<span class="tag good">Dinner · Pre-Dawn</span>';
+  if(shift==='On-call') return '<span class="tag good">Dinner</span>';
+  if(shift==='Pre-Dawn') return '<span class="tag good">Pre-Dawn</span>';
+  return '<span class="tag">—</span>';
+}
+function addRosterRow(){
+  var name = document.getElementById('nr_name').value.trim();
+  if(!name){ toast('Please enter a staff name.'); return; }
+  var block = document.getElementById('nr_block').value;
+  var role  = document.getElementById('nr_role').value;
+  var shift = document.getElementById('nr_shift').value;
+  var diet  = document.getElementById('nr_diet').value;
+  var leave = document.getElementById('nr_leave').value;
+  var tbody = document.querySelector('#rosterTable tbody');
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td>'+esc(block)+'</td><td><b>'+esc(name)+'</b></td><td>'+esc(role)+'</td><td>'+esc(shift)+'</td>'+
+    '<td><span class="tag">'+esc(diet)+'</span></td>'+
+    '<td>'+(leave?'<span class="tag warn">'+esc(leave)+'</span>':'—')+'</td>'+
+    '<td>'+rosterMeals(shift,leave)+'</td>'+
+    '<td><button class="btn sm" onclick="toggleRosterEdit(this)"><span class="ic" data-icon="edit"></span>Edit</button> '+
+    '<button class="btn sm ghost" onclick="removeRosterRow(this)" style="color:var(--bad);padding:6px 7px" title="Remove">✕</button></td>';
+  var editTr = document.createElement('tr');
+  editTr.className='roster-edit';
+  editTr.style.display='none';
+  editTr.style.background='rgba(241,250,243,.5)';
+  editTr.innerHTML='<td colspan="8" style="padding:10px"><div class="row"><span style="font-size:12px;color:var(--muted)">Use full roster form to edit saved entries.</span>'+
+    '<button class="btn sm primary" onclick="submit(\'facility\',\'Roster entry updated · '+esc(name)+'\');closeRosterEdit(this)"><span class="ic" data-icon="check"></span>Save</button>'+
+    '<button class="btn sm" onclick="closeRosterEdit(this)">Cancel</button></div></td>';
+  tbody.appendChild(tr);
+  tbody.appendChild(editTr);
+  renderIcons(tr); renderIcons(editTr);
+  document.getElementById('nr_name').value='';
+  document.getElementById('nr_leave').value='';
+  toggleAddRoster();
+  submit('facility','Roster entry added: '+name+' · '+block+' · '+shift);
+}
+function removeRosterRow(btn){
+  var row = btn.closest('tr');
+  var next = row ? row.nextElementSibling : null;
+  if(next && next.classList.contains('roster-edit')) next.remove();
+  if(row) row.remove();
+  toast('Roster entry removed.');
+}
+function rosterDate(delta){
+  toast((delta>0?'Next':'Previous')+' day — date navigation not wired in this demo.');
+}
+function toggleStaffForm(){
+  var p=document.getElementById('addStaffPanel');
+  if(p){ p.style.display=p.style.display==='none'?'block':'none'; renderIcons(p); }
+}
+function addStaffToDirectory(){
+  var name=document.getElementById('ns_name').value.trim();
+  if(!name){ toast('Please enter a staff name.'); return; }
+  var role=document.getElementById('ns_role').value;
+  var block=document.getElementById('ns_block').value;
+  var diet=document.getElementById('ns_diet').value;
+  var tbody=document.querySelector('#staffDirectoryTable tbody');
+  var rows=tbody.querySelectorAll('tr');
+  var num=rows.length+1;
+  var tr=document.createElement('tr');
+  tr.innerHTML='<td>'+num+'</td><td><b>'+esc(name)+'</b></td><td>'+esc(role)+'</td><td>'+esc(block)+'</td>'+
+    '<td><span class="tag">'+esc(diet)+'</span></td><td><span class="tag good">Active</span></td>'+
+    '<td><button class="btn sm ghost" onclick="removeStaff(this)" style="color:var(--bad)" title="Remove">✕</button></td>';
+  tbody.appendChild(tr);
+  /* also add to all staff selects */
+  document.querySelectorAll('#rosterTable select, #addRosterPanel #nr_name').forEach(function(sel){
+    if(sel.tagName==='SELECT'&&sel.options.length<=5){
+      var opt=document.createElement('option'); opt.textContent=name; sel.appendChild(opt);
+    }
+  });
+  document.getElementById('ns_name').value='';
+  toggleStaffForm();
+  submit('facility','Staff member registered: '+name+' · '+role+' · '+block);
+}
+function removeStaff(btn){
+  var row=btn.closest('tr'); if(row) row.remove();
+  toast('Staff member removed from directory.');
+}
+/* ── END STAFF ROSTER ── */
+
+function markMealPlanDirty(){
+  var btn=document.getElementById('saveMealPlanBtn');
+  if(btn){ btn.disabled=false; }
+}
+function toggleTubeFeed(val){
+  var el=document.getElementById('tubeFeedFields');
+  if(el) el.style.display=(val==='Tube Feeding')?'block':'none';
+}
+function toggleBolusFreq(val){
+  var el=document.getElementById('bolusFreqField');
+  if(el) el.style.display=(val==='Bolus'||val==='Intermittent')?'block':'none';
+}
+function initFastingBanner(){
+  var tab=document.getElementById('profile-mealplan');
+  var banner=document.getElementById('fastingBanner');
+  if(!tab||!banner) return;
+  banner.style.display=tab.getAttribute('data-fasting')==='true'?'flex':'none';
+}
+document.addEventListener('DOMContentLoaded', initFastingBanner);
 </script>
 </body>
 </html>
