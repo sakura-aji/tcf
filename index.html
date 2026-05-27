@@ -107,6 +107,7 @@
   table.tbl tr:last-child td{border-bottom:none}
   table.tbl tr:hover td{background:var(--line2)}
   .patient-table tbody tr{cursor:pointer}.patient-table tbody tr.is-hidden{display:none}
+  .bed-table tbody tr{cursor:pointer}
 
   /* Permission matrix */
   .perm-tbl{font-size:11.5px}
@@ -434,7 +435,9 @@
                       <div class="cols3"><div><label>Full Name</label><input class="input" value="Mr Tan Wei Ming"></div><div><label>NRIC / FIN</label><input class="input" value="S1234567A"></div><div><label>Date of Birth</label><input class="input" type="date"></div></div>
                       <div class="cols3" style="margin-top:10px"><div><label>Contact Number</label><input class="input" value="+65 9XXX XXXX"></div><div><label>Admission Status</label><select class="select"><option>Pre-admission</option><option>Admission</option><option selected>Active</option><option>Discharged</option></select></div><div><label>Referral Source</label><select class="select"><option selected>Hospital</option><option>Polyclinic</option><option>A&amp;E</option><option>Community</option><option>Family / Self</option></select></div></div>
                       <div class="section-hd"><span class="ic" data-icon="bed"></span>Bed Assignment</div>
-                      <div class="cols3"><div><label>Block / Ward</label><select class="select"><option selected>Block A / Ward 1</option><option>Block B / Ward 2</option><option>Block C / Ward 3</option></select></div><div><label>Room / Bed</label><input class="input" value="W2 · B14"></div><div><label>Assigned RN</label><select class="select"><option selected>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div></div>
+                      <div class="hint" style="margin-bottom:10px"><b>Patient page update</b><br>Users can update this patient's bed assignment here. The Facility bed table should reflect the same assignment and bed status.</div>
+                      <div class="cols3"><div><label>Block / Ward</label><select class="select"><option selected>Block A / Ward 1</option><option>Block B / Ward 2</option><option>Block C / Ward 3</option></select></div><div><label>Cubicle</label><input class="input" value="Cubicle 2"></div><div><label>Bed</label><input class="input" value="Bed 14"></div></div>
+                      <div class="cols3" style="margin-top:10px"><div><label>Bed Type</label><select class="select"><option selected>Ordinary</option><option>Air-Mattress</option><option>Isolation</option><option>Other</option></select></div><div><label>Bed Status</label><select class="select"><option>Available</option><option>Reserved</option><option selected>Occupied</option><option>Out-of-service</option></select></div><div><label>Assigned RN</label><select class="select"><option selected>RN Sarah</option><option>RN Mei Lin</option><option>RN Daniel</option></select></div></div>
                       <div class="section-hd"><span class="ic" data-icon="food"></span>Diet &amp; Clinical Flags</div>
                       <div class="cols3"><div><label>Patient Diet</label><select class="select"><optgroup label="IDDSI Texture"><option selected>L7 Regular Diet</option><option>L7 Easy To Chew Diet</option><option>L6 Soft &amp; Bite-Sized Diet</option><option>L5 Minced &amp; Moist Diet</option><option>L4 Pureed Diet</option><option>L3 Liquidised Diet</option></optgroup><optgroup label="Other"><option>Vegetarian Diet</option><option>Special Diet</option><option>Tube Feeding</option></optgroup></select></div><div><label>Food Allergies / Restrictions</label><input class="input" value="Shellfish, halal"></div><div><label>Withholding</label><select class="select"><option selected>No active withholding order</option><option>Withholding for procedure</option><option>Medication withholding required</option></select></div></div>
                       <div class="cols" style="margin-top:10px"><div><label>Known Drug Allergies</label><input class="input" value="Penicillin"></div><div><label>Upload Documents</label><input class="input" type="file" multiple></div></div>
@@ -1554,21 +1557,56 @@
         </div>
         <div id="fc-beds" class="sub-pane" data-group="fc">
           <div class="grid">
+            <div class="card col-12">
+              <div class="card-hd">
+                <strong><span class="ic" data-icon="edit"></span>Create Bed</strong>
+                <span class="pill" id="bedModePill">New bed record</span>
+              </div>
+              <div class="card-bd">
+                <div class="hint" style="margin-bottom:12px"><b>Bed logic</b><br>This section is for creating a new bed record. When a user clicks an existing bed from the table below, the selected bed values load here for editing, including patient assignment and bed status. Status is included so beds can be marked as <b>Available</b>, <b>Reserved</b>, <b>Occupied</b>, or <b>Out-of-service</b>.</div>
+                <div class="cols4">
+                  <div><label>Patient</label><select class="select" id="bedPatient"><option value="">Unassigned</option><option>Mr Tan</option><option>Mdm Lim</option><option>Mr Ravi</option></select></div>
+                  <div><label>Bed Type</label><select class="select" id="bedType"><option>Ordinary</option><option>Air-Mattress</option><option>Isolation</option><option>Other</option></select></div>
+                  <div><label>Status</label><select class="select" id="bedStatus"><option>Available</option><option>Reserved</option><option>Occupied</option><option>Out-of-service</option></select></div>
+                  <div><label>Block</label><select class="select" id="bedBlock"><option>Block A</option><option>Block B</option><option>Block C</option></select></div>
+                </div>
+                <div class="cols3" style="margin-top:10px">
+                  <div><label>Ward</label><select class="select" id="bedWard"><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div>
+                  <div><label>Cubicle</label><input class="input" id="bedCubicle" placeholder="Cubicle 1"></div>
+                  <div><label>Bed</label><input class="input" id="bedName" placeholder="Bed 14"></div>
+                </div>
+                <div class="row" style="margin-top:12px">
+                  <button class="btn" onclick="resetBedForm()"><span class="ic" data-icon="refresh"></span>Clear / New Bed</button>
+                  <button class="btn primary" id="bedSaveBtn" onclick="submit('facility','Bed record saved / updated')"><span class="ic" data-icon="check"></span>Create Bed</button>
+                </div>
+              </div>
+            </div>
+
             <div class="card col-12"><div class="card-hd"><strong><span class="ic" data-icon="bed"></span>Bed / Ward Status</strong><span class="pill">ECcare ER#8 · beds.cubicle_code</span></div><div class="card-bd">
-              <div class="row" style="margin-bottom:12px"><span class="tag info">Default sort: Ward → Cubicle → Bed</span><span class="tag good">Filter chips for ward rounds</span><span class="tag purple">eVendor Excel grouped by cubicle</span></div>
-              <div class="row" style="margin-bottom:12px"><button class="tab-btn active">All Wards</button><button class="tab-btn">Ward 1</button><button class="tab-btn">Ward 1 · Cubicle 1</button><button class="tab-btn">Ward 1 · Cubicle 2</button><button class="tab-btn">Ward 2</button></div>
-              <table class="tbl"><thead><tr><th>Block</th><th>Ward</th><th>Cubicle</th><th>Bed</th><th>Bed Type</th><th>Status</th><th>Patient</th></tr></thead><tbody>
-                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 1</td><td>Ordinary</td><td><span class="tag good">Available</span></td><td>—</td></tr>
-                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 2</td><td>Air-Mattress</td><td><span class="tag warn">Reserved</span></td><td>Mdm Lim</td></tr>
-                <tr><td>Block A</td><td>Ward 1</td><td>Cubicle 2</td><td>Bed 14</td><td>Ordinary</td><td><span class="tag bad">Occupied</span></td><td>Mr Tan</td></tr>
-                <tr><td>Block C</td><td>Ward 3</td><td>Cubicle 1</td><td>Bed 7</td><td>Isolation</td><td><span class="tag bad">Occupied</span></td><td>Mr Ravi</td></tr>
-                <tr><td>Block B</td><td>Ward 2</td><td>—</td><td>Bed 3</td><td>Ordinary</td><td><span class="tag">Out-of-service</span></td><td>—</td></tr>
-              </tbody></table>
+              <div class="row" style="margin-bottom:12px;justify-content:space-between">
+                <div class="row">
+                  <span class="tag info">Default sort: Ward → Cubicle → Bed</span>
+                  <span class="tag good">Filter chips for ward rounds</span>
+                  <span class="tag warn">Status includes Out-of-service</span>
+                </div>
+                <button class="btn sm primary" onclick="fakeExport('eVendor Excel grouped by cubicle')"><span class="ic" data-icon="download"></span>Export eVendor Excel</button>
+              </div>
+              <div class="hint" style="margin-bottom:12px"><b>eVendor ward sheet export</b><br>The export follows the WARD-N sheet packing layout. Rows are grouped by cubicle with a sub-header row inside each ward sheet, so vendor packing follows the ward-round physical layout.</div>
+              <div class="row" style="margin-bottom:12px"><button class="tab-btn active">All Wards</button><button class="tab-btn">Ward 1</button><button class="tab-btn">Ward 1 · Cubicle 1</button><button class="tab-btn">Ward 1 · Cubicle 2</button><button class="tab-btn">Ward 2</button><button class="tab-btn">Out-of-service</button></div>
+              <table class="tbl bed-table">
+                <thead><tr><th>Block</th><th>Ward</th><th>Cubicle</th><th>Bed</th><th>Bed Type</th><th>Status</th><th>Patient</th></tr></thead>
+                <tbody>
+                  <tr onclick="loadBedRecord('Block A','Ward 1','Cubicle 1','Bed 1','Ordinary','Available','')"><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 1</td><td>Ordinary</td><td><span class="tag good">Available</span></td><td>—</td></tr>
+                  <tr onclick="loadBedRecord('Block A','Ward 1','Cubicle 1','Bed 2','Air-Mattress','Reserved','Mdm Lim')"><td>Block A</td><td>Ward 1</td><td>Cubicle 1</td><td>Bed 2</td><td>Air-Mattress</td><td><span class="tag warn">Reserved</span></td><td>Mdm Lim</td></tr>
+                  <tr onclick="loadBedRecord('Block A','Ward 1','Cubicle 2','Bed 14','Ordinary','Occupied','Mr Tan')"><td>Block A</td><td>Ward 1</td><td>Cubicle 2</td><td>Bed 14</td><td>Ordinary</td><td><span class="tag bad">Occupied</span></td><td>Mr Tan</td></tr>
+                  <tr onclick="loadBedRecord('Block C','Ward 3','Cubicle 1','Bed 7','Isolation','Occupied','Mr Ravi')"><td>Block C</td><td>Ward 3</td><td>Cubicle 1</td><td>Bed 7</td><td>Isolation</td><td><span class="tag bad">Occupied</span></td><td>Mr Ravi</td></tr>
+                  <tr onclick="loadBedRecord('Block B','Ward 2','','Bed 3','Ordinary','Out-of-service','')"><td>Block B</td><td>Ward 2</td><td>—</td><td>Bed 3</td><td>Ordinary</td><td><span class="tag">Out-of-service</span></td><td>—</td></tr>
+                </tbody>
+              </table>
+              <div class="note">Click any bed row to load the selected bed record into the Create Bed form above. Existing bed assignment can then be updated from the bed record. Patient bed assignment can also be updated from the Patient Profile page.</div>
             </div></div>
-            <div class="card col-5"><div class="card-hd"><strong><span class="ic" data-icon="edit"></span>Assign / Move Bed</strong></div><div class="card-bd"><div class="cols"><div><label>Patient</label><select class="select"><option>Mr Tan</option><option>Mdm Lim</option></select></div><div><label>Bed Type</label><select class="select"><option>Ordinary</option><option>Air-Mattress</option><option>Isolation</option><option>Other</option></select></div></div><div class="cols3" style="margin-top:10px"><div><label>Ward</label><select class="select"><option>Ward 1</option><option>Ward 2</option><option>Ward 3</option></select></div><div><label>Cubicle</label><input class="input" placeholder="Cubicle 1"></div><div><label>Bed</label><input class="input" placeholder="Bed 14"></div></div><button class="btn primary" style="margin-top:10px" onclick="submit('facility','Bed assignment updated')"><span class="ic" data-icon="check"></span>Apply</button></div></div>
-            <div class="card col-7"><div class="card-hd"><strong><span class="ic" data-icon="download"></span>eVendor Ward Sheet Export</strong></div><div class="card-bd"><div class="hint"><b>WARD-N sheet packing layout</b><br>Rows are grouped by cubicle with a sub-header row inside each ward sheet so vendor packing follows ward-round physical layout.</div><button class="btn sm" style="margin-top:12px" onclick="fakeExport('eVendor Excel grouped by cubicle')"><span class="ic" data-icon="download"></span>Export eVendor Excel</button></div></div>
           </div>
-        </div>
+        </div>        </div>
       </div>
     </div>
 
@@ -2303,6 +2341,54 @@ function removeStaff(btn){
   toast('Staff member removed from directory.');
 }
 /* ── END STAFF ROSTER ── */
+
+
+function setSelectValue(id,value){
+  var el=document.getElementById(id);
+  if(!el) return;
+  for(var i=0;i<el.options.length;i++){
+    if(el.options[i].text===value || el.options[i].value===value){ el.selectedIndex=i; return; }
+  }
+  if(value){
+    var opt=document.createElement('option');
+    opt.textContent=value;
+    opt.value=value;
+    el.appendChild(opt);
+    el.value=value;
+  }else{
+    el.value='';
+  }
+}
+function loadBedRecord(block,ward,cubicle,bed,type,status,patient){
+  setSelectValue('bedBlock',block);
+  setSelectValue('bedWard',ward);
+  document.getElementById('bedCubicle').value=cubicle||'';
+  document.getElementById('bedName').value=bed||'';
+  setSelectValue('bedType',type);
+  setSelectValue('bedStatus',status);
+  setSelectValue('bedPatient',patient||'');
+  var pill=document.getElementById('bedModePill');
+  var btn=document.getElementById('bedSaveBtn');
+  if(pill) pill.textContent='Editing selected bed';
+  if(btn) btn.innerHTML='<span class="ic" data-icon="check"></span>Update Selected Bed';
+  initIcons();
+  toast('Selected bed loaded into Create Bed form.');
+}
+function resetBedForm(){
+  setSelectValue('bedPatient','');
+  setSelectValue('bedType','Ordinary');
+  setSelectValue('bedStatus','Available');
+  setSelectValue('bedBlock','Block A');
+  setSelectValue('bedWard','Ward 1');
+  var cubicle=document.getElementById('bedCubicle'); if(cubicle) cubicle.value='';
+  var bed=document.getElementById('bedName'); if(bed) bed.value='';
+  var pill=document.getElementById('bedModePill');
+  var btn=document.getElementById('bedSaveBtn');
+  if(pill) pill.textContent='New bed record';
+  if(btn) btn.innerHTML='<span class="ic" data-icon="check"></span>Create Bed';
+  initIcons();
+  toast('Create Bed form cleared.');
+}
 
 function markMealPlanDirty(){
   var btn=document.getElementById('saveMealPlanBtn');
